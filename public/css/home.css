@@ -1,0 +1,109 @@
+@import url('https://fonts.googleapis.com/css2?family=Lato&display=swap');
+
+*{
+	margin: 0;
+	padding: 0;
+}
+.navbar{
+	background: #03A9F4;
+}
+
+.content{
+	font-family: 'Lato', sans-serif;
+	align-items: center;
+	background: #E7EEFB;
+	display: flex;
+	flex-direction: column;
+	height: calc(100% - 56px);
+	justify-content: center;
+}
+
+.user-data{
+	display: flex;
+	align-items: center;
+}
+
+.user-name{
+	color: #fff;
+	margin: 0 10px;
+}
+.user-image{
+	height: 40px;
+	width: 40px;
+	background: #fff;
+	border-radius: 40px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+.user-image{
+	border-radius: 40px;
+}
+
+.add-stop{
+	height: 35%;
+}
+
+.space{
+	background: yellow;
+	height: 5%;
+}
+
+.view-stop{
+	height: 35%;
+}
+
+.add-stop, .view-stop{
+	align-items: center;
+	display: flex;
+	background: #FCFDFF;
+	border-radius: 15px;
+	padding: 20px;
+	width: 90%;
+}
+
+.fa-plus{
+	color: #8BC34A;
+}
+
+.fa-eye{
+	color: #2196F3;
+}
+
+.icon-action{
+	display: flex;
+	font-size: 3em;
+	justify-content: center;
+	width: 30%;
+}
+
+.content-time{
+	display: flex;
+	justify-content: space-between;
+}
+
+.gj-timepicker{
+	width: calc(50% - 10px) !important;
+}
+
+
+
+.modal-footer{
+	display: flex;
+	justify-content: space-around;
+}
+
+.btn-close{
+	color: #FFF;
+}
+
+.btn-save{
+	background: #03A9F4;
+	color: #FFF;
+}
+
+.btn-close{
+	background: #F44336;
+	color: #FFF;	
+}
