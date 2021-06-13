@@ -4,17 +4,21 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <!--jquery-->
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg==" crossorigin="anonymous"></script>
+        <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+          <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+  <link rel="stylesheet" href="/resources/demos/style.css">
         <!--BOOTSTRAP-->
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
-        <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ho+j7jyWK8fNQe+A12Hb8AhRq26LrZ/JpcUGGOn+Y7RsweNrtN/tE3MoK7ZeZDyx" crossorigin="anonymous"></script>
         <!--FontAwesome-->
         <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous"/>
         <!--timepicker-->
-        <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
         <script src="https://unpkg.com/gijgo@1.9.13/js/gijgo.min.js" type="text/javascript"></script>
         <link href="https://unpkg.com/gijgo@1.9.13/css/gijgo.min.css" rel="stylesheet" type="text/css" />
+        <!--Sweetalert-->
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/10.15.6/sweetalert2.min.css"/>
+        <script src="//cdn.jsdelivr.net/npm/sweetalert2@10/dist/sweetalert2.min.js"></script>
         <!--DataTables-->
         <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.23/css/dataTables.bootstrap4.min.css">
         <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.23/js/jquery.dataTables.js"></script>
@@ -25,11 +29,12 @@
       
         <!--css personal-->
         <link rel="stylesheet" href="css/home.css">
-        <title>Produccion SH</title>
+        <title>Produccion SE</title>
+        <meta name="csrf-token" id="csrf-token" content="{{ csrf_token() }}"> 
     </head>
     <body>
-        <nav class="navbar navbar-light">
-            <span class="navbar-brand mb-0 h1">Produccion SH</span>
+        <nav class="navbar">
+            <span class="navbar-brand mb-0 h1">Produccion SE</span>
             <div class="user-data">
                 <div class="user-name">Usuario</div>
                 <div class="user-image">
@@ -38,11 +43,11 @@
             </div>
         </nav>
         <div class="content">
-            <div class="add-stop shadow" data-toggle="modal" data-target="#exampleModal">
+            <div class="add-stop shadow cursor" data-toggle="modal" data-target="#mdl-add-stop">
                 <div class="icon-action">
                     <i class="fas fa-plus"></i>
                 </div>
-                Agregar paro de maquina
+                Agregar <span class="txt-description"> paro de maquina <span>
             </div>
             <div class="space"></div>
             <div class="view-stop shadow" data-toggle="modal" data-target="#modal-view">
@@ -51,10 +56,26 @@
                 </div>
                 Ver paros de maquina
             </div>
+            <div class="container-tbl-stop shadow">
+                <table id="tbl-stop" class="table table-bordered display responsive nowrap" cellspacing="0" width="100%">
+                    <thead class="thead-light">
+                        <tr>
+                            <th>Maquina</th>
+                            <th>Problema</th>
+                            <th>Hora Incio</th>
+                            <th>Hora Fin</th>
+                            <th>Responsable</th>
+                            <th>Acciones</th>
+                        </tr>
+                    </thead>
+                     <tbody>
+                     </tbody>
+                </table>
+            </div>
         </div>
 
         <!-- Modal -->
-        <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal fade" id="mdl-add-stop" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered">
                 <div class="modal-content">
                     <div class="modal-header">
@@ -64,32 +85,34 @@
                             </button>
                     </div>
                     <div class="modal-body">
-                        <form>
+                        <form id="create-stop">
+                            @csrf
                             <div class="form-group">
-                                <label for="exampleInputEmail1">Maquina</label>
-                                <input type="number" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+                                <label for="number-machine">Maquina</label>
+                                <input id="number-machine" name="machine" type="number" class="form-control">
                             </div>
                             <div class="form-group">
-                                <label for="exampleInputEmail1">Problema</label>
-                                <textarea name="" class="form-control"></textarea>
+                                <label for="problem">Problema</label>
+                                <textarea id="problem" name="problem" class="form-control"></textarea>
                             </div>
                             <div class="form-group">
                                 <label for="exampleInputEmail1">Hora</label>
                                 <div class="content-time">
-                                    <input id="time-start" class="form-control"/>
-                                    <input id="time-end" class="form-control"/>
+                                    <input id="hour_start" name="hour_start" class="form-control"/>
+                                    <input id="hour_end" name="hour_end" class="form-control"/>
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label for="exampleInputEmail1">Responsable</label>
-                                <input type="number" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
-                            <small id="emailHelp" class="form-text text-muted">Nombre de empleado</small>
+                                <label for="employee">Responsable</label>
+                                <input type="number" name="employee" class="form-control" id="employee">
+                                <small id="name-employee" class="form-text text-muted d-none">Nombre de empleado</small>
                             </div>
+                            <button id="submit-stop" class="d-none"></button>
                         </form>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary btn-close" data-dismiss="modal">Cerrar</button>
-                        <button type="button" class="btn btn-save">Guardar</button>
+                        <button type="button" class="btn btn-secondary btn-cancel" data-dismiss="modal">Cancelar</button>
+                        <button id="btn-save-stop" type="button" class="btn btn-save">Guardar</button>
                     </div>
                 </div>
             </div>
@@ -105,7 +128,7 @@
                               <span aria-hidden="true">&times;</span>
                             </button>
                     </div>
-                    <div class="modal-body" style="position: relative; width: 100%">
+                    <div class="modal-body" style="position: relative;">
                            <table id="tbl-stop" class="table table-bordered display responsive nowrap" cellspacing="0" width="100%">
                                <thead class="thead-light">
                                    <tr>
@@ -114,50 +137,20 @@
                                        <th>Hora Incio</th>
                                        <th>Hora Fin</th>
                                        <th>Responsable</th>
+                                       <th>Acciones</th>
                                    </tr>
                                </thead>
                                <tbody>
-                                   <tr>
-                                       <td>CA-4006</td>
-                                       <td>Contacto marcado</td>
-                                       <td>12:00 pm</td>
-                                       <td>1:00 pm</td>
-                                       <td>03171182</td>
-                                   </tr>
-                                   <tr>
-                                       <td>CA-0589</td>
-                                       <td>Baja resistencia</td>
-                                       <td>1:00 pm</td>
-                                       <td>3:00 pm</td>
-                                       <td>03171182</td>
-                                   </tr>
                                </tbody>
                            </table>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-close" data-dismiss="modal">Cerrar</button>
-                        <button type="button" class="btn btn-save">Guardar</button>
+                        <button type="button" class="btn btn-close" data-dismiss="modal">Aceptar</button>
                     </div>
                 </div>
             </div>
         </div>
 
-        <script>
-            $('#time-start').timepicker({
-                uiLibrary: 'bootstrap4'
-            });
-            $('#time-end').timepicker({
-                uiLibrary: 'bootstrap4'
-            });
-
-            $(document).ready(function(){
-                var table = $('#tbl-stop').DataTable({
-                    responsive: true,
-                    autoWidth: true
-                }); //dataTable
-   
-            });
-
-        </script>
+        <script src="js/home.js"></script>
     </body>
 </html>

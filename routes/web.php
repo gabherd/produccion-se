@@ -20,3 +20,6 @@ Route::get('/', function () {
 // 
 Route::get('stopMachine', '\App\Http\Controllers\HomeController@getStopMachine')
 	->name('stopMachine');
+
+Route::resource("paros", '\App\Http\Controllers\HomeController')
+	->names('stops');

@@ -4,8 +4,10 @@
 	margin: 0;
 	padding: 0;
 }
+
 .navbar{
-	background: #03A9F4;
+	background: #3dcd58;
+	color: #FFFFFF !important;
 }
 
 .content{
@@ -27,6 +29,7 @@
 	color: #fff;
 	margin: 0 10px;
 }
+
 .user-image{
 	height: 40px;
 	width: 40px;
@@ -52,6 +55,11 @@
 
 .view-stop{
 	height: 35%;
+}
+
+
+.container-tbl-stop{
+	display: none;
 }
 
 .add-stop, .view-stop{
@@ -87,8 +95,6 @@
 	width: calc(50% - 10px) !important;
 }
 
-
-
 .modal-footer{
 	display: flex;
 	justify-content: space-around;
@@ -103,7 +109,66 @@
 	color: #FFF;
 }
 
-.btn-close{
+.btn-cancel{
 	background: #F44336;
 	color: #FFF;	
+}
+
+.btn-close{
+	background: #4CAF50;
+}
+
+.cursor{
+	cursor: pointer;
+}
+
+@media (min-width: 900px) {
+	.content {
+		display: block;
+		padding: 15px;
+  	}
+
+  	.space{
+  		display: none;
+  	}
+
+	.add-stop{
+  		width: 120px;
+  		height: 20px;
+  		color: #FFF;
+		background: #8BC34A;
+		box-shadow: none !important;
+  	}
+
+  	.fa-plus{
+		color: #FFF;
+		font-size: 15px;
+	}
+
+	.txt-description{
+		display: none;
+	}
+
+	.add-stop, .container-tbl-stop{
+		align-items: center;
+		border-radius: 5px;
+	}
+
+	.icon-action{
+		display: flex;
+		font-size: 1.5em;
+		justify-content: center;
+		width: 30%;
+	}
+
+	.view-stop{
+		display: none;
+	}
+
+	.container-tbl-stop{
+		display: block;
+		background: #FFF;
+		margin-top: 15px;
+		padding: 20px;
+	}
 }
