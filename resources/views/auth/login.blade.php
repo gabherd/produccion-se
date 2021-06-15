@@ -14,19 +14,25 @@
 					<span class="txt-title-box">Iniciar sesión</span>
 				</div>
 				<div>
-					<form action="">
+					@if ($errors->any())
+					    <div class="alert alert-danger">
+					            Usuario y/o contraseña incorrectos
+					    </div>
+					@endif
+					<form action="login" method="post">
+						@csrf
 						<div class="form-group">
 							<label for="" class="txt-instructions">Correo</label>
-							<input class="form-control" type="text" placeholder="alguien@correo.com">
+							<input class="form-control" type="text" name="email" placeholder="alguien@correo.com">
 						</div>	
 						<div class="form-group">
 							<label for="" class="txt-instructions">Contraseña</label>
-							<input class="form-control" type="password" placeholder="******">
+							<input class="form-control" type="password" name="password" placeholder="******">
 						</div>
 						<button type="submit" class="btn btn-primary w-100">Ingresar</button>
 					</form>
 					<div class="w-100 link-register">
-						<a href="" class="center">Registrarme</a>
+						<a href="/register" class="center">Registrarme</a>
 					</div>
 				</div>
 

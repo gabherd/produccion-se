@@ -38,7 +38,7 @@
             <span class="navbar-brand mb-0 h1">Produccion</span>
             <div class="user-data">
                 <div class="user-name">Usuario</div>
-                <div class="user-image">
+                <div class="content-user-image">
                     <img src="img/owl.svg" class="user-image">
                 </div>
             </div>

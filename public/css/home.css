@@ -30,14 +30,19 @@
 	margin: 0 10px;
 }
 
-.user-image{
+.content-user-image{
 	height: 40px;
 	width: 40px;
-	background: #fff;
+	background: #FFFFFF;
 	border-radius: 40px;
 	display: flex;
 	justify-content: center;
 	align-items: center;
+}
+
+.user-image{
+	height: 40px;
+	width: 30px;
 }
 
 .user-image{

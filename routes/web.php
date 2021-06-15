@@ -15,7 +15,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
     return view('home');
-});
+})->middleware('auth');
 
 Route::get('stopMachine', '\App\Http\Controllers\HomeController@getStopMachine')
 	->name('stopMachine');
