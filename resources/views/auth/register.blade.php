@@ -16,40 +16,61 @@
 					<span class="txt-title-box">Registro</span>
 				</div>
 				<div>
-					@if ($errors->any())
-					    <div class="alert alert-danger">
-					        <ul>
-					            @foreach ($errors->all() as $error)
-					                <li>{{ $error }}</li>
-					            @endforeach
-					        </ul>
-					    </div>
-					@endif
 					<form action="register" method="post" >
 						@csrf
 						<div class="form-group">
 							<label for="" class="txt-instructions">Codigo de acceso</label>
 							<input class="form-control" type="text" name="access_code" placeholder="-----" autocomplete="new-text" value="{{old('access_code')}}" >
+							@if($errors->has('access_code'))
+					    		<div class="alert alert-danger">
+									<p>{{ $errors->first('access_code') }}</p>
+					    		</div>
+							@endif
 						</div>	
 						<div class="form-group">
 							<label for="" class="txt-instructions">Nombre</label>
 							<input class="form-control" type="text" name="name" value="{{old('name')}}" placeholder="Nombre">
+							@if($errors->has('name'))
+					    		<div class="alert alert-danger">
+									<p>{{ $errors->first('name') }}</p>
+					    		</div>
+							@endif
 						</div>	
 						<div class="form-group">
 							<label for="" class="txt-instructions">Apellido</label>
 							<input class="form-control" type="text" name="last_name" value="{{old('last_name')}}" placeholder="Apellido">
+							@if($errors->has('last_name'))
+					    		<div class="alert alert-danger">
+									<p>{{ $errors->first('last_name') }}</p>
+					    		</div>
+							@endif
 						</div>	
 						<div class="form-group">
 							<label for="" class="txt-instructions">Correo</label>
 							<input class="form-control" type="text" name="email" value="{{old('email')}}" autocomplete="new-text" placeholder="alguien@dominio.com" autocomplete="new-text">
+							@if($errors->has('email'))
+					    		<div class="alert alert-danger">
+									<p>{{ $errors->first('email') }}</p>
+					    		</div>
+							@endif
 						</div>	
 						<div class="form-group">
 							<label for="" class="txt-instructions">Contraseña</label>
 							<input class="form-control" type="password" name="password" placeholder="******" autocomplete="new-password">
+							@if($errors->has('password'))
+					    		<div class="alert alert-danger">
+									<p>{{ $errors->first('password') }}</p>
+					    		</div>
+							@endif
 						</div>
 						<div class="form-group">
 							<label for="" class="txt-instructions">Repetir contraseña</label>
 							<input class="form-control" type="password" name="password_confirmation" placeholder="******" autocomplete="new-password">
+							@if($errors->has('password_confirmation'))
+					    		<div class="alert alert-danger">
+									<p>{{ $errors->first('password_confirmation') }}</p>
+					    		</div>
+							@endif
 						</div>
 						<button type="submit" class="btn btn-success w-100">Registrarme</button>
 					</form>

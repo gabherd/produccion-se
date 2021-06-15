@@ -18,16 +18,16 @@ Route::get('/', function () {
 })->middleware('auth');
 
 Route::get('stopMachine', '\App\Http\Controllers\HomeController@getStopMachine')
-	->name('stopMachine');
+	->name('stopMachine')->middleware('auth');
 
 Route::get('employee', '\App\Http\Controllers\HomeController@getEmployee')
-	->name('employee');
+	->name('employee')->middleware('auth');
 
 Route::get('machine', '\App\Http\Controllers\HomeController@getMachine')
-	->name('machine');
+	->name('machine')->middleware('auth');
 
 Route::post('employee', '\App\Http\Controllers\HomeController@storeEmployee')
-	->name('save-employee');
+	->name('save-employee')->middleware('auth');
 
 Route::resource("paros", '\App\Http\Controllers\HomeController')
-	->names('stops');
+	->names('stops')->middleware('auth');

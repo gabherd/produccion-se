@@ -21,7 +21,7 @@ class CreateNewUser implements CreatesNewUsers
     public function create(array $input)
     {
         Validator::make($input, [
-            'access_code' => 'in:C41416',
+            'access_code' => ['required', 'string', 'in:C41416'],
             'name' => ['required', 'string', 'max:255'],
             'last_name' => ['required', 'string', 'max:200'],
             'email' => [
@@ -32,6 +32,14 @@ class CreateNewUser implements CreatesNewUsers
                 Rule::unique(User::class),
             ],
             'password' => $this->passwordRules(),
+        ],
+        [
+            'access_code.required' => 'El codigo de acceso es obligatorio',
+            'access_code.in' => 'El codigo de acceso es incorrecto',
+            'name.required' => 'El nombre es obligatorio',
+            'last_name.required' => 'El apellido es obligatorio',
+            'email.required' => 'El correo es obligatorio',
+            'password.required' => 'La contraseña es obligatoria',
         ])->validate();
 
         return User::create([
