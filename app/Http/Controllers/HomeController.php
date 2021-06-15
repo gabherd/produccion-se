@@ -16,13 +16,32 @@ class HomeController extends Controller
 
     public function getStopMachine(){
         $product = DB::table('machine_stop')
-                    ->select('id','id_machine', 'problem', 'hour_start', 'hour_end', 'id_employee')
+                    ->select('id','machine_stop.id_machine', 'name_step as description', 'problem', 'hour_start', 'hour_end', 'name')
+                    ->join('employee', 'employee.id_employee', '=', 'machine_stop.id_employee')
+                    ->join('machine', 'machine.id_machine', '=', 'machine_stop.id_machine')
                     ->orderBy('hour_start')
                     ->get();
 
         return $product;
     }
 
+    public function getEmployee(){
+        $product = DB::table('employee')
+                    ->select('id_employee as id','name', 'position')
+                    ->orderBy('id_employee')
+                    ->get();
+
+        return $product;
+    }
+
+    public function getMachine(){
+        $product = DB::table('machine')
+                    ->select('id_machine as id','number_step', 'name_step as name')
+                    ->orderBy('id_machine')
+                    ->get();
+
+        return $product;
+    }
     public function store(Request $request)
     {
         $now = new DateTime();
@@ -46,6 +65,23 @@ class HomeController extends Controller
         return Response()->json($response);  
     }
 
+    public function storeEmployee(Request $request)
+    {
+        $request = DB::table('employee')
+                    ->insert([
+                        'id_employee' => $request['number-employee'],
+                        'name' => $request['name'],
+                        'position' => $request['position'],
+                    ]);
+
+        if($request){
+            $response = array('status'=>1, 'msg'=>'Created successfully');
+        }else{
+            $response = array('status'=>'error', 'msg'=>'Data not creacted');
+        }
+        
+        return Response()->json($response);  
+    }
 
     public function show(Home $home)
     {

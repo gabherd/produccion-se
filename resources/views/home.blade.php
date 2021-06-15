@@ -5,8 +5,8 @@
         <!--jquery-->
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg==" crossorigin="anonymous"></script>
         <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-          <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-  <link rel="stylesheet" href="/resources/demos/style.css">
+        <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+        <link rel="stylesheet" href="/resources/demos/style.css">
         <!--BOOTSTRAP-->
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ho+j7jyWK8fNQe+A12Hb8AhRq26LrZ/JpcUGGOn+Y7RsweNrtN/tE3MoK7ZeZDyx" crossorigin="anonymous"></script>
@@ -26,15 +26,16 @@
         <!--Ratatable responsive-->
         <link rel="stylesheet" href="https://cdn.datatables.net/responsive/2.2.7/css/responsive.dataTables.min.css">
         <script src="https://cdn.datatables.net/responsive/2.2.7/js/dataTables.responsive.min.js"></script>
-      
+        <!--lodash-->
+        <script src="https://cdn.jsdelivr.net/npm/lodash@4.17.20/lodash.min.js"></script>
         <!--css personal-->
         <link rel="stylesheet" href="css/home.css">
-        <title>Produccion SE</title>
+        <title>Produccion</title>
         <meta name="csrf-token" id="csrf-token" content="{{ csrf_token() }}"> 
     </head>
     <body>
         <nav class="navbar">
-            <span class="navbar-brand mb-0 h1">Produccion SE</span>
+            <span class="navbar-brand mb-0 h1">Produccion</span>
             <div class="user-data">
                 <div class="user-name">Usuario</div>
                 <div class="user-image">
@@ -46,8 +47,7 @@
             <div class="add-stop shadow cursor" data-toggle="modal" data-target="#mdl-add-stop">
                 <div class="icon-action">
                     <i class="fas fa-plus"></i>
-                </div>
-                Agregar <span class="txt-description"> paro de maquina <span>
+                </div>Agregar <span class="txt-description"> paro de maquina <span>
             </div>
             <div class="space"></div>
             <div class="view-stop shadow" data-toggle="modal" data-target="#modal-view">
@@ -57,13 +57,15 @@
                 Ver paros de maquina
             </div>
             <div class="container-tbl-stop shadow">
-                <table id="tbl-stop" class="table table-bordered display responsive nowrap" cellspacing="0" width="100%">
+                <table id="tbl-stop" class="tbl-stop table table-bordered display responsive nowrap" cellspacing="0" width="100%">
                     <thead class="thead-light">
                         <tr>
                             <th>Maquina</th>
+                            <th>Descripcion</th>
                             <th>Problema</th>
                             <th>Hora Incio</th>
                             <th>Hora Fin</th>
+                            <th>Tiempo</th>
                             <th>Responsable</th>
                             <th>Acciones</th>
                         </tr>
@@ -104,8 +106,8 @@
                             </div>
                             <div class="form-group">
                                 <label for="employee">Responsable</label>
-                                <input type="number" name="employee" class="form-control" id="employee">
-                                <small id="name-employee" class="form-text text-muted d-none">Nombre de empleado</small>
+                                <input id="id_employee" type="number" name="employee" class="form-control" id="employee">
+                                <small id="name-employee" class="form-text text-muted"></small>
                             </div>
                             <button id="submit-stop" class="d-none"></button>
                         </form>
@@ -129,13 +131,15 @@
                             </button>
                     </div>
                     <div class="modal-body" style="position: relative;">
-                           <table id="tbl-stop" class="table table-bordered display responsive nowrap" cellspacing="0" width="100%">
+                           <table id="tbl-stop" class="tbl-stop table table-bordered display responsive nowrap" cellspacing="0" width="100%">
                                <thead class="thead-light">
                                    <tr>
                                        <th>Maquina</th>
+                                       <th>Descripcion</th>
                                        <th>Problema</th>
                                        <th>Hora Incio</th>
                                        <th>Hora Fin</th>
+                                       <th>Tiempo</th>
                                        <th>Responsable</th>
                                        <th>Acciones</th>
                                    </tr>
@@ -146,6 +150,46 @@
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-close" data-dismiss="modal">Aceptar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Modal -->
+        <div class="modal fade" id="mdl-add-employee" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Agregar Empleado</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                              <span aria-hidden="true">&times;</span>
+                            </button>
+                    </div>
+                    <div class="modal-body">
+                        <form id="create-employee">
+                            @csrf
+                            <div class="form-group">
+                                <label for="number-employee">Numero de empleado</label>
+                                <input id="number-employee" name="number-employee" type="number" class="form-control">
+                            </div>
+                            <div class="form-group">
+                                <label for="position">Puesto</label>
+                                <select name="position" class="form-control">
+                                    <option value="Setup">Setup</option>
+                                    <option value="Tecnico">Técnico</option>
+                                    <option value="Operador">Operador</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="employee">Nombre</label>
+                                <input id="name-empl" type="text" name="name" class="form-control" id="employee">
+                            </div>
+                            <button id="submit-employee" class="d-none"></button>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary btn-cancel" data-dismiss="modal">Cancelar</button>
+                        <button id="btn-save-employee" type="button" class="btn btn-save">Guardar</button>
                     </div>
                 </div>
             </div>

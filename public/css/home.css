@@ -6,7 +6,7 @@
 }
 
 .navbar{
-	background: #3dcd58;
+	background: #2196F3;
 	color: #FFFFFF !important;
 }
 
@@ -120,6 +120,10 @@
 
 .cursor{
 	cursor: pointer;
+}
+
+#ui-id-1, #ui-id-2{
+	z-index: 1050 !important;
 }
 
 @media (min-width: 900px) {

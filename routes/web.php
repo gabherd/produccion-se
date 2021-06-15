@@ -17,9 +17,17 @@ Route::get('/', function () {
     return view('home');
 });
 
-// 
 Route::get('stopMachine', '\App\Http\Controllers\HomeController@getStopMachine')
 	->name('stopMachine');
+
+Route::get('employee', '\App\Http\Controllers\HomeController@getEmployee')
+	->name('employee');
+
+Route::get('machine', '\App\Http\Controllers\HomeController@getMachine')
+	->name('machine');
+
+Route::post('employee', '\App\Http\Controllers\HomeController@storeEmployee')
+	->name('save-employee');
 
 Route::resource("paros", '\App\Http\Controllers\HomeController')
 	->names('stops');
