@@ -15,36 +15,8 @@ $.get( "machine", function( data ) {
     };
 });
 
-
-$("#number-machine").autocomplete({
-    source: machines,
-    select: function(event, ui) {
-        $('#number-machine').text(ui.item.id);
-    }
-});
-
-$("#id_employee").autocomplete({
-    source: employees,
-    select: function(event, ui) {
-        $('#name-employee').text(ui.item.name);
-    }
-});
-
-
-
-$('#hour_start').timepicker({
-    uiLibrary: 'bootstrap4'
-});
-
-
-
-$('#hour_end').timepicker({
-    uiLibrary: 'bootstrap4'
-});
-
-
 $(document).ready(function(){
-    $('#tbl-stop').DataTable({
+    $('table.display').DataTable({
         language: {
             "url": "//cdn.datatables.net/plug-ins/1.10.20/i18n/Spanish.json"
         },
@@ -75,16 +47,20 @@ $(document).ready(function(){
             { data: 'name'},
             { data: null,
                 render: function (data, type, row) {
+                    var maquina = data.id_machine.split('-');
+                    var problem = data.problem;
+                    var hour_start = data.hour_start;
+                    var hour_end = data.hour_end;
+                    var employee = data.employee;
+
                     return "<div class='d-flex justify-content-around'>" +
-                            "<button class='btn btn-info btn-editModel' " + 
-                                "data-toggle='modal' "+
-                                "data-target='#mdl-save-model' " + 
-                                "data-idBrand='"+data.id+"'> Editar </button>" + 
-                            "<button type='submit' id='"+data.id+"' "+
-                                "class='btn btn-danger btn-delete-problem' "+
-                                "data-token='{{ csrf_token() }}' "+
-                                "data-id-problem='"+data.id+"' "+
-                                "data-name='"+data.id_machine+" - "+data.id_machine+"'>Borrar</button>"+
+                                "<button class='btn btn-info btn-edit-stop' " + 
+                                    "data-toggle='modal' "+
+                                    "data-target='#mdl-add-stop' " + 
+                                    "onclick=editStop(2192,'"+problem+"','"+hour_start+"','"+hour_end+"','"+employee+"')> Editar </button>" + 
+                                "<button class='btn btn-danger btn-delete-problem' "+
+                                    "data-id-problem='"+data.id+"' "+
+                                    "data-name='"+data.id_machine+" - "+data.problem+"'>Eliminar</button>"+
                            "</div>";
                 }
             }
@@ -92,13 +68,40 @@ $(document).ready(function(){
     }); //dataTable
 });
 
+
+$("#number-machine").autocomplete({
+    source: machines,
+    select: function(event, ui) {
+        $('#number-machine').text(ui.item.id);
+    }
+});
+
+$("#id_employee").autocomplete({
+    source: employees,
+    select: function(event, ui) {
+        $('#name-employee').text(ui.item.name);
+    }
+});
+
+$('#hour_start').timepicker({
+    uiLibrary: 'bootstrap4'
+});
+
+
+$('#hour_end').timepicker({
+    uiLibrary: 'bootstrap4'
+});
+
+
 $('.view-stop').on('click', function(){
-    $('#tbl-stop').DataTable().ajax.reload();
+    $('table.display').DataTable().ajax.reload();
 });
 
 $("#tbl-stop").delegate('.btn-delete-problem', 'click', function(){
         var id = $(this).attr('data-id-problem');
         var itemName = $(this).attr('data-name');
+        
+        console.log(itemName);
 
         Swal.fire({
             title: '¿Estas seguro?',
@@ -165,6 +168,18 @@ $("#tbl-stop").delegate('.btn-delete-problem', 'click', function(){
         });
 });
 
+function editStop(machine, problem, hour_start, hour_end, employee){
+    $("#modal-view").modal('hide');
+
+    $('#number-machine').val(machine);
+    $('#problem').val(problem);
+    $('#hour_start').val(hour_start);
+    $('#hour_end').val(hour_end);
+    $('#id_employee').val(employee);
+    $('#name-employee').val(employee);
+}
+
+
 $('#btn-save-stop').on('click', function(){
     if (_.some(employees, ['label', parseInt($('#id_employee').val())])) {
         $.ajax({
@@ -184,7 +199,7 @@ $('#btn-save-stop').on('click', function(){
                     });
 
                     $('#mdl-add-stop').modal('hide');
-                    $('#tbl-stop').DataTable().ajax.reload();
+                    $('#table.display').DataTable().ajax.reload();
                     $("#create-stop").trigger("reset");
                 }
             }
@@ -232,7 +247,7 @@ $('#btn-save-employee').on('click', function(){
         });
 });
 
-$('.add-stop').on('click', function(){
+$('.btn-add-stop').on('click', function(){
     $("#create-stop").trigger("reset");
     $('#name-employee').text('');
 });
