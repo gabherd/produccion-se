@@ -16,7 +16,14 @@ class HomeController extends Controller
 
     public function getStopMachine(){
         $product = DB::table('machine_stop')
-                    ->select('id','machine_stop.id_machine', 'name_step as description', 'problem', 'hour_start', 'hour_end', 'name', 'employee.id_employee as employee')
+                    ->select('id',
+                        'machine_stop.id_machine', 
+                        'name_step as description', 
+                        'problem', 
+                        DB::raw('DATE_FORMAT(hour_start, "%H:%i") AS hour_start'),
+                        DB::raw('DATE_FORMAT(hour_end, "%H:%i") AS hour_end'),
+                        'name', 
+                        'employee.id_employee as employee')
                     ->join('employee', 'employee.id_employee', '=', 'machine_stop.id_employee')
                     ->join('machine', 'machine.id_machine', '=', 'machine_stop.id_machine')
                     ->orderBy('hour_start')
