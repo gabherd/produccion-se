@@ -16,6 +16,8 @@ class HomeController extends Controller
     }
 
     public function getStopMachine(){
+        $now = new DateTime();
+
         $product = MachineStop::select('id',
                                     'machine_stop.id_machine', 
                                     'name_step as description', 
@@ -27,6 +29,7 @@ class HomeController extends Controller
                                 ->join('employee', 'employee.id_employee', '=', 'machine_stop.id_employee')
                                 ->join('machine', 'machine.id_machine', '=', 'machine_stop.id_machine')
                                 ->orderBy('updated_at', 'DESC')
+                                ->where('updated_at', '>=', date('2021-06-17'))
                                 ->get();
 
         return $product;
