@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use \Datetime;
 use App\Models\Home;
+use App\Models\MachineStop;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -15,19 +16,18 @@ class HomeController extends Controller
     }
 
     public function getStopMachine(){
-        $product = DB::table('machine_stop')
-                    ->select('id',
-                        'machine_stop.id_machine', 
-                        'name_step as description', 
-                        'problem', 
-                        DB::raw('DATE_FORMAT(hour_start, "%H:%i") AS hour_start'),
-                        DB::raw('DATE_FORMAT(hour_end, "%H:%i") AS hour_end'),
-                        'name', 
-                        'employee.id_employee as employee')
-                    ->join('employee', 'employee.id_employee', '=', 'machine_stop.id_employee')
-                    ->join('machine', 'machine.id_machine', '=', 'machine_stop.id_machine')
-                    ->orderBy('hour_start')
-                    ->get();
+        $product = MachineStop::select('id',
+                                    'machine_stop.id_machine', 
+                                    'name_step as description', 
+                                    'problem', 
+                                    DB::raw('DATE_FORMAT(hour_start, "%H:%i") AS hour_start'),
+                                    DB::raw('DATE_FORMAT(hour_end, "%H:%i") AS hour_end'),
+                                    'name', 
+                                    'employee.id_employee as employee')
+                                ->join('employee', 'employee.id_employee', '=', 'machine_stop.id_employee')
+                                ->join('machine', 'machine.id_machine', '=', 'machine_stop.id_machine')
+                                ->orderBy('hour_start')
+                                ->get();
 
         return $product;
     }
@@ -42,10 +42,9 @@ class HomeController extends Controller
     }
 
     public function getMachine(){
-        $product = DB::table('machine')
-                    ->select('id_machine as id','number_step', 'name_step as name')
-                    ->orderBy('id_machine')
-                    ->get();
+        $product = DB::table('machine')->select('id_machine as id','number_step', 'name_step as name')
+                                ->orderBy('id_machine')
+                                ->get();
 
         return $product;
     }
@@ -53,8 +52,7 @@ class HomeController extends Controller
     {
         $now = new DateTime();
 
-        $request = DB::table('machine_stop')
-                    ->insert([
+        $request = MachineStop::insert([
                         'problem' => $request['problem'],
                         'hour_start' => $request['hour_start'],
                         'hour_end' => $request['hour_end'],
@@ -74,12 +72,11 @@ class HomeController extends Controller
 
     public function storeEmployee(Request $request)
     {
-        $request = DB::table('employee')
-                    ->insert([
-                        'id_employee' => $request['number-employee'],
-                        'name' => $request['name'],
-                        'position' => $request['position'],
-                    ]);
+        $request = DB::table('employee')->insert([
+                                    'id_employee' => $request['number-employee'],
+                                    'name' => $request['name'],
+                                    'position' => $request['position'],
+                                ]);
 
         if($request){
             $response = array('status'=>1, 'msg'=>'Created successfully');
@@ -95,27 +92,32 @@ class HomeController extends Controller
         
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Home  $home
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, Home $home)
+    public function update(Request $request, $id)
     {
-        //
+        try{
+            $stop = MachineStop::find($id);
+
+            $stop->id_machine = 'CA-'.$request['machine'];
+            $stop->problem = $request['problem'];
+            $stop->hour_start = $request['hour_start'];
+            $stop->hour_end = $request['hour_end'];
+            $stop->id_employee = $request['employee'];
+
+            $stop->save();
+
+            return response()->json(["status" => 200, "detail" => "Updated successful "]); 
+
+        }catch(Exception $e){
+
+            return response()->json(["status" => 500, "detail" => "Data not updated"]); 
+
+        }
+
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\Home  $home
-     * @return \Illuminate\Http\Response
-     */
     public function destroy($id)
     {
-        $query = DB::table('machine_stop')->where('id', $id)->delete(); 
+        $query = MachineStop::where('id', $id)->delete(); 
 
         if($query){
             $response = array('status' => 1, 'msg'=>'Deleted');

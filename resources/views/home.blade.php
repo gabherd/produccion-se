@@ -7,7 +7,7 @@
         <!---->
         <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
         <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-        <link rel="stylesheet" href="/resources/demos/style.css">
+        <!------------link rel="stylesheet" href="/resources/demos/style.css"-------------->
         <!--BOOTSTRAP-->
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
         <!--FontAwesome-->
@@ -44,7 +44,7 @@
             </div>
         </nav>
         <div class="content">
-            <div class="btn-add-stop shadow cursor" data-toggle="modal" data-target="#mdl-add-stop">
+            <div class="btn-add-stop shadow cursor" onclick='saveStop();' data-toggle="modal" data-target="#mdl-add-stop">
                 <div class="icon-action">
                     <i class="fas fa-plus"></i>
                 </div>Agregar <span class="txt-description"> paro de maquina <span>
@@ -81,7 +81,7 @@
             <div class="modal-dialog modal-dialog-centered">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLabel">Agregar paro de maquina</h5>
+                        <h5 class="modal-title" id="title-modal-add-stop">Agregar paro de maquina</h5>
                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                               <span aria-hidden="true">&times;</span>
                             </button>
@@ -93,7 +93,7 @@
                                 <label for="number-machine">Maquina</label>
                                 <div class="form-group-icon">
                                     <i class="fas fa-search"></i>
-                                    <input id="number-machine" name="machine" type="number" class="form-control" >
+                                    <input id="number-machine" name="machine" type="number" class="form-control" placeholder="Buscar">
                                 </div>
                             </div>
                             <div class="form-group">
@@ -120,7 +120,7 @@
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary btn-cancel" data-dismiss="modal">Cancelar</button>
-                        <button id="btn-save-stop" type="button" class="btn btn-save">Guardar</button>
+                        <button id="btn-save-stop" data-id='' data-submit="create" type="button" class="btn btn-save">Guardar</button>
                     </div>
                 </div>
             </div>

@@ -57,7 +57,7 @@ $(document).ready(function(){
                                 "<button class='btn btn-info btn-edit-stop' " + 
                                     "data-toggle='modal' "+
                                     "data-target='#mdl-add-stop' " + 
-                                    "onclick=editStop(2192,'"+problem+"','"+hour_start+"','"+hour_end+"','"+employee+"')> Editar </button>" + 
+                                    "onclick=editStop("+data.id+",'"+maquina[1]+"','"+problem+"','"+hour_start+"','"+hour_end+"','"+employee+"')> Editar </button>" + 
                                 "<button class='btn btn-danger btn-delete-problem' "+
                                     "data-id-problem='"+data.id+"' "+
                                     "data-name='"+data.id_machine+" - "+data.problem+"'>Eliminar</button>"+
@@ -67,7 +67,6 @@ $(document).ready(function(){
         ]
     }); //dataTable
 });
-
 
 $("#number-machine").autocomplete({
     source: machines,
@@ -99,13 +98,11 @@ $('.view-stop').on('click', function(){
 
 $("#tbl-stop").delegate('.btn-delete-problem', 'click', function(){
         var id = $(this).attr('data-id-problem');
-        var itemName = $(this).attr('data-name');
+        var item_name = $(this).attr('data-name');
         
-        console.log(itemName);
-
         Swal.fire({
             title: '¿Estas seguro?',
-            text: "Eliminar " + itemName,
+            text: "Eliminar " + item_name,
             icon: 'warning',
             showCancelButton: true,
             confirmButtonColor: '#3085d6',
@@ -168,8 +165,21 @@ $("#tbl-stop").delegate('.btn-delete-problem', 'click', function(){
         });
 });
 
-function editStop(machine, problem, hour_start, hour_end, employee){
-    $("#modal-view").modal('hide');
+function saveStop(){
+    $('#title-modal-add-stop').text('Agregar paro de maquina');
+    
+    $("#create-stop").trigger("reset");
+    $('#name-employee').text('');
+
+    $('#btn-save-stop').attr('data-submit', 'create');
+
+
+}
+
+function editStop(id, machine, problem, hour_start, hour_end, employee){
+    $('#modal-view').modal('hide');
+
+    $('#title-modal-add-stop').text('Editar registro');
 
     $('#number-machine').val(machine);
     $('#problem').val(problem);
@@ -177,49 +187,199 @@ function editStop(machine, problem, hour_start, hour_end, employee){
     $('#hour_end').val(hour_end);
     $('#id_employee').val(employee);
     $('#name-employee').val(employee);
+
+    $('#btn-save-stop').attr('data-id', id);
+    $('#btn-save-stop').attr('data-submit', 'update');
 }
 
+    $('#btn-save-stop').on('click', function(){
+        var action_submit = $('#btn-save-stop').attr('data-submit');
 
-$('#btn-save-stop').on('click', function(){
-    if (_.some(employees, ['label', parseInt($('#id_employee').val())])) {
-        $.ajax({
-            url: "paros",
-            method:"POST",
-            data: $("#create-stop").serialize(),
-            success: function(res){
-                console.log(res);
-                if (res.status) {
+        if (action_submit  == 'update') {
+            if (_.some(employees, ['label', parseInt($('#id_employee').val())])) {
+                
+                var id = $('#btn-save-stop').attr('data-id');
 
-                    Swal.fire({
-                      position: 'center',
-                      icon: 'success',
-                      title: 'Registro guardado',
-                      showConfirmButton: false,
-                      timer: 900
-                    });
+                $.ajax({
+                    url: "/paros/"+id,
+                    dataType: "JSON",
+                    method:"PUT",
+                    data: $("#create-stop").serialize() + '&_method=' + "PUT",
+                    success: function(res){
+                        console.log(res)
+                        if (res.status == 200) {
 
-                    $('#mdl-add-stop').modal('hide');
-                    $('#table.display').DataTable().ajax.reload();
-                    $("#create-stop").trigger("reset");
-                }
+                            swalMessage('success', 'Registro actualizado')
+
+                            $('#mdl-add-stop').modal('hide');
+                            $('table.display').DataTable().ajax.reload();
+                            $("#create-stop").trigger("reset");
+                        }
+                    }, 
+                    error: function(){
+                            swalMessage('warning', 'Error', 'Los datos no fueron actualizados, intente mas tarde');
+
+                            $('#mdl-add-stop').modal('hide');
+                            $("#create-stop").trigger("reset");
+                    }
+                });
+            }else{
+                employeeNotRegistered();
             }
+        }else{
+            if (_.some(employees, ['label', parseInt($('#id_employee').val())])) {
+                $.ajax({
+                    url: "paros",
+                    dataType: "JSON",
+                    method:"POST",
+                    data: $("#create-stop").serialize(),
+                    success: function(res){
+                        console.log(res);
+                        if (res.status) {
+
+                            Swal.fire({
+                              position: 'center',
+                              icon: 'success',
+                              title: 'Registro guardado',
+                              showConfirmButton: false,
+                              timer: 900
+                            });
+
+                            $('#mdl-add-stop').modal('hide');
+                            $('table.display').DataTable().ajax.reload();
+                            $("#create-stop").trigger("reset");
+                        }
+                    }
+                });
+            }else{
+                employeeNotRegistered();
+            }
+        }
+
+    });
+
+
+function employeeNotRegistered(){
+    Swal.fire({
+        position: 'center',
+        icon: 'warning',
+        title: 'Empleado no encontrado',
+        text: 'Debes registrar los datos del emplado',
+    }).then((result) => {
+        if (result.isConfirmed) {
+                $('#name-empl').val()
+                $('#number-employee').val($('#id_employee').val());
+                $('#mdl-add-stop').modal('hide');
+                $('#mdl-add-employee').modal('show');
+            }
+    });
+}
+
+function swalMessage(typeMessage, title, text = ''){
+    if (typeMessage == 'success') {
+        Swal.fire({
+            position: 'center',
+            icon: 'success',
+            title: title,
+            showConfirmButton: false,
+            timer: 900
         });
-    }else{
+    }else if (typeMessage == 'warning') {
         Swal.fire({
             position: 'center',
             icon: 'warning',
-            title: 'Empleado no encontrado',
-            text: 'Debes registrar los datos del emplado',
-        }).then((result) => {
-            if (result.isConfirmed) {
-                    $('#name-empl').val()
-                    $('#number-employee').val($('#id_employee').val());
-                    $('#mdl-add-stop').modal('hide');
-                    $('#mdl-add-employee').modal('show');
-                }
+            title: title,
+            text: text
         });
     }
-});
+}
+
+/*
+$('#btn-save-stop').on('click', function(){
+    var action = $('#btn-save-stop').attr('data-submit');
+    var id = $('#btn-save-stop').attr('id');
+     
+    if (action == 'update') {
+        if (_.some(employees, ['label', parseInt($('#id_employee').val())])) {
+            $.ajax({
+                url: "paros/"+id,
+                dataType: "JSON",
+                method:"PUT",
+                data: $("#create-stop").serialize(),
+                success: function(res){
+                    console.log(res);
+                    if (res.status) {
+
+                        Swal.fire({
+                          position: 'center',
+                          icon: 'success',
+                          title: 'Registro guardado',
+                          showConfirmButton: false,
+                          timer: 900
+                        });
+
+                        $('#mdl-add-stop').modal('hide');
+                        $('#table.display').DataTable().ajax.reload();
+                        $("#create-stop").trigger("reset");
+                    }
+                }
+            });
+        }else{
+            Swal.fire({
+                position: 'center',
+                icon: 'warning',
+                title: 'Empleado no encontrado',
+                text: 'Debes registrar los datos del emplado',
+            }).then((result) => {
+                if (result.isConfirmed) {
+                        $('#name-empl').val()
+                        $('#number-employee').val($('#id_employee').val());
+                        $('#mdl-add-stop').modal('hide');
+                        $('#mdl-add-employee').modal('show');
+                    }
+            });
+        }
+    }else{
+        if (_.some(employees, ['label', parseInt($('#id_employee').val())])) {
+            $.ajax({
+                url: "paros",
+                method:"POST",
+                data: $("#create-stop").serialize(),
+                success: function(res){
+                    console.log(res);
+                    if (res.status) {
+
+                        Swal.fire({
+                          position: 'center',
+                          icon: 'success',
+                          title: 'Registro guardado',
+                          showConfirmButton: false,
+                          timer: 900
+                        });
+
+                        $('#mdl-add-stop').modal('hide');
+                        $('#table.display').DataTable().ajax.reload();
+                        $("#create-stop").trigger("reset");
+                    }
+                }
+            });
+        }else{
+            Swal.fire({
+                position: 'center',
+                icon: 'warning',
+                title: 'Empleado no encontrado',
+                text: 'Debes registrar los datos del emplado',
+            }).then((result) => {
+                if (result.isConfirmed) {
+                        $('#name-empl').val()
+                        $('#number-employee').val($('#id_employee').val());
+                        $('#mdl-add-stop').modal('hide');
+                        $('#mdl-add-employee').modal('show');
+                    }
+            });
+        }
+    }
+});*/
 
 $('#btn-save-employee').on('click', function(){
         $.ajax({
@@ -230,14 +390,7 @@ $('#btn-save-employee').on('click', function(){
                 console.log(res);
                 if (res.status) {
 
-                    Swal.fire({
-                      position: 'center',
-                      icon: 'success',
-                      title: 'Registro guardado',
-                      showConfirmButton: false,
-                      timer: 900
-                    });
-
+                    swalMessage('success', 'Registro guardado');
 
                     location.reload();
                     $('#mdl-add-employee').modal('hide');
@@ -247,7 +400,3 @@ $('#btn-save-employee').on('click', function(){
         });
 });
 
-$('.btn-add-stop').on('click', function(){
-    $("#create-stop").trigger("reset");
-    $('#name-employee').text('');
-});
