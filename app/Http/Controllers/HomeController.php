@@ -26,7 +26,7 @@ class HomeController extends Controller
                                     'employee.id_employee as employee')
                                 ->join('employee', 'employee.id_employee', '=', 'machine_stop.id_employee')
                                 ->join('machine', 'machine.id_machine', '=', 'machine_stop.id_machine')
-                                ->orderBy('hour_start')
+                                ->orderBy('updated_at', 'DESC')
                                 ->get();
 
         return $product;
@@ -48,6 +48,7 @@ class HomeController extends Controller
 
         return $product;
     }
+
     public function store(Request $request)
     {
         $now = new DateTime();
@@ -56,7 +57,7 @@ class HomeController extends Controller
                         'problem' => $request['problem'],
                         'hour_start' => $request['hour_start'],
                         'hour_end' => $request['hour_end'],
-                        'date' => $now->format('Y-m-d H:i:s'),
+                        'created_at' => $now->format('Y-m-d H:i:s'),
                         'id_employee' => $request['employee'],
                         'id_machine' => 'CA-'.$request['machine']
                     ]);
