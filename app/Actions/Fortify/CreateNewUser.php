@@ -20,6 +20,8 @@ class CreateNewUser implements CreatesNewUsers
      */
     public function create(array $input)
     {
+        $avatar =  array("bear", "dog", "fox", "koala", "lion", "monkey", "owl", "panda", "tiger", "wolf");
+
         Validator::make($input, [
             'access_code' => ['required', 'string', 'in:C41416'],
             'name' => ['required', 'string', 'max:255'],
@@ -47,6 +49,7 @@ class CreateNewUser implements CreatesNewUsers
             'last_name' => $input['last_name'],
             'email' => $input['email'],
             'password' => Hash::make($input['password']),
+            'avatar' => $avatar[array_rand($avatar)],
         ]);
     }
 }

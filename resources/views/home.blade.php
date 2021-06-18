@@ -39,7 +39,7 @@
             <div class="user-data">
                 <div class="user-name">{{ Auth::user()->name }}</div>
                 <div class="content-user-image">
-                    <img src="img/owl.svg" class="user-image">
+                    <img src="img/animals/{{ Auth::user()->avatar }}.svg" class="user-image">
                 </div>
             </div>
         </nav>
