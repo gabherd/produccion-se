@@ -51,13 +51,14 @@ $(document).ready(function(){
                     var problem = data.problem;
                     var hour_start = data.hour_start;
                     var hour_end = data.hour_end;
-                    var employee = data.employee;
+                    var id_employee = data.employee;
+                    var name_employee = data.name;
 
                     return "<div class='d-flex justify-content-around'>" +
                                 "<button class='btn btn-info btn-edit-stop' " + 
                                     "data-toggle='modal' "+
                                     "data-target='#mdl-add-stop' " + 
-                                    "onclick=editStop("+data.id+",'"+maquina[1]+"','"+problem+"','"+hour_start+"','"+hour_end+"','"+employee+"')> Editar </button>" + 
+                                    "onclick='editStop("+data.id+",`"+maquina[1]+"`,`"+problem+"`,`"+hour_start+"`,`"+hour_end+"`,`"+id_employee+"`,`"+name_employee+"`)'> Editar </button>" + 
                                 "<button class='btn btn-danger btn-delete-problem' "+
                                     "data-id-problem='"+data.id+"' "+
                                     "data-name='"+data.id_machine+" - "+data.problem+"'>Eliminar</button>"+
@@ -66,7 +67,7 @@ $(document).ready(function(){
             }
         ]
     }); //dataTable
-});
+});//
 
 $("#number-machine").autocomplete({
     source: machines,
@@ -172,11 +173,9 @@ function saveStop(){
     $('#name-employee').text('');
 
     $('#btn-save-stop').attr('data-submit', 'create');
-
-
 }
 
-function editStop(id, machine, problem, hour_start, hour_end, employee){
+function editStop(id, machine, problem, hour_start, hour_end, id_employee, name_employee){
     $('#modal-view').modal('hide');
 
     $('#title-modal-add-stop').text('Editar registro');
@@ -185,14 +184,14 @@ function editStop(id, machine, problem, hour_start, hour_end, employee){
     $('#problem').val(problem);
     $('#hour_start').val(hour_start);
     $('#hour_end').val(hour_end);
-    $('#id_employee').val(employee);
-    $('#name-employee').val(employee);
+    $('#id_employee').val(id_employee);
+    $('#name-employee').text(name_employee);
 
     $('#btn-save-stop').attr('data-id', id);
     $('#btn-save-stop').attr('data-submit', 'update');
 }
 
-    $('#btn-save-stop').on('click', function(){
+$('#btn-save-stop').on('click', function(){
         var action_submit = $('#btn-save-stop').attr('data-submit');
 
         if (action_submit  == 'update') {
@@ -255,8 +254,7 @@ function editStop(id, machine, problem, hour_start, hour_end, employee){
                 employeeNotRegistered();
             }
         }
-
-    });
+});
 
 
 function employeeNotRegistered(){
