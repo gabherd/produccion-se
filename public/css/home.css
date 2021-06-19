@@ -114,6 +114,10 @@
 	width: calc(50% - 10px) !important;
 }
 
+.redClass{
+	background: #FCCDCD;
+}
+
 .modal-footer{
 	display: flex;
 	justify-content: space-around;

@@ -26,6 +26,11 @@ $(document).ready(function(){
                 url: '/stopMachine',
                 dataSrc: '',
         },
+        createdRow: function( row, data, dataIndex){
+                if( data.hour_end ==  `00:00`){
+                    $(row).addClass('redClass');
+                }
+        },
         columns: [
             { data: 'id_machine'},
             { data: 'description'},
@@ -34,14 +39,19 @@ $(document).ready(function(){
             { data: 'hour_end'},
             { data: null, 
                 render: function(data, type, row){
-                      // Calcula los minutos de cada hora
-                      var minutos_inicio = data.hour_start.split(':')
+                    // Calcula los minutos de cada hora
+                    var minutos_inicio = data.hour_start.split(':')
                         .reduce((p, c) => parseInt(p) * 60 + parseInt(c));
                      
-                      var minutos_final = data.hour_end.split(':')
-                        .reduce((p, c) => parseInt(p) * 60 + parseInt(c));
-                      
-                    return (((minutos_final - minutos_inicio) /60) % 60);
+                    if (data.hour_end == '00:00'){
+                        return 0;
+                    }else{
+                        var minutos_final = data.hour_end.split(':')
+                          .reduce((p, c) => parseInt(p) * 60 + parseInt(c));
+                          
+                        return (((minutos_final - minutos_inicio) /60) % 60);
+                    }
+
                 }
             },
             { data: 'name'},

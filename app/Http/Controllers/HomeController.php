@@ -23,13 +23,13 @@ class HomeController extends Controller
                                     'name_step as description', 
                                     'problem', 
                                     DB::raw('DATE_FORMAT(hour_start, "%H:%i") AS hour_start'),
-                                    DB::raw('DATE_FORMAT(hour_end, "%H:%i") AS hour_end'),
+                                    DB::raw('(CASE WHEN DATE_FORMAT(hour_end, "%H:%i") = "00:00" THEN "00:00" ELSE DATE_FORMAT(hour_end, "%H:%i") END) AS hour_end'),
                                     'name', 
                                     'employee.id_employee as employee')
                                 ->join('employee', 'employee.id_employee', '=', 'machine_stop.id_employee')
                                 ->join('machine', 'machine.id_machine', '=', 'machine_stop.id_machine')
                                 ->orderBy('updated_at', 'DESC')
-                                ->where('updated_at', '>=', date('2021-06-17'))
+                                ->where('updated_at', '>=', date('2021-06-18'))
                                 ->get();
 
         return $product;
@@ -55,11 +55,17 @@ class HomeController extends Controller
     public function store(Request $request)
     {
         $now = new DateTime();
+        
+        if ($request['hour_end'] == null) {
+            $hour_end = '00:00:00';
+        }else{
+            $hour_end = $request['hour_end'];
+        }
 
         $request = MachineStop::insert([
                         'problem' => $request['problem'],
                         'hour_start' => $request['hour_start'],
-                        'hour_end' => $request['hour_end'],
+                        'hour_end' => $hour_end,
                         'created_at' => $now->format('Y-m-d H:i:s'),
                         'id_employee' => $request['employee'],
                         'id_machine' => 'CA-'.$request['machine']
