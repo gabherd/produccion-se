@@ -47,7 +47,7 @@
             <div class="btn-add-stop shadow cursor" onclick='saveStop();' data-toggle="modal" data-target="#mdl-add-stop">
                 <div class="icon-action">
                     <i class="fas fa-plus"></i>
-                </div>Agregar <span class="txt-description"> paro de maquina <span>
+                </div>Agregar <span class="txt-description">&nbsp; paro de maquina <span>
             </div>
             <div class="space"></div>
             <div class="view-stop shadow" data-toggle="modal" data-target="#modal-view">
