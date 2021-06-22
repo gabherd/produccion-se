@@ -6,12 +6,12 @@ var stops = ['Baja resistencia', 'Centrado', 'Altura', 'Punto A alto', 'Variacio
 
 /*bugs - 
     reconsulta ajax
-            *la hora de fin en paro de maquina no debe ser mayor a la hora de inicio
-            *Al agregar un nuevo empleado no borrar el registro del paro
+            la hora de fin en paro de maquina no debe ser mayor a la hora de inicio
+            Al agregar un nuevo empleado no borrar el registro del paro
         En el campo responsable agregar la opcion de seleccionar solo el puesto
-        Error al no encontrar una maquina
-            *Mensaje de registro duplicado
-            *ver la descipcion de la quina seleccionada al registrar un paro*/
+            Error al no encontrar una maquina
+            Mensaje de registro duplicado
+            ver la descipcion de la quina seleccionada al registrar un paro*/
 
 
 $.get( "employee", function( data ) {

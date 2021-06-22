@@ -133,7 +133,7 @@
                                     <i class="fas fa-search"></i>
                                     <input id="id_machine" name="machine" type="number" class="form-control" placeholder="Buscar">
                                     <div class="msg-error-machine alert alert-danger">
-                                        Maquina no encontrada, selecciona una existente
+                                        Maquina no encontrada, selecciona una de la lista
                                     </div>
                                 </div>
                                 <small id="description_machine" class="form-text text-muted"></small>
