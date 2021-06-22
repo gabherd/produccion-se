@@ -78,6 +78,42 @@
             </div>
         </div>
 
+
+        <!-- Modal show table-->
+        <div class="modal fade" id="modal-view" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-lg modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Ver paros de maquina</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                              <span aria-hidden="true">&times;</span>
+                            </button>
+                    </div>
+                    <div class="modal-body" style="position: relative;">
+                           <table id="tbl-stop-mobile" class="tbl-stop table table-bordered display responsive nowrap" cellspacing="0" width="100%">
+                               <thead class="thead-light">
+                                   <tr>
+                                       <th>Maquina</th>
+                                       <th>Descripcion</th>
+                                       <th>Problema</th>
+                                       <th>Hora Incio</th>
+                                       <th>Hora Fin</th>
+                                       <th>Tiempo</th>
+                                       <th>Responsable</th>
+                                       <th>Acciones</th>
+                                   </tr>
+                               </thead>
+                               <tbody>
+                               </tbody>
+                           </table>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-close" data-dismiss="modal">Aceptar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
         <!-- Modal add stop-->
         <div class="modal fade" id="mdl-add-stop" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered">
@@ -96,6 +132,9 @@
                                 <div class="form-group-icon">
                                     <i class="fas fa-search"></i>
                                     <input id="id_machine" name="machine" type="number" class="form-control" placeholder="Buscar">
+                                    <div class="msg-error-machine alert alert-danger">
+                                        Maquina no encontrada, selecciona una existente
+                                    </div>
                                 </div>
                                 <small id="description_machine" class="form-text text-muted"></small>
                             </div>
@@ -136,41 +175,6 @@
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary btn-cancel" data-dismiss="modal">Cancelar</button>
                         <button id="btn-save-stop" data-id='' data-submit="create" type="button" class="btn btn-save">Guardar</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Modal show table-->
-        <div class="modal fade" id="modal-view" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-            <div class="modal-dialog modal-lg modal-dialog-centered">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLabel">Ver paros de maquina</h5>
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                              <span aria-hidden="true">&times;</span>
-                            </button>
-                    </div>
-                    <div class="modal-body" style="position: relative;">
-                           <table id="tbl-stop-mobile" class="tbl-stop table table-bordered display responsive nowrap" cellspacing="0" width="100%">
-                               <thead class="thead-light">
-                                   <tr>
-                                       <th>Maquina</th>
-                                       <th>Descripcion</th>
-                                       <th>Problema</th>
-                                       <th>Hora Incio</th>
-                                       <th>Hora Fin</th>
-                                       <th>Tiempo</th>
-                                       <th>Responsable</th>
-                                       <th>Acciones</th>
-                                   </tr>
-                               </thead>
-                               <tbody>
-                               </tbody>
-                           </table>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-close" data-dismiss="modal">Aceptar</button>
                     </div>
                 </div>
             </div>

@@ -5,9 +5,10 @@ var stops = ['Baja resistencia', 'Centrado', 'Altura', 'Punto A alto', 'Variacio
 
 
 /*bugs - 
+    reconsulta ajax
             *la hora de fin en paro de maquina no debe ser mayor a la hora de inicio
+            *Al agregar un nuevo empleado no borrar el registro del paro
         En el campo responsable agregar la opcion de seleccionar solo el puesto
-        Al agregar un nuevo empleado no borrar el registro del paro
         Error al no encontrar una maquina
             *Mensaje de registro duplicado
             *ver la descipcion de la quina seleccionada al registrar un paro*/
@@ -16,7 +17,7 @@ var stops = ['Baja resistencia', 'Centrado', 'Altura', 'Punto A alto', 'Variacio
 $.get( "employee", function( data ) {
     for (index in data) {
         employees.push({'label': data[index].id, 'name': data[index].name, 'position': data[index].position})        
-    };
+    }
 });
 
 $.get( "machine", function( data ) {
@@ -24,7 +25,7 @@ $.get( "machine", function( data ) {
         var machine = data[index].id;
         machine = machine.split('-');
         machines.push({'label': machine[1], 'name': data[index].name, 'step': data[index].number_step})        
-    };
+    }
 });
 
 $.get( "stopMachine", function( data ) {
@@ -126,6 +127,19 @@ $('#hour_start').timepicker({
     uiLibrary: 'bootstrap4'
 });
 
+$('#id_machine').on('change', function(){
+    var id_machine = $('#id_machine').val();
+
+    for (index in machines) {
+        if (machines[index].label != id_machine) {
+            $('.msg-error-machine').show();
+        }else{
+            $('.msg-error-machine').hide();
+            break;
+        }
+    }
+});
+
 $('#hour_start').on('change', function(){
     var id_machine = $('#id_machine').val();
     var hour_start = $('#hour_start').val();
@@ -140,7 +154,7 @@ $('#hour_start').on('change', function(){
         }else{
             $('.msg-error-repeated').hide();
         }
-    };
+    }
 });
 
 
@@ -321,15 +335,13 @@ $('#btn-save-stop').on('click', function(){
                     method:"POST",
                     data: $("#create-stop").serialize(),
                     success: function(res){
-                        console.log(res);
                         if (res.status) {
-
+  
                             Swal.fire({
                               position: 'center',
                               icon: 'success',
                               title: 'Registro guardado',
                               showConfirmButton: false,
-                              timer: 900
                             });
 
                             $('#mdl-add-stop').modal('hide');
@@ -338,14 +350,14 @@ $('#btn-save-stop').on('click', function(){
                         }
                     }, 
                     error: function(){
-                            swalMessage('warning', 'Error', 'Registro no guardado, verifica que los datos estén correctos');
+                        swalMessage('warning', 'Error', 'Registro no guardado, verifica que los datos estén correctos');
 
-                            $('#mdl-add-stop').modal('hide');
-                            $("#create-stop").trigger("reset");
+                        $('#mdl-add-stop').modal('hide');
+                        $("#create-stop").trigger("reset");
                     }
                 });
             }else{
-                employeeNotRegistered();
+                    employeeNotRegistered();
             }
         }
 });
@@ -358,14 +370,14 @@ function employeeNotRegistered(){
         title: 'Empleado no encontrado',
         text: 'Debes registrar los datos del emplado',
     }).then((result) => {
-        if (result.isConfirmed) {
-                $('#name-empl').val()
-                $('#number-employee').val($('#id_employee').val());
-                $('#mdl-add-stop').modal('hide');
-                $('#mdl-add-employee').modal('show');
-            }
+        if(result.isConfirmed) {
+            $('#name-empl').val()
+            $('#number-employee').val($('#id_employee').val());
+            $('#mdl-add-employee').modal('show');
+        }
     });
 }
+
 
 function swalMessage(typeMessage, title, text = ''){
     if (typeMessage == 'success') {
@@ -397,8 +409,9 @@ $('#btn-save-employee').on('click', function(){
                 if (res.status) {
 
                     swalMessage('success', 'Registro guardado');
-
                     location.reload();
+
+                    $('#name-employee').text($('#name-empl').val());
                     $('#mdl-add-employee').modal('hide');
                     $("#create-employee").trigger("reset");
                 }
@@ -406,3 +419,11 @@ $('#btn-save-employee').on('click', function(){
         });
 });
 
+//Modal encima de otra modal
+$(document).on('show.bs.modal', '.modal', function (event) {
+    var zIndex = 1040 + (10 * $('.modal:visible').length);
+    $(this).css('z-index', zIndex);
+    setTimeout(function() {
+        $('.modal-backdrop').not('.modal-stack').css('z-index', zIndex - 1).addClass('modal-stack');
+    }, 0);
+});

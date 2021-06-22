@@ -119,7 +119,7 @@
 	color: #838383;
 }
 
-.msg-error-repeated, .msg-error-hour{
+.msg-error-repeated, .msg-error-hour, .msg-error-machine{
 	display: none;
 }
 
