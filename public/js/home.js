@@ -56,17 +56,21 @@ $(document).ready(function(){
             { data: 'hour_end'},
             { data: null, 
                 render: function(data, type, row){
-                    // Calcula los minutos de cada hora
-                    var minutos_inicio = data.hour_start.split(':')
-                        .reduce((p, c) => parseInt(p) * 60 + parseInt(c));
+                    
                      
                     if (data.hour_end == '00:00'){
                         return 0;
                     }else{
-                        var minutos_final = data.hour_end.split(':')
-                          .reduce((p, c) => parseInt(p) * 60 + parseInt(c));
-                          
-                        return (((minutos_final - minutos_inicio) /60) % 60);
+                        var start_time = moment(data.hour_start, "HH:mm");
+                        var end_time = moment(data.hour_end, "HH:mm");
+
+                        var hour = end_time.diff(start_time, 'hours');
+                        var minutes = end_time.diff(start_time, 'minutes');
+
+                        hour < 10 ? hour = "0" + hour : hour;
+                        minutes < 10 ? minutes = "0" + minutes : minutes;
+
+                        return hour + ":" + minutes;
                     }
 
                 }
