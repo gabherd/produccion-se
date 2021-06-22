@@ -239,22 +239,11 @@ $(".table.display").delegate('.btn-delete-problem', 'click', function(){
                             if (res.status == 1) {
                                 Swal.close();
 
-                                Swal.fire({
-                                    position: 'center',
-                                    icon: 'success',
-                                    title: 'Registro eliminado exitosamente',
-                                    showConfirmButton: false,
-                                    timer: 900
-                                });
+                                swalMessage('success', 'Registro eliminado exitosamente');
 
                                 $('.table.display').DataTable().ajax.reload();
                             }else{
-                                Swal.fire({
-                                    position: 'center',
-                                    icon: 'warning',
-                                    title: 'Error',
-                                    text: 'Ocurrio un problema'
-                                });
+                                swalMessage('warning', 'Error', 'Ocurrio un problema');
                             }
                         }
                     }); 
@@ -347,12 +336,7 @@ $('#btn-save-stop').on('click', function(){
                     success: function(res){
                         if (res.status) {
   
-                            Swal.fire({
-                              position: 'center',
-                              icon: 'success',
-                              title: 'Registro guardado',
-                              showConfirmButton: false,
-                            });
+                            swalMessage('success', 'Registro guardado');
 
                             $('#mdl-add-stop').modal('hide');
                             $('table.display').DataTable().ajax.reload();
