@@ -23,6 +23,8 @@
         <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.23/css/dataTables.bootstrap4.min.css">
         <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.23/js/jquery.dataTables.js"></script>
         <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.23/js/dataTables.bootstrap4.min.js"></script>
+        <!--Moment-->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js" integrity="sha512-qTXRIMyZIFb8iQcfjXWCO8+M5Tbc38Qi5WzdPOYZHIlZpzBHG3L3by84BBBOiRGiEb7KKtAOAs5qYdUiZiQNNQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
         <!--Ratatable responsive-->
         <link rel="stylesheet" href="https://cdn.datatables.net/responsive/2.2.7/css/responsive.dataTables.min.css">
         <script src="https://cdn.datatables.net/responsive/2.2.7/js/dataTables.responsive.min.js"></script>
@@ -90,11 +92,12 @@
                         <form id="create-stop">
                             @csrf
                             <div class="form-group">
-                                <label for="number-machine">Maquina</label>
+                                <label for="id_machine">Maquina</label>
                                 <div class="form-group-icon">
                                     <i class="fas fa-search"></i>
-                                    <input id="number-machine" name="machine" type="number" class="form-control" placeholder="Buscar">
+                                    <input id="id_machine" name="machine" type="number" class="form-control" placeholder="Buscar">
                                 </div>
+                                <small id="description_machine" class="form-text text-muted"></small>
                             </div>
                             <div class="form-group">
                                 <label for="problem">Problema</label>
@@ -103,8 +106,20 @@
                             <div class="form-group">
                                 <label for="exampleInputEmail1">Hora</label>
                                 <div class="content-time">
-                                    <input id="hour_start" name="hour_start" class="form-control"/>
-                                    <input id="hour_end" name="hour_end" class="form-control"/>
+                                    <div class="group-time">
+                                        <div class="description-hour">Hora de inicio</div>
+                                        <input id="hour_start"  data-hour_start="" name="hour_start" class="form-control"/>
+                                        <div class="msg-error-repeated alert alert-danger">
+                                            Ya tienes un registro con la misma hora de inicio
+                                        </div>
+                                    </div>
+                                    <div class="group-time">
+                                        <div class="description-hour">Hora de corrección</div>
+                                        <input id="hour_end" name="hour_end" class="form-control"/>
+                                        <div class="msg-error-hour alert alert-danger">
+                                            La hora de corrección está terminando antes de la hora de inicio
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                             <div class="form-group">
@@ -181,9 +196,10 @@
                             <div class="form-group">
                                 <label for="position">Puesto</label>
                                 <select name="position" class="form-control">
+                                    <option value="Calidad">Calidad</option>
+                                    <option value="Operador">Operador</option>
                                     <option value="Setup">Setup</option>
                                     <option value="Tecnico">Técnico</option>
-                                    <option value="Operador">Operador</option>
                                 </select>
                             </div>
                             <div class="form-group">

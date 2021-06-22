@@ -1,5 +1,17 @@
 var employees = [];
 var machines = [];
+var hour_stops = [];
+var stops = ['Baja resistencia', 'Centrado', 'Altura', 'Punto A alto', 'Variacion de medida', 'Ajuste de tecnico', 'Cambio de electro', 'Punto A bajo','T gap'];
+
+
+/*bugs - 
+            *la hora de fin en paro de maquina no debe ser mayor a la hora de inicio
+        En el campo responsable agregar la opcion de seleccionar solo el puesto
+        Al agregar un nuevo empleado no borrar el registro del paro
+        Error al no encontrar una maquina
+            *Mensaje de registro duplicado
+            *ver la descipcion de la quina seleccionada al registrar un paro*/
+
 
 $.get( "employee", function( data ) {
     for (index in data) {
@@ -15,6 +27,11 @@ $.get( "machine", function( data ) {
     };
 });
 
+$.get( "stopMachine", function( data ) {
+    hour_stops = data;
+});
+
+
 $(document).ready(function(){
     $('table.display').DataTable({
         language: {
@@ -27,7 +44,7 @@ $(document).ready(function(){
                 dataSrc: '',
         },
         createdRow: function( row, data, dataIndex){
-                if( data.hour_end ==  `00:00`){
+                if( data.hour_end == '00:00'){
                     $(row).addClass('redClass');
                 }
         },
@@ -57,8 +74,9 @@ $(document).ready(function(){
             { data: 'name'},
             { data: null,
                 render: function (data, type, row) {
-                    var maquina = data.id_machine.split('-');
+                    var machine = data.id_machine.split('-');
                     var problem = data.problem;
+                    var description = data.description;
                     var hour_start = data.hour_start;
                     var hour_end = data.hour_end;
                     var id_employee = data.employee;
@@ -68,7 +86,7 @@ $(document).ready(function(){
                                 "<button class='btn btn-info btn-edit-stop' " + 
                                     "data-toggle='modal' "+
                                     "data-target='#mdl-add-stop' " + 
-                                    "onclick='editStop("+data.id+",`"+maquina[1]+"`,`"+problem+"`,`"+hour_start+"`,`"+hour_end+"`,`"+id_employee+"`,`"+name_employee+"`)'> Editar </button>" + 
+                                    "onclick='editStop("+data.id+",`"+machine[1]+"`,`"+description+"`,`"+problem+"`,`"+hour_start+"`,`"+hour_end+"`,`"+id_employee+"`,`"+name_employee+"`)'> Editar </button>" + 
                                 "<button class='btn btn-danger btn-delete-problem' "+
                                     "data-id-problem='"+data.id+"' "+
                                     "data-name='"+data.id_machine+" - "+data.problem+"'>Eliminar</button>"+
@@ -79,10 +97,17 @@ $(document).ready(function(){
     }); //dataTable
 });//
 
-$("#number-machine").autocomplete({
+$("#id_machine").autocomplete({
     source: machines,
     select: function(event, ui) {
-        $('#number-machine').text(ui.item.id);
+        $('#description_machine').text(ui.item.name);
+    }
+});
+
+$("#problem").autocomplete({
+    source: stops,
+    select: function(event, ui) {
+        $('#problem').text(ui.item.id);
     }
 });
 
@@ -97,6 +122,46 @@ $('#hour_start').timepicker({
     uiLibrary: 'bootstrap4'
 });
 
+$('#hour_start').on('change', function(){
+    var id_machine = $('#id_machine').val();
+    var hour_start = $('#hour_start').val();
+    var data_hour =  $('#hour_start').attr('data-hour_start');
+
+    for (index in hour_stops) {
+        var machine = hour_stops[index].id_machine.split('-');
+        var hour = hour_stops[index].hour_start;
+
+        if (((hour_start == hour) && (id_machine == machine[1])) && (data_hour != hour_start)) {
+            $('.msg-error-repeated').show();
+        }else{
+            $('.msg-error-repeated').hide();
+        }
+    };
+});
+
+
+$('#hour_end').on('change', function(){
+    var hour_start = $('#hour_start').val();
+    var hour_end =  $('#hour_end').val();
+
+    var start_time = moment(hour_start, "HH:mm");
+    var end_time = moment(hour_end, "HH:mm");
+
+    //Comprueba que los hora de paro sea menor que los hora de correction
+    if (end_time.diff(start_time, 'hours') < 0) {
+        $('.msg-error-hour').show();
+    }else{
+        $('.msg-error-hour').hide();
+
+        //Comprueba que los minutos de paro sea menor que los minutos de correction
+        if (end_time.diff(start_time, 'minutes') < 0) {
+            $('.msg-error-hour').show();
+        }else{
+            $('.msg-error-hour').hide();
+        }
+    }
+
+});
 
 $('#hour_end').timepicker({
     uiLibrary: 'bootstrap4'
@@ -178,19 +243,28 @@ $("#tbl-stop").delegate('.btn-delete-problem', 'click', function(){
 
 function saveStop(){
     $('#title-modal-add-stop').text('Agregar paro de maquina');
+    $('.msg-error-repeated').hide();
+    $('#hour_start').attr('data-hour_start', '');
     
     $("#create-stop").trigger("reset");
+
+    $('#description_machine').text('');
     $('#name-employee').text('');
 
     $('#btn-save-stop').attr('data-submit', 'create');
 }
 
-function editStop(id, machine, problem, hour_start, hour_end, id_employee, name_employee){
+function editStop(id, machine, description_machine, problem, hour_start, hour_end, id_employee, name_employee){
     $('#modal-view').modal('hide');
+    $('.msg-error-repeated').hide();
+
+    $('#hour_start').attr('data-hour_start', hour_start);
+
+    $('#description_machine').text(description_machine);
 
     $('#title-modal-add-stop').text('Editar registro');
 
-    $('#number-machine').val(machine);
+    $('#id_machine').val(machine);
     $('#problem').val(problem);
     $('#hour_start').val(hour_start);
     $('#hour_end').val(hour_end);
@@ -258,6 +332,12 @@ $('#btn-save-stop').on('click', function(){
                             $('table.display').DataTable().ajax.reload();
                             $("#create-stop").trigger("reset");
                         }
+                    }, 
+                    error: function(){
+                            swalMessage('warning', 'Error', 'Registro no guardado, verifica que los datos estén correctos');
+
+                            $('#mdl-add-stop').modal('hide');
+                            $("#create-stop").trigger("reset");
                     }
                 });
             }else{
@@ -302,92 +382,6 @@ function swalMessage(typeMessage, title, text = ''){
     }
 }
 
-/*
-$('#btn-save-stop').on('click', function(){
-    var action = $('#btn-save-stop').attr('data-submit');
-    var id = $('#btn-save-stop').attr('id');
-     
-    if (action == 'update') {
-        if (_.some(employees, ['label', parseInt($('#id_employee').val())])) {
-            $.ajax({
-                url: "paros/"+id,
-                dataType: "JSON",
-                method:"PUT",
-                data: $("#create-stop").serialize(),
-                success: function(res){
-                    console.log(res);
-                    if (res.status) {
-
-                        Swal.fire({
-                          position: 'center',
-                          icon: 'success',
-                          title: 'Registro guardado',
-                          showConfirmButton: false,
-                          timer: 900
-                        });
-
-                        $('#mdl-add-stop').modal('hide');
-                        $('#table.display').DataTable().ajax.reload();
-                        $("#create-stop").trigger("reset");
-                    }
-                }
-            });
-        }else{
-            Swal.fire({
-                position: 'center',
-                icon: 'warning',
-                title: 'Empleado no encontrado',
-                text: 'Debes registrar los datos del emplado',
-            }).then((result) => {
-                if (result.isConfirmed) {
-                        $('#name-empl').val()
-                        $('#number-employee').val($('#id_employee').val());
-                        $('#mdl-add-stop').modal('hide');
-                        $('#mdl-add-employee').modal('show');
-                    }
-            });
-        }
-    }else{
-        if (_.some(employees, ['label', parseInt($('#id_employee').val())])) {
-            $.ajax({
-                url: "paros",
-                method:"POST",
-                data: $("#create-stop").serialize(),
-                success: function(res){
-                    console.log(res);
-                    if (res.status) {
-
-                        Swal.fire({
-                          position: 'center',
-                          icon: 'success',
-                          title: 'Registro guardado',
-                          showConfirmButton: false,
-                          timer: 900
-                        });
-
-                        $('#mdl-add-stop').modal('hide');
-                        $('#table.display').DataTable().ajax.reload();
-                        $("#create-stop").trigger("reset");
-                    }
-                }
-            });
-        }else{
-            Swal.fire({
-                position: 'center',
-                icon: 'warning',
-                title: 'Empleado no encontrado',
-                text: 'Debes registrar los datos del emplado',
-            }).then((result) => {
-                if (result.isConfirmed) {
-                        $('#name-empl').val()
-                        $('#number-employee').val($('#id_employee').val());
-                        $('#mdl-add-stop').modal('hide');
-                        $('#mdl-add-employee').modal('show');
-                    }
-            });
-        }
-    }
-});*/
 
 $('#btn-save-employee').on('click', function(){
         $.ajax({

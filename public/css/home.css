@@ -110,8 +110,17 @@
 	justify-content: space-between;
 }
 
-.gj-timepicker{
+.group-time{
 	width: calc(50% - 10px) !important;
+}
+
+.description-hour{
+	font-size: 11px;
+	color: #838383;
+}
+
+.msg-error-repeated, .msg-error-hour{
+	display: none;
 }
 
 .redClass{
@@ -145,7 +154,7 @@
 	cursor: pointer;
 }
 
-#ui-id-1, #ui-id-2{
+#ui-id-1, #ui-id-2,  #ui-id-3{
 	z-index: 1050 !important;
 }
 
