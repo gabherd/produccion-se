@@ -190,7 +190,7 @@ $('.view-stop').on('click', function(){
     $('table.display').DataTable().ajax.reload();
 });
 
-$("#tbl-stop").delegate('.btn-delete-problem', 'click', function(){
+$(".table.display").delegate('.btn-delete-problem', 'click', function(){
         var id = $(this).attr('data-id-problem');
         var item_name = $(this).attr('data-name');
         
