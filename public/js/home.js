@@ -40,6 +40,7 @@ $(document).ready(function(){
         },
         lengthMenu: [20, 40, 80, 160, 400, 500, 1000],
         responsive: true,
+        order: [[ 8, "desc" ]],
         ajax: {
                 url: '/stopMachine',
                 dataSrc: '',
@@ -49,6 +50,13 @@ $(document).ready(function(){
                     $(row).addClass('redClass');
                 }
         },
+        columnDefs: [
+            {
+                "targets": [8],
+                "visible": false,
+                "searchable": false
+            }
+        ],
         columns: [
             { data: 'id_machine'},
             { data: 'description'},
@@ -97,7 +105,9 @@ $(document).ready(function(){
                                     "data-name='"+data.id_machine+" - "+data.problem+"'>Eliminar</button>"+
                            "</div>";
                 }
-            }
+            },
+            { data: 'updated'},
+
         ]
     }); //dataTable
 });//
@@ -237,7 +247,7 @@ $(".table.display").delegate('.btn-delete-problem', 'click', function(){
                                     timer: 900
                                 });
 
-                                $('#tbl-stop').DataTable().ajax.reload();
+                                $('.table.display').DataTable().ajax.reload();
                             }else{
                                 Swal.fire({
                                     position: 'center',

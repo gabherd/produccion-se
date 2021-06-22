@@ -70,6 +70,7 @@
                             <th>Tiempo</th>
                             <th>Responsable</th>
                             <th>Acciones</th>
+                            <th></th>
                         </tr>
                     </thead>
                      <tbody>
@@ -79,7 +80,7 @@
         </div>
 
 
-        <!-- Modal show table-->
+    <!-- Modal show table-->
         <div class="modal fade" id="modal-view" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
             <div class="modal-dialog modal-lg modal-dialog-centered">
                 <div class="modal-content">
@@ -93,14 +94,15 @@
                            <table id="tbl-stop-mobile" class="tbl-stop table table-bordered display responsive nowrap" cellspacing="0" width="100%">
                                <thead class="thead-light">
                                    <tr>
-                                       <th>Maquina</th>
-                                       <th>Descripcion</th>
-                                       <th>Problema</th>
-                                       <th>Hora Incio</th>
-                                       <th>Hora Fin</th>
-                                       <th>Tiempo</th>
-                                       <th>Responsable</th>
-                                       <th>Acciones</th>
+                                        <th>Maquina</th>
+                                        <th>Descripcion</th>
+                                        <th>Problema</th>
+                                        <th>Hora Incio</th>
+                                        <th>Hora Fin</th>
+                                        <th>Tiempo</th>
+                                        <th>Responsable</th>
+                                        <th>Acciones</th>
+                                        <th></th>
                                    </tr>
                                </thead>
                                <tbody>
@@ -114,7 +116,7 @@
             </div>
         </div>
 
-        <!-- Modal add stop-->
+    <!-- Modal add stop-->
         <div class="modal fade" id="mdl-add-stop" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered">
                 <div class="modal-content">
@@ -180,7 +182,7 @@
             </div>
         </div>
 
-        <!-- Modal add employee-->
+    <!-- Modal add employee-->
         <div class="modal fade" id="mdl-add-employee" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered">
                 <div class="modal-content">

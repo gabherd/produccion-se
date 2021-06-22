@@ -25,7 +25,7 @@ class HomeController extends Controller
                                     DB::raw('DATE_FORMAT(hour_start, "%H:%i") AS hour_start'),
                                     DB::raw('(CASE WHEN DATE_FORMAT(hour_end, "%H:%i") = "00:00" THEN "00:00" ELSE DATE_FORMAT(hour_end, "%H:%i") END) AS hour_end'),
                                     'name', 
-                                    'employee.id_employee as employee')
+                                    'employee.id_employee AS employee', 'updated_at AS updated')
                                 ->join('employee', 'employee.id_employee', '=', 'machine_stop.id_employee')
                                 ->join('machine', 'machine.id_machine', '=', 'machine_stop.id_machine')
                                 ->orderBy('updated_at', 'DESC')
