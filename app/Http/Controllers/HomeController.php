@@ -22,12 +22,15 @@ class HomeController extends Controller
                                     'machine_stop.id_machine', 
                                     'name_step as description', 
                                     'problem', 
+                                    'updated_at AS updated',
+                                    'employee.id_employee',
+                                    'position.id_position',
+                                    DB::raw('IFNULL(name_employee, name_position) as responsible'),
                                     DB::raw('DATE_FORMAT(hour_start, "%H:%i") AS hour_start'),
-                                    DB::raw('(CASE WHEN DATE_FORMAT(hour_end, "%H:%i") = "00:00" THEN "00:00" ELSE DATE_FORMAT(hour_end, "%H:%i") END) AS hour_end'),
-                                    'name', 
-                                    'employee.id_employee AS employee', 'updated_at AS updated')
-                                ->join('employee', 'employee.id_employee', '=', 'machine_stop.id_employee')
+                                    DB::raw('(CASE WHEN DATE_FORMAT(hour_end, "%H:%i") = "00:00" THEN "00:00" ELSE DATE_FORMAT(hour_end, "%H:%i") END) AS hour_end'))
                                 ->join('machine', 'machine.id_machine', '=', 'machine_stop.id_machine')
+                                ->leftjoin('employee', 'employee.id_employee', '=', 'machine_stop.id_employee')
+                                ->leftjoin('position', 'position.id_position', '=', 'machine_stop.id_position')
                                 ->orderBy('updated_at', 'DESC')
                                 ->where('updated_at', '>=', date('2021-06-18'))
                                 ->get();
@@ -37,7 +40,7 @@ class HomeController extends Controller
 
     public function getEmployee(){
         $product = DB::table('employee')
-                    ->select('id_employee as id','name', 'position')
+                    ->select('id_employee as id','name_employee as name', 'position')
                     ->orderBy('id_employee')
                     ->get();
 
@@ -55,6 +58,7 @@ class HomeController extends Controller
     public function store(Request $request)
     {
         $now = new DateTime();
+        //check-switch
         
         if ($request['hour_end'] == null) {
             $hour_end = '00:00:00';
@@ -62,19 +66,33 @@ class HomeController extends Controller
             $hour_end = $request['hour_end'];
         }
 
-        $request = MachineStop::insert([
-                        'problem' => $request['problem'],
-                        'hour_start' => $request['hour_start'],
-                        'hour_end' => $hour_end,
-                        'created_at' => $now->format('Y-m-d H:i:s'),
-                        'id_employee' => $request['employee'],
-                        'id_machine' => 'CA-'.$request['machine']
-                    ]);
+        if ($request['swt-employee'] == 'on') {
+            $request = MachineStop::insert([
+                'problem' => $request['problem'],
+                'hour_start' => $request['hour_start'],
+                'hour_end' => $hour_end,
+                'created_at' => $now->format('Y-m-d H:i:s'),
+                'id_employee' => $request['employee'],
+                'id_machine' => 'CA-'.$request['machine']
+            ]);
+        }else if ($request['position'] != null) {
+            $request = MachineStop::insert([
+                'problem' => $request['problem'],
+                'hour_start' => $request['hour_start'],
+                'hour_end' => $hour_end,
+                'created_at' => $now->format('Y-m-d H:i:s'),
+                'id_position' => $request['position'],
+                'id_machine' => 'CA-'.$request['machine']
+            ]);
+        }else{
+           return Response()->json(['status'=>500, 'msg'=>'Data not creacted']);
+        }
+
 
         if($request){
             $response = array('status'=>1, 'msg'=>'Created successfully');
         }else{
-            $response = array('status'=>'error', 'msg'=>'Data not creacted');
+            $response = array('status'=>500, 'msg'=>'Data not creacted');
         }
         
         return Response()->json($response);  
@@ -84,7 +102,7 @@ class HomeController extends Controller
     {
         $request = DB::table('employee')->insert([
                                     'id_employee' => $request['number-employee'],
-                                    'name' => $request['name'],
+                                    'name_employee' => $request['name'],
                                     'position' => $request['position'],
                                 ]);
 
@@ -104,6 +122,7 @@ class HomeController extends Controller
 
     public function update(Request $request, $id)
     {
+
         try{
             $stop = MachineStop::find($id);
 
@@ -111,7 +130,14 @@ class HomeController extends Controller
             $stop->problem = $request['problem'];
             $stop->hour_start = $request['hour_start'];
             $stop->hour_end = $request['hour_end'];
-            $stop->id_employee = $request['employee'];
+
+            if ($request['swt-employee'] == 'on') {
+                $stop->id_employee = $request['employee'];
+                $stop->id_position = null;
+            }else{
+                $stop->id_employee = null;
+                $stop->id_position = $request['position'];
+            }
 
             $stop->save();
 

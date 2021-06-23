@@ -84,7 +84,7 @@ $(document).ready(function(){
 
                 }
             },
-            { data: 'name'},
+            { data: 'responsible'},
             { data: null,
                 render: function (data, type, row) {
                     var machine = data.id_machine.split('-');
@@ -92,14 +92,15 @@ $(document).ready(function(){
                     var description = data.description;
                     var hour_start = data.hour_start;
                     var hour_end = data.hour_end;
-                    var id_employee = data.employee;
-                    var name_employee = data.name;
+                    var name_employee = data.responsible;
+                    var id_employee = data.id_employee;
+                    var id_position = data.id_position;
 
                     return "<div class='d-flex justify-content-around'>" +
                                 "<button class='btn btn-info btn-edit-stop' " + 
                                     "data-toggle='modal' "+
                                     "data-target='#mdl-add-stop' " + 
-                                    "onclick='editStop("+data.id+",`"+machine[1]+"`,`"+description+"`,`"+problem+"`,`"+hour_start+"`,`"+hour_end+"`,`"+id_employee+"`,`"+name_employee+"`)'> Editar </button>" + 
+                                    "onclick='editStop("+data.id+",`"+machine[1]+"`,`"+description+"`,`"+problem+"`,`"+hour_start+"`,`"+hour_end+"`,`"+name_employee+"`,`"+id_employee+"`,`"+id_position+"`)'> Editar </button>" + 
                                 "<button class='btn btn-danger btn-delete-problem' "+
                                     "data-id-problem='"+data.id+"' "+
                                     "data-name='"+data.id_machine+" - "+data.problem+"'>Eliminar</button>"+
@@ -137,6 +138,10 @@ $('#hour_start').timepicker({
     uiLibrary: 'bootstrap4'
 });
 
+$('#hour_end').timepicker({
+    uiLibrary: 'bootstrap4'
+});
+
 $('#id_machine').on('change', function(){
     var id_machine = $('#id_machine').val();
 
@@ -167,7 +172,6 @@ $('#hour_start').on('change', function(){
     }
 });
 
-
 $('#hour_end').on('change', function(){
     var hour_start = $('#hour_start').val();
     var hour_end =  $('#hour_end').val();
@@ -188,11 +192,16 @@ $('#hour_end').on('change', function(){
             $('.msg-error-hour').hide();
         }
     }
-
 });
 
-$('#hour_end').timepicker({
-    uiLibrary: 'bootstrap4'
+$('#swt-id_employee').on('click', function(){
+    if ($(this).is(':checked')) {
+        $('#name_employee').show();
+        $('#position_employee').hide();
+    }else{
+        $('#name_employee').hide();
+        $('#position_employee').show();
+    }
 });
 
 
@@ -261,19 +270,27 @@ $(".table.display").delegate('.btn-delete-problem', 'click', function(){
 function saveStop(){
     $('#title-modal-add-stop').text('Agregar paro de maquina');
     $('.msg-error-repeated').hide();
+
+    $("#create-stop").trigger("reset");
+    $("option:selected").removeAttr("selected");
+    $('#swt-id_employee').attr('checked', true);
+
     $('#hour_start').attr('data-hour_start', '');
     
-    $("#create-stop").trigger("reset");
-
     $('#description_machine').text('');
     $('#name-employee').text('');
+
+    $('#name_employee').show();
+    $('#position_employee').hide();
+    $('.msg-error-hour').hide();
 
     $('#btn-save-stop').attr('data-submit', 'create');
 }
 
-function editStop(id, machine, description_machine, problem, hour_start, hour_end, id_employee, name_employee){
+function editStop(id, machine, description_machine, problem, hour_start, hour_end, name_employee, id_employee, id_position){
     $('#modal-view').modal('hide');
     $('.msg-error-repeated').hide();
+    $("option:selected").removeAttr("selected");
 
     $('#hour_start').attr('data-hour_start', hour_start);
 
@@ -285,22 +302,34 @@ function editStop(id, machine, description_machine, problem, hour_start, hour_en
     $('#problem').val(problem);
     $('#hour_start').val(hour_start);
     $('#hour_end').val(hour_end);
-    $('#id_employee').val(id_employee);
-    $('#name-employee').text(name_employee);
+    
+    if (id_employee == 'null') {
+        $('#swt-id_employee').prop('checked', false);
+        $('#slt-position option[value="'+id_position+'"]').attr('selected', true);
+
+        $('#name_employee').hide();
+        $('#position_employee').show();
+    }else{
+        $('#swt-id_employee').prop('checked', true);
+        $('#id_employee').val(id_employee);
+        $('#name-employee').text(name_employee);
+
+        $('#name_employee').show();
+        $('#position_employee').hide();
+    }
 
     $('#btn-save-stop').attr('data-id', id);
     $('#btn-save-stop').attr('data-submit', 'update');
 }
 
 $('#btn-save-stop').on('click', function(){
-        var action_submit = $('#btn-save-stop').attr('data-submit');
+    var action_submit = $('#btn-save-stop').attr('data-submit');
 
-        if (action_submit  == 'update') {
-            if (_.some(employees, ['label', parseInt($('#id_employee').val())])) {
-                
-                var id = $('#btn-save-stop').attr('data-id');
+    if (action_submit  == 'update') {
+        if (!$('#swt-id_employee').is(':checked')) {
+            var id = $('#btn-save-stop').attr('data-id');
 
-                $.ajax({
+            $.ajax({
                     url: "/paros/"+id,
                     dataType: "JSON",
                     method:"PUT",
@@ -322,13 +351,39 @@ $('#btn-save-stop').on('click', function(){
                             $('#mdl-add-stop').modal('hide');
                             $("#create-stop").trigger("reset");
                     }
-                });
-            }else{
-                employeeNotRegistered();
-            }
+            });
+        }else if (_.some(employees, ['label', parseInt($('#id_employee').val())])) {
+            var id = $('#btn-save-stop').attr('data-id');
+
+            $.ajax({
+                    url: "/paros/"+id,
+                    dataType: "JSON",
+                    method:"PUT",
+                    data: $("#create-stop").serialize() + '&_method=' + "PUT",
+                    success: function(res){
+                        console.log(res)
+                        if (res.status == 200) {
+
+                            swalMessage('success', 'Registro actualizado')
+
+                            $('#mdl-add-stop').modal('hide');
+                            $('table.display').DataTable().ajax.reload();
+                            $("#create-stop").trigger("reset");
+                        }
+                    }, 
+                    error: function(){
+                            swalMessage('warning', 'Error', 'Los datos no fueron actualizados, intente mas tarde');
+
+                            $('#mdl-add-stop').modal('hide');
+                            $("#create-stop").trigger("reset");
+                    }
+            });
         }else{
-            if (_.some(employees, ['label', parseInt($('#id_employee').val())])) {
-                $.ajax({
+            employeeNotRegistered();
+        }
+    }else{
+        if (!$('#swt-id_employee').is(':checked')) {
+            $.ajax({
                     url: "paros",
                     dataType: "JSON",
                     method:"POST",
@@ -349,13 +404,35 @@ $('#btn-save-stop').on('click', function(){
                         $('#mdl-add-stop').modal('hide');
                         $("#create-stop").trigger("reset");
                     }
-                });
-            }else{
-                    employeeNotRegistered();
-            }
-        }
-});
+            });
+        }else if (_.some(employees, ['label', parseInt($('#id_employee').val())]) && $('#swt-id_employee').is(':checked')) {
+            $.ajax({
+                    url: "paros",
+                    dataType: "JSON",
+                    method:"POST",
+                    data: $("#create-stop").serialize(),
+                    success: function(res){
+                        if (res.status) {
+  
+                            swalMessage('success', 'Registro guardado');
 
+                            $('#mdl-add-stop').modal('hide');
+                            $('table.display').DataTable().ajax.reload();
+                            $("#create-stop").trigger("reset");
+                        }
+                    }, 
+                    error: function(){
+                        swalMessage('warning', 'Error', 'Registro no guardado, verifica que los datos estén correctos');
+
+                        $('#mdl-add-stop').modal('hide');
+                        $("#create-stop").trigger("reset");
+                    }
+            });
+        }else{
+            employeeNotRegistered();
+        }
+    }
+});
 
 function employeeNotRegistered(){
     Swal.fire({
@@ -371,7 +448,6 @@ function employeeNotRegistered(){
         }
     });
 }
-
 
 function swalMessage(typeMessage, title, text = ''){
     if (typeMessage == 'success') {
@@ -391,7 +467,6 @@ function swalMessage(typeMessage, title, text = ''){
         });
     }
 }
-
 
 $('#btn-save-employee').on('click', function(){
         $.ajax({

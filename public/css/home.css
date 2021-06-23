@@ -119,6 +119,21 @@
 	color: #838383;
 }
 
+#ui-id-1, #ui-id-2,  #ui-id-3{
+	z-index: 1050 !important;
+}
+
+.custom-switch{
+	padding-left: 2.25rem !important;
+	color: #737373;
+}
+
+
+#position_employee{
+	display: none;
+}
+
+
 .msg-error-repeated, .msg-error-hour, .msg-error-machine{
 	display: none;
 }
@@ -126,6 +141,7 @@
 .redClass{
 	background: #FCCDCD;
 }
+
 
 .modal-footer{
 	display: flex;
@@ -154,9 +170,7 @@
 	cursor: pointer;
 }
 
-#ui-id-1, #ui-id-2,  #ui-id-3{
-	z-index: 1050 !important;
-}
+
 
 @media (min-width: 900px) {
 	.content {

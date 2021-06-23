@@ -145,7 +145,7 @@
                                 <input id="problem" name="problem" class="form-control">
                             </div>
                             <div class="form-group">
-                                <label for="exampleInputEmail1">Hora</label>
+                                <label>Hora</label>
                                 <div class="content-time">
                                     <div class="group-time">
                                         <div class="description-hour">Hora de inicio</div>
@@ -165,11 +165,27 @@
                             </div>
                             <div class="form-group">
                                 <label for="employee">Responsable</label>
-                                <div class="form-group-icon">
-                                    <i class="fas fa-search"></i>
-                                    <input id="id_employee" type="number" name="employee" class="form-control" placeholder="Buscar">
-                                </div>                                
-                                <small id="name-employee" class="form-text text-muted"></small>
+                                <div class="custom-control custom-switch">
+                                    <input type="checkbox" name="swt-employee" class="custom-control-input" id="swt-id_employee" checked>
+                                    <label class="custom-control-label" for="swt-id_employee">Numero de empleado</label>
+                                </div>
+                                <div id="name_employee">
+                                    <div class="form-group-icon">
+                                        <i class="fas fa-search"></i>
+                                        <input id="id_employee" type="number" name="employee" class="form-control" placeholder="Buscar">
+                                    </div> 
+                                    <small id="name-employee" class="form-text text-muted"></small>
+                                </div>
+                                <div id="position_employee">
+                                    <select name="position" id="slt-position" class="form-control">
+                                        <option value="0">Selecciona un puesto</option>
+                                        <option value="1">Calidad</option>
+                                        <option value="2">Operador</option>
+                                        <option value="3">Setup</option>
+                                        <option value="4">Técnico</option>
+                                    </select>
+                                </div>  
+
                             </div>
                             <button id="submit-stop" class="d-none"></button>
                         </form>
