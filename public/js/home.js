@@ -269,7 +269,7 @@ $(".table.display").delegate('.btn-delete-problem', 'click', function(){
 
 function saveStop(){
     $('#title-modal-add-stop').text('Agregar paro de maquina');
-    $('.msg-error-repeated').hide();
+    $('.alert-danger').hide();
 
     $("#create-stop").trigger("reset");
     $("option:selected").removeAttr("selected");
@@ -282,14 +282,13 @@ function saveStop(){
 
     $('#name_employee').show();
     $('#position_employee').hide();
-    $('.msg-error-hour').hide();
 
     $('#btn-save-stop').attr('data-submit', 'create');
 }
 
 function editStop(id, machine, description_machine, problem, hour_start, hour_end, name_employee, id_employee, id_position){
     $('#modal-view').modal('hide');
-    $('.msg-error-repeated').hide();
+    $('.alert-danger').hide();
     $("option:selected").removeAttr("selected");
 
     $('#hour_start').attr('data-hour_start', hour_start);
