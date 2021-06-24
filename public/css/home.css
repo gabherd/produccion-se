@@ -67,6 +67,10 @@
 	display: none;
 }
 
+.tbl-stop td{
+	text-transform: uppercase;
+}
+
 .btn-add-stop, .view-stop{
 	align-items: center;
 	display: flex;
