@@ -3,31 +3,6 @@ var machines = [];
 var hour_stops = [];
 var stops = ['Baja resistencia', 'Centrado', 'Altura', 'Punto A alto', 'Variacion de medida', 'Ajuste de tecnico', 'Cambio de electro', 'Punto A bajo','T gap'];
 
-
-/*bugs - 
-    reconsulta ajax
-            la hora de fin en paro de maquina no debe ser mayor a la hora de inicio
-            Al agregar un nuevo empleado no borrar el registro del paro
-            En el campo responsable agregar la opcion de seleccionar solo el puesto
-            Error al no encontrar una maquina
-            Mensaje de registro duplicado
-            ver la descipcion de la quina seleccionada al registrar un paro*/
-
-
-$.get( "employee", function( data ) {
-    for (index in data) {
-        employees.push({'label': data[index].id, 'name': data[index].name, 'position': data[index].position})        
-    }
-});
-
-$.get( "machine", function( data ) {
-    for (index in data) {
-        var machine = data[index].id;
-        machine = machine.split('-');
-        machines.push({'label': machine[1], 'name': data[index].name, 'step': data[index].number_step})        
-    }
-});
-
 $.get( "stopMachine", function( data ) {
     hour_stops = data;
 });
@@ -111,6 +86,10 @@ $(document).ready(function(){
 
         ]
     }); //dataTable
+
+    getAllEmployees();
+
+    getAllMachines();
 });//
 
 $("#id_machine").autocomplete({
@@ -495,3 +474,22 @@ $(document).on('show.bs.modal', '.modal', function (event) {
         $('.modal-backdrop').not('.modal-stack').css('z-index', zIndex - 1).addClass('modal-stack');
     }, 0);
 });
+
+
+function getAllEmployees(){
+    $.get( "employee", function( data ) {
+        for (index in data) {
+            employees.push({'label': data[index].id, 'name': data[index].name, 'position': data[index].position})        
+        }
+    });
+}
+
+function getAllMachines(){
+    $.get( "machine", function( data ) {
+        for (index in data) {
+            var machine = data[index].id;
+            machine = machine.split('-');
+            machines.push({'label': machine[1], 'name': data[index].name, 'step': data[index].number_step})        
+        }
+    });
+}
