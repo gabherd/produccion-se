@@ -51,8 +51,18 @@ $(document).ready(function(){
                         var hour = end_time.diff(start_time, 'hours');
                         var minutes = end_time.diff(start_time, 'minutes');
 
+                        do{
+                            if (minutes > 60) {
+                                console.log(minutes);
+                                minutes = minutes - 60;
+                                hour++;
+                            }
+                        }while(minutes > 60);
+
+                        hour > 1 ? hour--: hour;
                         hour < 10 ? hour = "0" + hour : hour;
                         minutes < 10 ? minutes = "0" + minutes : minutes;
+
 
                         return hour + ":" + minutes;
                     }
