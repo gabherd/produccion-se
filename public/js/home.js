@@ -94,6 +94,14 @@ $(document).ready(function(){
     getAllEmployees();
 
     getAllMachines();
+
+    $('#btn-menu').on('click', function(){
+        $('.menu-container').toggle();
+    });
+
+    $('.space-free').on('click', function(){
+        $('.menu-container').toggle();
+    });
 });//
 
 $("#id_machine").autocomplete({

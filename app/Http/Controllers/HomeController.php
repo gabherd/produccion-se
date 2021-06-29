@@ -32,7 +32,7 @@ class HomeController extends Controller
                                 ->leftjoin('employee', 'employee.id_employee', '=', 'machine_stop.id_employee')
                                 ->leftjoin('position', 'position.id_position', '=', 'machine_stop.id_position')
                                 ->orderBy('updated_at', 'DESC')
-                                ->where('updated_at', '>=', date('2021-06-24'))
+                                ->where('updated_at', '>=', date('2021-06-18'))
                                 ->get();
 
         return $product;
