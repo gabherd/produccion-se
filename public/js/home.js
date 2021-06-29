@@ -58,7 +58,6 @@ $(document).ready(function(){
                         hour < 10 ? hour = "0" + hour : hour;
                         minutes < 10 ? minutes = "0" + minutes : minutes;
 
-
                         return hour + ":" + minutes;
                     }
 
@@ -156,27 +155,14 @@ $('#hour_start').on('change', function(){
     }
 });
 
-$('#hour_end').on('change', function(){
-    var hour_start = $('#hour_start').val();
-    var hour_end =  $('#hour_end').val();
-
-    var start_time = moment(hour_start, "HH:mm");
-    var end_time = moment(hour_end, "HH:mm");
-
-    //Comprueba que los hora de paro sea menor que los hora de correction
-    if (end_time.diff(start_time, 'hours') < 0) {
-        $('.msg-error-hour').show();
-    }else{
-        $('.msg-error-hour').hide();
-
-        //Comprueba que los minutos de paro sea menor que los minutos de correction
-        if (end_time.diff(start_time, 'minutes') < 0) {
-            $('.msg-error-hour').show();
-        }else{
-            $('.msg-error-hour').hide();
-        }
-    }
+$('#hour_start').on('change', function(){
+    hourMessageError();
 });
+
+$('#hour_end').on('change', function(){
+    hourMessageError();
+});
+
 
 $('#swt-id_employee').on('click', function(){
     if ($(this).is(':checked')) {
@@ -450,6 +436,29 @@ function swalMessage(typeMessage, title, text = ''){
         });
     }
 }
+
+function hourMessageError(){
+    var hour_start = $('#hour_start').val();
+    var hour_end =  $('#hour_end').val();
+
+    var start_time = moment(hour_start, "HH:mm");
+    var end_time = moment(hour_end, "HH:mm");
+
+    //Comprueba que los hora de paro sea menor que los hora de correction
+    if (end_time.diff(start_time, 'hours') < 0) {
+        $('.msg-error-hour').show();
+    }else{
+        $('.msg-error-hour').hide();
+
+        //Comprueba que los minutos de paro sea menor que los minutos de correction
+        if (end_time.diff(start_time, 'minutes') < 0) {
+            $('.msg-error-hour').show();
+        }else{
+            $('.msg-error-hour').hide();
+        }
+    }
+}
+
 
 $('#btn-save-employee').on('click', function(){
         $.ajax({
