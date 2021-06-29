@@ -54,14 +54,14 @@
             <div class="menu-container">
                 <div class="space-free"></div>
                 <div class="menu-body">
-                    <div class="item-menu cursor">
+                    <a class="item-menu cursor" href="{{ route('home') }}">
                         <img src="img/dashboard.svg" height="20">
                         <div class="text-menu">Dasboard</div>
-                    </div>
-                    <div class="item-menu cursor">
+                    </a>
+                    <a class="item-menu cursor" href="{{ route('stop') }}">
                         <img src="img/mantenimiento.svg" height="20">
                         <div class="text-menu">Paros de maquina</div>
-                    </div>
+                    </a>
                 </div>
             </div>
 

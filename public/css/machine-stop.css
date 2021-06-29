@@ -43,11 +43,8 @@ body{
 	width: 70%;
 	background: #343a40;
 	height: 100%;
-	color: #c2c7d0;
 	padding-top: 10px;
 }
-
-
 
 .space-free{
 	width: 30%;
@@ -63,8 +60,17 @@ body{
 	align-items: center;
 }
 
+.item-menu a{
+	text-decoration: none;
+}
+
 .text-menu{
 	margin-left: 10px;
+	color: #c2c7d0;
+}
+
+a:hover {
+    text-decoration:none; 
 }
 
 .content{
@@ -250,6 +256,7 @@ body{
 		top: 0;
 		height: 100%;
 		position: relative;
+		width: 160px;
 	}
 
 	.space-free{
@@ -263,11 +270,12 @@ body{
 	.item-menu:hover{
 		background: rgba(255,255,255,.1);
 	}
+
 	.content {
 		grid-area: content;
 		display: block;
 		padding: 15px;
-		width: calc(100vw - 160px);
+		width: calc(100vw - 177px);
   	}
 
   	.space{

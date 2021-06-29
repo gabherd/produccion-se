@@ -14,8 +14,12 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
+    return view('dashboard');
+})->name('home')->middleware('auth');
+
+Route::get('paros-maquina', function () {
     return view('machine-stop');
-})->middleware('auth');
+})->name('stop')->middleware('auth');
 
 Route::get('stopMachine', '\App\Http\Controllers\MachineStopController@getStopMachine')
 	->name('stopMachine')->middleware('auth');
