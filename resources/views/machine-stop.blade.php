@@ -31,7 +31,7 @@
         <!--lodash-->
         <script src="https://cdn.jsdelivr.net/npm/lodash@4.17.20/lodash.min.js"></script>
         <!--css personal-->
-        <link rel="stylesheet" href="css/home.css">
+        <link rel="stylesheet" href="css/machine-stop.css">
         <title>Produccion SE</title>
         <meta name="csrf-token" id="csrf-token" content="{{ csrf_token() }}"> 
     </head>
@@ -262,6 +262,6 @@
 
         <!--Bootstrap-->
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ho+j7jyWK8fNQe+A12Hb8AhRq26LrZ/JpcUGGOn+Y7RsweNrtN/tE3MoK7ZeZDyx" crossorigin="anonymous"></script>
-        <script src="js/home.js"></script>
+        <script src="js/machine-stop.js"></script>
     </body>
 </html>

@@ -8,7 +8,7 @@ use App\Models\MachineStop;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
-class HomeController extends Controller
+class MachineStopController extends Controller
 {
     public function index()
     {

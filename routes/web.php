@@ -14,20 +14,20 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('home');
+    return view('machine-stop');
 })->middleware('auth');
 
-Route::get('stopMachine', '\App\Http\Controllers\HomeController@getStopMachine')
+Route::get('stopMachine', '\App\Http\Controllers\MachineStopController@getStopMachine')
 	->name('stopMachine')->middleware('auth');
 
-Route::get('employee', '\App\Http\Controllers\HomeController@getEmployee')
+Route::get('employee', '\App\Http\Controllers\MachineStopController@getEmployee')
 	->name('employee')->middleware('auth');
 
-Route::get('machine', '\App\Http\Controllers\HomeController@getMachine')
+Route::get('machine', '\App\Http\Controllers\MachineStopController@getMachine')
 	->name('machine')->middleware('auth');
 
-Route::post('employee', '\App\Http\Controllers\HomeController@storeEmployee')
+Route::post('employee', '\App\Http\Controllers\MachineStopController@storeEmployee')
 	->name('save-employee')->middleware('auth');
 
-Route::resource("paros", '\App\Http\Controllers\HomeController')
+Route::resource("paros", '\App\Http\Controllers\MachineStopController')
 	->names('stops')->middleware('auth');
