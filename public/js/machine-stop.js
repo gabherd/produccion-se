@@ -7,13 +7,6 @@ $.get( "stopMachine", function( data ) {
     hour_stops = data;
 });
 
-//obtiene el ancho del scroll lateral
-function getScrollBarWidth () {
-    var $outer = $('<div>').css({visibility: 'hidden', width: 100, overflow: 'scroll'}).appendTo('body'),
-        widthWithScroll = $('<div>').css({width: '100%'}).appendTo($outer).outerWidth();
-    $outer.remove();
-    return 100 - widthWithScroll;
-};
 
 $(document).ready(function(){
     $('table.display').DataTable({
@@ -117,8 +110,6 @@ $(document).ready(function(){
     $('.space-free').on('click', function(){
         $('.menu-container').toggle();
     });
-
-
 });//
 
 $("#id_machine").autocomplete({
@@ -262,60 +253,6 @@ $(".table.display").delegate('.btn-delete-problem', 'click', function(){
         });
 });
 
-function saveStop(){
-    $('#title-modal-add-stop').text('Agregar paro de maquina');
-    $('.alert-danger').hide();
-
-    $("#create-stop").trigger("reset");
-    $("option:selected").removeAttr("selected");
-    $('#swt-id_employee').attr('checked', true);
-
-    $('#hour_start').attr('data-hour_start', '');
-    
-    $('#description_machine').text('');
-    $('#name-employee').text('');
-
-    $('#name_employee').show();
-    $('#position_employee').hide();
-
-    $('#btn-save-stop').attr('data-submit', 'create');
-}
-
-function editStop(id, machine, description_machine, problem, hour_start, hour_end, name_employee, id_employee, id_position){
-    $('#modal-view').modal('hide');
-    $('.alert-danger').hide();
-    $("option:selected").removeAttr("selected");
-
-    $('#hour_start').attr('data-hour_start', hour_start);
-
-    $('#description_machine').text(description_machine);
-
-    $('#title-modal-add-stop').text('Editar registro');
-
-    $('#id_machine').val(machine);
-    $('#problem').val(problem);
-    $('#hour_start').val(hour_start);
-    $('#hour_end').val(hour_end);
-    
-    if (id_employee == 'null') {
-        $('#swt-id_employee').prop('checked', false);
-        $('#slt-position option[value="'+id_position+'"]').attr('selected', true);
-
-        $('#name_employee').hide();
-        $('#position_employee').show();
-    }else{
-        $('#swt-id_employee').prop('checked', true);
-        $('#id_employee').val(id_employee);
-        $('#name-employee').text(name_employee);
-
-        $('#name_employee').show();
-        $('#position_employee').hide();
-    }
-
-    $('#btn-save-stop').attr('data-id', id);
-    $('#btn-save-stop').attr('data-submit', 'update');
-}
-
 $('#btn-save-stop').on('click', function(){
     var action_submit = $('#btn-save-stop').attr('data-submit');
 
@@ -428,6 +365,80 @@ $('#btn-save-stop').on('click', function(){
     }
 });
 
+$('#btn-save-employee').on('click', function(){
+        $.ajax({
+            url: "employee",
+            method:"POST",
+            data: $("#create-employee").serialize(),
+            success: function(res){
+                console.log(res);
+                if (res.status) {
+
+                    swalMessage('success', 'Registro guardado');
+                    location.reload();
+
+                    $('#name-employee').text($('#name-empl').val());
+                    $('#mdl-add-employee').modal('hide');
+                    $("#create-employee").trigger("reset");
+                }
+            }
+        });
+});
+
+function saveStop(){
+    $('#title-modal-add-stop').text('Agregar paro de maquina');
+    $('.alert-danger').hide();
+
+    $("#create-stop").trigger("reset");
+    $("option:selected").removeAttr("selected");
+    $('#swt-id_employee').attr('checked', true);
+
+    $('#hour_start').attr('data-hour_start', '');
+    
+    $('#description_machine').text('');
+    $('#name-employee').text('');
+
+    $('#name_employee').show();
+    $('#position_employee').hide();
+
+    $('#btn-save-stop').attr('data-submit', 'create');
+}
+
+function editStop(id, machine, description_machine, problem, hour_start, hour_end, name_employee, id_employee, id_position){
+    $('#modal-view').modal('hide');
+    $('.alert-danger').hide();
+    $("option:selected").removeAttr("selected");
+
+    $('#hour_start').attr('data-hour_start', hour_start);
+
+    $('#description_machine').text(description_machine);
+
+    $('#title-modal-add-stop').text('Editar registro');
+
+    $('#id_machine').val(machine);
+    $('#problem').val(problem);
+    $('#hour_start').val(hour_start);
+    $('#hour_end').val(hour_end);
+    
+    if (id_employee == 'null') {
+        $('#swt-id_employee').prop('checked', false);
+        $('#slt-position option[value="'+id_position+'"]').attr('selected', true);
+
+        $('#name_employee').hide();
+        $('#position_employee').show();
+    }else{
+        $('#swt-id_employee').prop('checked', true);
+        $('#id_employee').val(id_employee);
+        $('#name-employee').text(name_employee);
+
+        $('#name_employee').show();
+        $('#position_employee').hide();
+    }
+
+    $('#btn-save-stop').attr('data-id', id);
+    $('#btn-save-stop').attr('data-submit', 'update');
+}
+
 function employeeNotRegistered(){
     Swal.fire({
         position: 'center',
@@ -483,36 +494,6 @@ function hourMessageError(){
         }
     }
 }
-
-
-$('#btn-save-employee').on('click', function(){
-        $.ajax({
-            url: "employee",
-            method:"POST",
-            data: $("#create-employee").serialize(),
-            success: function(res){
-                console.log(res);
-                if (res.status) {
-
-                    swalMessage('success', 'Registro guardado');
-                    location.reload();
-
-                    $('#name-employee').text($('#name-empl').val());
-                    $('#mdl-add-employee').modal('hide');
-                    $("#create-employee").trigger("reset");
-                }
-            }
-        });
-});
-
-//Modal encima de otra modal
-$(document).on('show.bs.modal', '.modal', function (event) {
-    var zIndex = 1040 + (10 * $('.modal:visible').length);
-    $(this).css('z-index', zIndex);
-    setTimeout(function() {
-        $('.modal-backdrop').not('.modal-stack').css('z-index', zIndex - 1).addClass('modal-stack');
-    }, 0);
-});
 
 
 function getAllEmployees(){
