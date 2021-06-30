@@ -242,6 +242,7 @@ a:hover {
 
 @media (min-width: 900px) {
 	.main{
+		width: 100%;
 		display: grid;
 		grid-template: "navbar navbar"
 						"menu-container content";
@@ -249,6 +250,10 @@ a:hover {
 
 	#btn-menu{
 		display: none;
+	}
+
+	.navbar{
+		width: 100%;
 	}
 
 	.menu-container{
@@ -275,7 +280,7 @@ a:hover {
 		grid-area: content;
 		display: block;
 		padding: 15px;
-		width: calc(100vw - 177px);
+		width: calc(100vw - 160px);
   	}
 
   	.space{

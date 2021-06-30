@@ -7,9 +7,20 @@ $.get( "stopMachine", function( data ) {
     hour_stops = data;
 });
 
+function getScrollBarWidth () {
+    var $outer = $('<div>').css({visibility: 'hidden', width: 100, overflow: 'scroll'}).appendTo('body'),
+        widthWithScroll = $('<div>').css({width: '100%'}).appendTo($outer).outerWidth();
+    $outer.remove();
+    return 100 - widthWithScroll;
+};
 
 $(document).ready(function(){
     $('table.display').DataTable({
+        initComplete: function(){
+            if ($( document ).height() > $( window ).height()) {
+                $('.content').css('width', 'calc(100vw - '+(160 + getScrollBarWidth())+'px)');
+            }
+        },
         language: {
             "url": "//cdn.datatables.net/plug-ins/1.10.20/i18n/Spanish.json"
         },
@@ -91,6 +102,8 @@ $(document).ready(function(){
         ]
     }); //dataTable
 
+   //console.log($('.content').css('width', 'calc(100vw - '+(160 + getScrollBarWidth())+'px)'));
+
     getAllEmployees();
 
     getAllMachines();
@@ -102,6 +115,8 @@ $(document).ready(function(){
     $('.space-free').on('click', function(){
         $('.menu-container').toggle();
     });
+
+
 });//
 
 $("#id_machine").autocomplete({

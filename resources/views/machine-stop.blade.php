@@ -1,17 +1,11 @@
-<html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <!--jquery-->
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg==" crossorigin="anonymous"></script>
+@extends('public/layout')
+
+@section('resources')
         <!---->
         <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
         <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
         <!------------link rel="stylesheet" href="/resources/demos/style.css"-------------->
-        <!--BOOTSTRAP-->
-        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
-        <!--FontAwesome-->
-        <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous"/>
+      
         <!--timepicker-->
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
         <script src="https://unpkg.com/gijgo@1.9.13/js/gijgo.min.js" type="text/javascript"></script>
@@ -32,39 +26,10 @@
         <script src="https://cdn.jsdelivr.net/npm/lodash@4.17.20/lodash.min.js"></script>
         <!--css personal-->
         <link rel="stylesheet" href="css/machine-stop.css">
-        <title>Produccion SE</title>
         <meta name="csrf-token" id="csrf-token" content="{{ csrf_token() }}"> 
-    </head>
-    <body>
-        <div class="main">
-            <nav class="navbar">
-                <div class="title-navbar">
-                    <img src="img/menu.svg" id="btn-menu" class="cursor" alt="" height="30">
-                    <span class="navbar-brand mb-0 h1">Produccion SE</span>
-                    
-                </div>
-                <div class="user-data">
-                    <div class="user-name">{{ Auth::user()->name }}</div>
-                    <div class="content-user-image">
-                        <img src="img/animals/{{ Auth::user()->avatar }}.svg" class="user-image">
-                    </div>
-                </div>
-            </nav>
+@endsection()
 
-            <div class="menu-container">
-                <div class="space-free"></div>
-                <div class="menu-body">
-                    <a class="item-menu cursor" href="{{ route('home') }}">
-                        <img src="img/dashboard.svg" height="20">
-                        <div class="text-menu">Dasboard</div>
-                    </a>
-                    <a class="item-menu cursor" href="{{ route('stop') }}">
-                        <img src="img/mantenimiento.svg" height="20">
-                        <div class="text-menu">Paros de maquina</div>
-                    </a>
-                </div>
-            </div>
-
+@section('content')
             <div class="content">
                 <div class="btn-add-stop shadow cursor" onclick='saveStop();' data-toggle="modal" data-target="#mdl-add-stop">
                     <div class="icon-action">
@@ -98,10 +63,10 @@
                     </table>
                 </div>
             </div>
-        </div>
+@endsection()
 
-
-    <!-- Modal show table-->
+@section('modals')
+<!-- Modal show table-->
         <div class="modal fade" id="modal-view" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
             <div class="modal-dialog modal-lg modal-dialog-centered">
                 <div class="modal-content">
@@ -137,7 +102,7 @@
             </div>
         </div>
 
-    <!-- Modal add stop-->
+<!-- Modal add stop-->
         <div class="modal fade" id="mdl-add-stop" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered">
                 <div class="modal-content">
@@ -219,7 +184,7 @@
             </div>
         </div>
 
-    <!-- Modal add employee-->
+<!-- Modal add employee-->
         <div class="modal fade" id="mdl-add-employee" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered">
                 <div class="modal-content">
@@ -259,9 +224,8 @@
                 </div>
             </div>
         </div>
+@endsection()
 
-        <!--Bootstrap-->
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ho+j7jyWK8fNQe+A12Hb8AhRq26LrZ/JpcUGGOn+Y7RsweNrtN/tE3MoK7ZeZDyx" crossorigin="anonymous"></script>
-        <script src="js/machine-stop.js"></script>
-    </body>
-</html>
+@section('scripts')
+    <script src="js/machine-stop.js"></script>
+@endsection()
