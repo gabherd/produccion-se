@@ -8,6 +8,8 @@
         <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous"/>
 		<meta charset="UTF-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="css/menu.css">
+        <link rel="stylesheet" href="css/public.css">
 		@yield('resources')
 		<title>Document</title>
 	</head>
@@ -41,14 +43,18 @@
 	                </a>
 	            </div>
 	        </div>
+	        
+   			<div class="content">
+        		@yield('content')
+   			</div>
 
-        	@yield('content')
         </div>
 
         @yield('modals')
 
         <!--Bootstrap-->
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ho+j7jyWK8fNQe+A12Hb8AhRq26LrZ/JpcUGGOn+Y7RsweNrtN/tE3MoK7ZeZDyx" crossorigin="anonymous"></script>
+
         @yield('scripts')
 	</body>
 </html>

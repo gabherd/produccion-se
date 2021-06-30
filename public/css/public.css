@@ -1,0 +1,141 @@
+@import url('https://fonts.googleapis.com/css2?family=Lato&display=swap');
+
+*{
+	margin: 0;
+	padding: 0;
+}
+
+body{
+	height: 100%;
+}
+
+.navbar{
+	background: #2196F3;
+	color: #FFFFFF !important;
+	grid-area: navbar;
+}
+
+.title-navbar{
+	display: flex;
+	align-items: center;
+}
+
+#btn-menu{
+	margin-right: 10px;
+}
+
+.main{
+	display: grid;
+	grid-template: "navbar navbar"
+					"content content";
+}
+
+.content{
+	grid-area: content;
+	font-family: 'Lato', sans-serif;
+	align-items: center;
+	background: #E7EEFB;
+	display: flex;
+	flex-direction: column;
+	min-height: calc(100vh - 56px);
+	justify-content: center;
+}
+
+.user-data{
+	display: flex;
+	align-items: center;
+}
+
+.user-name{
+	color: #fff;
+	margin: 0 10px;
+}
+
+.content-user-image{
+	height: 40px;
+	width: 40px;
+	background: #F6F5FA;
+	border-radius: 40px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+.user-image{
+	height: 40px;
+	width: 30px;
+}
+
+.user-image{
+	border-radius: 40px;
+}
+
+.btn-close{
+	color: #FFF;
+}
+
+.btn-save{
+	background: #03A9F4;
+	color: #FFF;
+}
+
+.btn-cancel{
+	background: #F44336;
+	color: #FFF;	
+}
+
+.btn-close{
+	background: #4CAF50;
+}
+
+.cursor{
+	cursor: pointer;
+}
+
+.redClass{
+	background: #FCCDCD;
+}
+
+@media (min-width: 900px) {
+	.main{
+		width: 100%;
+		display: grid;
+		grid-template: "navbar navbar"
+						"menu-container content";
+	}
+
+	#btn-menu{
+		display: none;
+	}
+
+	.navbar{
+		width: 100%;
+	}
+
+	.menu-container{
+		grid-area: menu-container;
+		top: 0;
+		height: 100%;
+		position: relative;
+		width: 160px;
+	}
+
+	.space-free{
+		display: none;
+	}
+
+	.menu-body{
+		width: 100%;
+	}
+
+	.item-menu:hover{
+		background: rgba(255,255,255,.1);
+	}
+
+	.content {
+		grid-area: content;
+		display: block;
+		padding: 15px;
+		width: calc(100vw - 160px);
+  	}
+}

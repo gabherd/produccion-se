@@ -7,6 +7,7 @@ $.get( "stopMachine", function( data ) {
     hour_stops = data;
 });
 
+//obtiene el ancho del scroll lateral
 function getScrollBarWidth () {
     var $outer = $('<div>').css({visibility: 'hidden', width: 100, overflow: 'scroll'}).appendTo('body'),
         widthWithScroll = $('<div>').css({width: '100%'}).appendTo($outer).outerWidth();
@@ -17,6 +18,7 @@ function getScrollBarWidth () {
 $(document).ready(function(){
     $('table.display').DataTable({
         initComplete: function(){
+            //reduce el tamaño de del contenedor por el scroll lateral
             if ($( document ).height() > $( window ).height()) {
                 $('.content').css('width', 'calc(100vw - '+(160 + getScrollBarWidth())+'px)');
             }

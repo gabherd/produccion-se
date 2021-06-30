@@ -1,11 +1,9 @@
 @extends('public/layout')
 
 @section('resources')
-        <!---->
         <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
         <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
         <!------------link rel="stylesheet" href="/resources/demos/style.css"-------------->
-      
         <!--timepicker-->
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
         <script src="https://unpkg.com/gijgo@1.9.13/js/gijgo.min.js" type="text/javascript"></script>
@@ -30,7 +28,6 @@
 @endsection()
 
 @section('content')
-            <div class="content">
                 <div class="btn-add-stop shadow cursor" onclick='saveStop();' data-toggle="modal" data-target="#mdl-add-stop">
                     <div class="icon-action">
                         <i class="fas fa-plus"></i>
@@ -62,168 +59,167 @@
                          </tbody>
                     </table>
                 </div>
-            </div>
 @endsection()
 
 @section('modals')
-<!-- Modal show table-->
-        <div class="modal fade" id="modal-view" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-            <div class="modal-dialog modal-lg modal-dialog-centered">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLabel">Ver paros de maquina</h5>
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                              <span aria-hidden="true">&times;</span>
-                            </button>
-                    </div>
-                    <div class="modal-body" style="position: relative;">
-                           <table id="tbl-stop-mobile" class="tbl-stop table table-bordered display responsive nowrap" cellspacing="0" width="100%">
-                               <thead class="thead-light">
-                                   <tr>
-                                        <th>Maquina</th>
-                                        <th>Descripcion</th>
-                                        <th>Problema</th>
-                                        <th>Hora Incio</th>
-                                        <th>Hora Fin</th>
-                                        <th>Tiempo</th>
-                                        <th>Responsable</th>
-                                        <th>Acciones</th>
-                                        <th></th>
-                                   </tr>
-                               </thead>
-                               <tbody>
-                               </tbody>
-                           </table>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-close" data-dismiss="modal">Aceptar</button>
+    <!-- Modal show table-->
+            <div class="modal fade" id="modal-view" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog modal-lg modal-dialog-centered">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLabel">Ver paros de maquina</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                  <span aria-hidden="true">&times;</span>
+                                </button>
+                        </div>
+                        <div class="modal-body" style="position: relative;">
+                               <table id="tbl-stop-mobile" class="tbl-stop table table-bordered display responsive nowrap" cellspacing="0" width="100%">
+                                   <thead class="thead-light">
+                                       <tr>
+                                            <th>Maquina</th>
+                                            <th>Descripcion</th>
+                                            <th>Problema</th>
+                                            <th>Hora Incio</th>
+                                            <th>Hora Fin</th>
+                                            <th>Tiempo</th>
+                                            <th>Responsable</th>
+                                            <th>Acciones</th>
+                                            <th></th>
+                                       </tr>
+                                   </thead>
+                                   <tbody>
+                                   </tbody>
+                               </table>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-close" data-dismiss="modal">Aceptar</button>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
 
-<!-- Modal add stop-->
-        <div class="modal fade" id="mdl-add-stop" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-            <div class="modal-dialog modal-dialog-centered">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="title-modal-add-stop">Agregar paro de maquina</h5>
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                              <span aria-hidden="true">&times;</span>
-                            </button>
-                    </div>
-                    <div class="modal-body">
-                        <form id="create-stop">
-                            @csrf
-                            <div class="form-group">
-                                <label for="id_machine">Maquina</label>
-                                <div class="form-group-icon">
-                                    <i class="fas fa-search"></i>
-                                    <input id="id_machine" name="machine" type="number" class="form-control" placeholder="Buscar">
-                                    <div class="msg-error-machine alert alert-danger">
-                                        Maquina no encontrada, selecciona una de la lista
-                                    </div>
-                                </div>
-                                <small id="description_machine" class="form-text text-muted"></small>
-                            </div>
-                            <div class="form-group">
-                                <label for="problem">Problema</label>
-                                <input id="problem" name="problem" class="form-control">
-                            </div>
-                            <div class="form-group">
-                                <label>Hora</label>
-                                <div class="content-time">
-                                    <div class="group-time">
-                                        <div class="description-hour">Hora de inicio</div>
-                                        <input id="hour_start"  data-hour_start="" name="hour_start" class="form-control"/>
-                                        <div class="msg-error-repeated alert alert-danger">
-                                            Ya tienes un registro con la misma hora de inicio
-                                        </div>
-                                    </div>
-                                    <div class="group-time">
-                                        <div class="description-hour">Hora de corrección</div>
-                                        <input id="hour_end" name="hour_end" class="form-control"/>
-                                        <div class="msg-error-hour alert alert-danger">
-                                            La hora de corrección está terminando antes de la hora de inicio
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label for="employee">Responsable</label>
-                                <div class="custom-control custom-switch">
-                                    <input type="checkbox" name="swt-employee" class="custom-control-input" id="swt-id_employee" checked>
-                                    <label class="custom-control-label" for="swt-id_employee">Numero de empleado</label>
-                                </div>
-                                <div id="name_employee">
+    <!-- Modal add stop-->
+            <div class="modal fade" id="mdl-add-stop" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="title-modal-add-stop">Agregar paro de maquina</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                  <span aria-hidden="true">&times;</span>
+                                </button>
+                        </div>
+                        <div class="modal-body">
+                            <form id="create-stop">
+                                @csrf
+                                <div class="form-group">
+                                    <label for="id_machine">Maquina</label>
                                     <div class="form-group-icon">
                                         <i class="fas fa-search"></i>
-                                        <input id="id_employee" type="number" name="employee" class="form-control" placeholder="Buscar">
-                                    </div> 
-                                    <small id="name-employee" class="form-text text-muted"></small>
+                                        <input id="id_machine" name="machine" type="number" class="form-control" placeholder="Buscar">
+                                        <div class="msg-error-machine alert alert-danger">
+                                            Maquina no encontrada, selecciona una de la lista
+                                        </div>
+                                    </div>
+                                    <small id="description_machine" class="form-text text-muted"></small>
                                 </div>
-                                <div id="position_employee">
-                                    <select name="position" id="slt-position" class="form-control">
-                                        <option value="0">Selecciona un puesto</option>
-                                        <option value="1">Calidad</option>
-                                        <option value="2">Operador</option>
-                                        <option value="3">Setup</option>
-                                        <option value="4">Técnico</option>
+                                <div class="form-group">
+                                    <label for="problem">Problema</label>
+                                    <input id="problem" name="problem" class="form-control">
+                                </div>
+                                <div class="form-group">
+                                    <label>Hora</label>
+                                    <div class="content-time">
+                                        <div class="group-time">
+                                            <div class="description-hour">Hora de inicio</div>
+                                            <input id="hour_start"  data-hour_start="" name="hour_start" class="form-control"/>
+                                            <div class="msg-error-repeated alert alert-danger">
+                                                Ya tienes un registro con la misma hora de inicio
+                                            </div>
+                                        </div>
+                                        <div class="group-time">
+                                            <div class="description-hour">Hora de corrección</div>
+                                            <input id="hour_end" name="hour_end" class="form-control"/>
+                                            <div class="msg-error-hour alert alert-danger">
+                                                La hora de corrección está terminando antes de la hora de inicio
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="employee">Responsable</label>
+                                    <div class="custom-control custom-switch">
+                                        <input type="checkbox" name="swt-employee" class="custom-control-input" id="swt-id_employee" checked>
+                                        <label class="custom-control-label" for="swt-id_employee">Numero de empleado</label>
+                                    </div>
+                                    <div id="name_employee">
+                                        <div class="form-group-icon">
+                                            <i class="fas fa-search"></i>
+                                            <input id="id_employee" type="number" name="employee" class="form-control" placeholder="Buscar">
+                                        </div> 
+                                        <small id="name-employee" class="form-text text-muted"></small>
+                                    </div>
+                                    <div id="position_employee">
+                                        <select name="position" id="slt-position" class="form-control">
+                                            <option value="0">Selecciona un puesto</option>
+                                            <option value="1">Calidad</option>
+                                            <option value="2">Operador</option>
+                                            <option value="3">Setup</option>
+                                            <option value="4">Técnico</option>
+                                        </select>
+                                    </div>  
+
+                                </div>
+                                <button id="submit-stop" class="d-none"></button>
+                            </form>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary btn-cancel" data-dismiss="modal">Cancelar</button>
+                            <button id="btn-save-stop" data-id='' data-submit="create" type="button" class="btn btn-save">Guardar</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+    <!-- Modal add employee-->
+            <div class="modal fade" id="mdl-add-employee" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLabel">Agregar Empleado</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                  <span aria-hidden="true">&times;</span>
+                                </button>
+                        </div>
+                        <div class="modal-body">
+                            <form id="create-employee">
+                                @csrf
+                                <div class="form-group">
+                                    <label for="number-employee">Numero de empleado</label>
+                                    <input id="number-employee" name="number-employee" type="number" class="form-control">
+                                </div>
+                                <div class="form-group">
+                                    <label for="position">Puesto</label>
+                                    <select name="position" class="form-control">
+                                        <option value="Calidad">Calidad</option>
+                                        <option value="Operador">Operador</option>
+                                        <option value="Setup">Setup</option>
+                                        <option value="Tecnico">Técnico</option>
                                     </select>
-                                </div>  
-
-                            </div>
-                            <button id="submit-stop" class="d-none"></button>
-                        </form>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary btn-cancel" data-dismiss="modal">Cancelar</button>
-                        <button id="btn-save-stop" data-id='' data-submit="create" type="button" class="btn btn-save">Guardar</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-<!-- Modal add employee-->
-        <div class="modal fade" id="mdl-add-employee" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-            <div class="modal-dialog modal-dialog-centered">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLabel">Agregar Empleado</h5>
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                              <span aria-hidden="true">&times;</span>
-                            </button>
-                    </div>
-                    <div class="modal-body">
-                        <form id="create-employee">
-                            @csrf
-                            <div class="form-group">
-                                <label for="number-employee">Numero de empleado</label>
-                                <input id="number-employee" name="number-employee" type="number" class="form-control">
-                            </div>
-                            <div class="form-group">
-                                <label for="position">Puesto</label>
-                                <select name="position" class="form-control">
-                                    <option value="Calidad">Calidad</option>
-                                    <option value="Operador">Operador</option>
-                                    <option value="Setup">Setup</option>
-                                    <option value="Tecnico">Técnico</option>
-                                </select>
-                            </div>
-                            <div class="form-group">
-                                <label for="employee">Nombre</label>
-                                <input id="name-empl" type="text" name="name" class="form-control" id="employee">
-                            </div>
-                            <button id="submit-employee" class="d-none"></button>
-                        </form>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary btn-cancel" data-dismiss="modal">Cancelar</button>
-                        <button id="btn-save-employee" type="button" class="btn btn-save">Guardar</button>
+                                </div>
+                                <div class="form-group">
+                                    <label for="employee">Nombre</label>
+                                    <input id="name-empl" type="text" name="name" class="form-control" id="employee">
+                                </div>
+                                <button id="submit-employee" class="d-none"></button>
+                            </form>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary btn-cancel" data-dismiss="modal">Cancelar</button>
+                            <button id="btn-save-employee" type="button" class="btn btn-save">Guardar</button>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
 @endsection()
 
 @section('scripts')

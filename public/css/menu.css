@@ -1,0 +1,41 @@
+.menu-container{
+	grid-area: menu-container;
+	position: absolute;
+	top: 56;
+	width: 100%;
+	height: calc(100% - 56px);
+}
+
+.menu-body{
+	width: 70%;
+	background: #343a40;
+	height: 100%;
+	padding-top: 10px;
+}
+
+.space-free{
+	width: 30%;
+	height: 100%;
+	background: rgba(52,58,64, .7);
+	float: right;
+}
+
+.item-menu{
+	display: flex;
+	height: 50px;
+	padding: 0 20px;
+	align-items: center;
+}
+
+.item-menu a{
+	text-decoration: none;
+}
+
+.text-menu{
+	margin-left: 10px;
+	color: #c2c7d0;
+}
+
+a:hover {
+    text-decoration:none; 
+}
