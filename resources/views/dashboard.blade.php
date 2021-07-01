@@ -36,8 +36,11 @@
 				<div class="line-box-vertical"></div>
 				<div class="body-box">
 					<div class="info-box">
-						<div class="title-box">31</div>
-						<div class="subTitle-box">Empleados</div>
+						<div class="title-box">{{ getQtyEmployees() }}</div>
+						<div class="subTitle-box">
+							<div>Empleados</div>
+							<div>registrados</div>
+						</div>
 					</div>
 					<div class="image-box">
 						<i class="fas fa-users image-users"></i>
