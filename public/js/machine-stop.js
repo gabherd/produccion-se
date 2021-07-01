@@ -1,7 +1,44 @@
 var employees = [];
 var machines = [];
 var hour_stops = [];
-var stops = ['Baja resistencia', 'Centrado', 'Altura', 'Punto A alto', 'Variacion de medida', 'Ajuste de tecnico', 'Cambio de electro', 'Punto A bajo','T gap'];
+var stops = ['AJUSTE DE ALTURA', 
+              'FALTA DE BLADE',  
+              'CAMBIO DE MODELO',  
+              'VARIACION DE PARALELOS',           
+              'PUNTO B Y C BAJO',           
+              'GIRO DE ELECTRODO',
+              'MAQUINA BLOQUEADA',
+              'REBABA',
+              'PUNTO A BAJO',
+              'PUNTO B BAJO',
+              'PUNTO C BAJO',
+              'Baja resistencia', 
+              'Falta de blade',
+              'Dimension alta', 
+              'T gap bajo',
+              'T gap alto',  
+              'AJUSTE DE PRENSA',
+              'EXCESO DE CORRIENTE',
+              'MAL PISADO',
+              'GOLPE EN YOKE',
+              'Ajuste de pin',  
+              'Ajuste de pisada', 
+              'Ajuste de punto C',
+              'cambio de modelo', 
+              'Ajuste de cuchilla', 
+              'CAMBIO DE BARRA DE BRONCE', 
+              'ALTURA BAJA', 
+              'PUNTO C ALTO', 
+              'AJUSTE DE VASTAGO', 
+              'CENTRADO DE CONTACTO', 
+              'Altura', 'Punto A alto', 
+              'Variacion de medida',
+              'Ajuste de tecnico', 
+              'Cambio de modelo', 
+              'Cambio de electro', 
+              'Punto A bajo',
+              'T gap', 
+              'AJUSTE DE SENSOR'];
 
 $.get( "stopMachine", function( data ) {
     hour_stops = data;

@@ -35,7 +35,7 @@
 	            <div class="menu-body">
 	                <a class="item-menu cursor" href="{{ route('home') }}">
 	                    <img src="img/dashboard.svg" height="20">
-	                    <div class="text-menu">Dasboard</div>
+	                    <div class="text-menu">Dashboard</div>
 	                </a>
 	                <a class="item-menu cursor" href="{{ route('stop') }}">
 	                    <img src="img/mantenimiento.svg" height="20">
