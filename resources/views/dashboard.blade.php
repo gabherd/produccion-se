@@ -20,7 +20,7 @@
 				<div class="line-box-vertical"></div>
 				<div class="body-box">
 					<div class="info-box">
-						<div class="title-box">5</div>
+						<div class="title-box" id="machine-stoped">...</div>
 						<div class="subTitle-box">
 							<div>Maquinas</div>
 							<div>detenidas</div>

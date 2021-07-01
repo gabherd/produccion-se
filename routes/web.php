@@ -21,6 +21,11 @@ Route::get('paros-maquina', function () {
     return view('machine-stop');
 })->name('stop')->middleware('auth');
 
+//dashboard
+Route::get('qtyMachineStoped', '\App\Http\Controllers\DashboardController@getQtyMachineStoped')
+	->name('qtyMachineStoped')->middleware('auth');
+
+//Machine stop
 Route::get('stopMachine', '\App\Http\Controllers\MachineStopController@getStopMachine')
 	->name('stopMachine')->middleware('auth');
 
