@@ -14,7 +14,7 @@
 @endsection()
 
 @section('content')
-	<div style="display: flex; justify-content: space-between;">
+	<div class="first-charts" style="">
 		<div class="content-machine-employee">
 			<div class="box-content box-machine">
 				<div class="line-box-vertical"></div>
@@ -50,11 +50,11 @@
 		</div>
 
 		<div class="box-content box-setup">
-			<div  id="piechart" style="width: 300px; height: 200px;"></div>
+			<div  id="piechart" style="width: 100%; height: 200px;"></div>
 		</div>
 
-		<div class="box-content" >
-			<canvas id="myChart" width="500" height="200"></canvas>
+		<div class="box-content box-total-stoped" >
+			<canvas id="myChart" style="width: 100%; height: 200px;"></canvas>
 		</div>
 	</div>
 	<br>

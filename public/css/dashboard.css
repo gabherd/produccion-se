@@ -85,3 +85,27 @@
 }
 
 
+.first-charts{
+	display: grid; 
+	grid-gap: 20px;
+	grid-template-rows: 200px;
+	grid-template-areas: 'content-machine-employee box-setup box-total-stoped box-total-stoped';
+}
+
+.content-machine-employee{
+	grid-area: content-machine-employee;
+}
+
+.box-setup{
+	grid-area: box-setup;
+}
+
+.box-total-stoped{
+	grid-area: box-total-stoped;
+	position: relative;
+}
+
+#myChart{
+	height: 200px !important;
+	width: 100% !important;
+}

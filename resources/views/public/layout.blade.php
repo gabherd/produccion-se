@@ -11,7 +11,7 @@
         <link rel="stylesheet" href="css/menu.css">
         <link rel="stylesheet" href="css/public.css">
 		@yield('resources')
-		<title>Document</title>
+		<title>Produción SE</title>
 	</head>
 	<body>
         <div class="main">
@@ -19,7 +19,7 @@
 			<nav class="navbar">
 			    <div class="title-navbar">
 			        <img src="img/menu.svg" id="btn-menu" class="cursor" alt="" height="30">
-			        <span class="navbar-brand mb-0 h1">Produccion SE</span>
+			        <span class="navbar-brand mb-0 h1">Produción SE</span>
 			        
 			    </div>
 			    <div class="user-data">
