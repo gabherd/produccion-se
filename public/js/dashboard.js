@@ -1,15 +1,58 @@
+var responsableCorrection = [    ['Setup', 'Maquinas'] ];
+var QtyMachineStoped = {"labels":[], "data": []};
 var ctx = document.getElementById('myChart').getContext('2d');
 google.charts.load('current', {'packages':['corechart']});
-google.charts.setOnLoadCallback(chartSetup);
+
 
 getMachineStoped();
-chartHourStop();
-chartQtyStoped();
+getNameResponsable();
+//chartHourStop();
+qtyMachineStoped();
+
+
+$(document).ready(function(){
+}); 
 
 function getMachineStoped(){
     $.get( "qtyMachineStoped", function( data ) {
         $('#machine-stoped').text(data);
     });    
+}
+
+function getNameResponsable(){
+    $.ajax({                                            
+        url: 'getNameResponsable',                        
+        dataType: 'json',
+        async:false,                    
+        success: function(data)          
+        {   
+           for(index in data){
+             responsableCorrection.push([data[index].name_responsable, data[index].total]);
+            }   
+        },
+        complete: function (data) {
+              google.charts.setOnLoadCallback(chartSetup);
+        }
+    });
+}
+
+function qtyMachineStoped(){
+    $.ajax({                                            
+        url: 'qtyStopedByMachine',                        
+        dataType: 'json',
+        async:false,                    
+        success: function(data)          
+        {   
+
+           for(index in data){
+             QtyMachineStoped.labels.push(data[index].id_machine);
+             QtyMachineStoped.data.push(data[index].total);
+            }   
+        },
+        complete: function (data) {
+            chartQtyStoped();
+        }
+    });
 }
 
 //obtiene la cantidad de horas que se han detenido las maquinas
@@ -20,7 +63,7 @@ function chartHourStop(){
             type: 'column'
         },
         title: {
-            text: 'Browser market shares. January, 2018'
+            text: 'Total de horas de paros'
         },
         accessibility: {
             announceNewData: {
@@ -93,16 +136,10 @@ function chartHourStop(){
 //obtiene cual setup tranaja mas
 function chartSetup() {
 
-  var data = google.visualization.arrayToDataTable([
-    ['Setup', 'Maquinas'],
-    ['Ernesto',     5],
-    ['Juan',      2],
-    ['Uriel',  2],
-    ['Marcos', 2],
-  ]);
+  var data = google.visualization.arrayToDataTable( responsableCorrection );
 
   var options = {
-    title: 'Eficiencia'
+    title: 'Eficiencia setup'
   };
 
   var chart = new google.visualization.PieChart(document.getElementById('piechart'));
@@ -115,10 +152,10 @@ function chartQtyStoped(){
     var myChart = new Chart(ctx, {
         type: 'bar',
         data: {
-            labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange', 'Orange'],
+            labels: QtyMachineStoped.labels,
             datasets: [{
                 label: '# of Votes',
-                data: [12, 19, 3, 5, 2, 3],
+                data: QtyMachineStoped.data,
                 backgroundColor: [
                     'rgba(255, 99, 132, 1)',
                     'rgba(54, 162, 235, 1)',
@@ -147,13 +184,15 @@ function chartQtyStoped(){
             plugins: {
                 legend: {
                     display: false
+                }, 
+                title: {
+                    display: true,
+                    text: 'Cantidad de paros por maquina'
                 }
             }
         }
     });
 }
-
-
 
 //adapta el ancho del cocumento por el scroll lateral
 $(document).ready(function(){

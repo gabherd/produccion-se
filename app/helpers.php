@@ -9,4 +9,8 @@ use Illuminate\Support\Facades\DB;
 
         return $qtyEmployee;
 	}
+
+	function dateActual(){
+		return '2021-06-20';
+	}
 ?>

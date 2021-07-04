@@ -25,6 +25,14 @@ Route::get('paros-maquina', function () {
 Route::get('qtyMachineStoped', '\App\Http\Controllers\DashboardController@getQtyMachineStoped')
 	->name('qtyMachineStoped')->middleware('auth');
 
+//Cantidad de paros por maquina
+Route::get('qtyStopedByMachine', '\App\Http\Controllers\DashboardController@getQtyStopedByMachine')
+	->name('qtyStopedByMachine')->middleware('auth');
+
+//obtine el nombre del setup 
+Route::get('getNameResponsable', '\App\Http\Controllers\DashboardController@getNameResponsable')
+	->name('getNameResponsable')->middleware('auth');
+
 //Machine stop
 Route::get('stopMachine', '\App\Http\Controllers\MachineStopController@getStopMachine')
 	->name('stopMachine')->middleware('auth');
