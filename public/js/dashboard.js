@@ -269,7 +269,7 @@ function chartQtyStoped(){
 
 //adapta el ancho del cocumento por el scroll lateral
 $(document).ready(function(){
-    if ($( window ).width > 900) {
+    if ($( window ).width() >= 900) {
         if ($( document ).height() > $( window ).height()) {
             $('.content').css('width', 'calc(100vw - '+(160 + getScrollBarWidth())+'px)');
         }
