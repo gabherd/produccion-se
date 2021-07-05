@@ -1,13 +1,15 @@
 var responsableCorrection = [    ['Setup', 'Maquinas'] ];
-var QtyMachineStoped = {labels: [], data: []};
-var ctx = document.getElementById('myChart').getContext('2d');
+var QtyMachineStoped = [];
+var totalHoursStoped = [];
+//var ctx = document.getElementById('myChart').getContext('2d');
 google.charts.load('current', {'packages':['corechart']});
 
 
 getMachineStoped();
 getNameResponsable();
-chartHourStop();
+//chartHourStop();//
 qtyMachineStoped();
+getTotalHourStoped();
 
 
 $(document).ready(function(){
@@ -37,35 +39,36 @@ function getNameResponsable(){
 }
 
 function qtyMachineStoped(){
-    /*$.ajax({                                            
-        url: 'qtyStopedByMachine',                        
-        dataType: 'json',
-        async:false,                    
-        success: function(data)          
-        {   
-
-           for(index in data){
-             QtyMachineStoped.push({name: data[index].id_machine, y: data[index].total});
-            }   
-        },
-        complete: function (data) {
-            chartQtyStoped();
-        }
-    });*/
     $.ajax({                                            
         url: 'qtyStopedByMachine',                        
         dataType: 'json',
         async:false,                    
         success: function(data)          
         {   
-
            for(index in data){
-             QtyMachineStoped.labels.push(data[index].id_machine);
-             QtyMachineStoped.data.push(data[index].total);
+             QtyMachineStoped.push({name: data[index].id_machine, y: data[index].total, process: data[index].name});
             }   
         },
         complete: function (data) {
             chartQtyStoped();
+        }
+    });
+
+}
+
+function getTotalHourStoped(){
+    $.ajax({                                            
+        url: 'totalHourStoped',                        
+        dataType: 'json',
+        async:false,                    
+        success: function(data)          
+        {   
+           for(index in data){
+             totalHoursStoped.push({name: data[index].id_machine, process: data[index].name, y: parseFloat(data[index].hours + "." + data[index].minutes), hours:data[index].hours, minutes: data[index].minutes});
+            }   
+        },
+        complete: function (data) {
+            chartHourStop();
         }
     });
 
@@ -112,42 +115,22 @@ function chartHourStop(){
         },
         tooltip: {
             headerFormat: '<span style="font-size:11px">{series.name}</span><br>',
-            pointFormat: '<span style="color:{point.color}">{point.name}</span>: <b>{point.y:.0f}</b> Horas<br/>'
+            pointFormat: '<b>Maquina: </b><span style="color:{point.color}">{point.name}</span> <br>'+
+                         '<b>Proceso:</b> {point.process} <br>'+
+                         '<b>Tiempo:</b>  {point.hours}:{point.minutes} <br>'
         },
         series: [
             {
-                name: "Maquina",
+                name: "Paro de maquina",
                 colorByPoint: true,
-                data: [
-                    {
+                data:  totalHoursStoped 
+                /* 
+                totalHoursStoped structure
+                {
                         name: "CA-4006",
+                        process: "BIM",
                         y: 5,
-                    },
-                    {
-                        name: "CA-3192",
-                        y: 7,
-                    },
-                    {
-                        name: "CA-0307",
-                        y: 1,
-                    },
-                    {
-                        name: "CA-1792",
-                        y: 0.3,
-                    },
-                    {
-                        name: "CA-2134",
-                        y: 0.2,
-                    },
-                    {
-                        name: "CA-2017",
-                        y: 11,
-                    },
-                    {
-                        name: "CA-1345",
-                        y: 5,
-                    }
-                ]
+                }*/
             }
         ],
     });
@@ -169,7 +152,7 @@ function chartSetup() {
 
 //obtiene cuantas veces se han parado las maquinas
 function chartQtyStoped(){
-        var myChart = new Chart(ctx, {
+       /* var myChart = new Chart(ctx, {
         type: 'bar',
         data: {
             labels: QtyMachineStoped.labels,
@@ -216,8 +199,8 @@ function chartQtyStoped(){
                 }
             }
         }
-    });
-    /*Highcharts.chart('myChart', {
+    });*/
+    Highcharts.chart('myChart', {
         chart: {
             type: 'column'
         },
@@ -255,7 +238,9 @@ function chartQtyStoped(){
         },
         tooltip: {
             headerFormat: '<span style="font-size:11px">{series.name}</span><br>',
-            pointFormat: '<span style="color:{point.color}">{point.name}</span>: <b>{point.y:.0f}</b> paros<br/>'
+             pointFormat: '<b>Maquina: </b><span style="color:{point.color}">{point.name}</span> <br>'+
+                         '<b>Proceso:</b> {point.process} <br>'+
+                         '<b>Paros:</b>  {point.y} <br>'
         },
         series: [
             {
@@ -264,7 +249,7 @@ function chartQtyStoped(){
                 data: QtyMachineStoped
             }
         ],
-    });*/
+    });
 }
 
 //adapta el ancho del cocumento por el scroll lateral

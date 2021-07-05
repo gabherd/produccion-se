@@ -54,7 +54,7 @@
 		</div>
 
 		<div class="box-content box-total-stoped" >
-			<canvas id="myChart" style="width: 100%; height: 200px;"></canvas>
+			<div id="myChart" style="width: 100%; height: 200px;"></div>
 		</div>
 	</div>
 	<br>

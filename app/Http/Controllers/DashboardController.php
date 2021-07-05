@@ -42,7 +42,7 @@ class DashboardController extends Controller
     public function getQtyStopedByMachine()
     {
         $result = DB::table('machine_stop')
-            ->select(DB::raw('COUNT(machine.id_machine) as total,  machine_stop.id_machine'))
+            ->select(DB::raw('machine_stop.id_machine, machine.name_step AS name, COUNT(machine.id_machine) as total'))
             ->join('machine', 'machine.id_machine', '=', 'machine_stop.id_machine')
             ->groupBy('machine_stop.id_machine')
             ->where('created_at', '>=', dateActual())
@@ -65,9 +65,13 @@ class DashboardController extends Controller
 
     }
 
-    public function getHourStoped()
+    public function getTotalHourStoped()
     {
-        
+        $query = "SELECT machine.id_machine, name_step AS name, SUBSTRING(sum(TIMEDIFF( hour_end, hour_start)), 1, 1 ) as hours, SUBSTRING(sum(TIMEDIFF( hour_end, hour_start)), 2, 2 ) as minutes FROM `machine_stop` JOIN machine on machine_stop.id_machine = machine.id_machine GROUP BY id_machine";
+
+        $result = DB::select($query);
+
+        return $result;
     }
 
 
