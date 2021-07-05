@@ -1,12 +1,12 @@
 var responsableCorrection = [    ['Setup', 'Maquinas'] ];
-var QtyMachineStoped = {"labels":[], "data": []};
+var QtyMachineStoped = {labels: [], data: []};
 var ctx = document.getElementById('myChart').getContext('2d');
 google.charts.load('current', {'packages':['corechart']});
 
 
 getMachineStoped();
 getNameResponsable();
-//chartHourStop();
+chartHourStop();
 qtyMachineStoped();
 
 
@@ -37,6 +37,21 @@ function getNameResponsable(){
 }
 
 function qtyMachineStoped(){
+    /*$.ajax({                                            
+        url: 'qtyStopedByMachine',                        
+        dataType: 'json',
+        async:false,                    
+        success: function(data)          
+        {   
+
+           for(index in data){
+             QtyMachineStoped.push({name: data[index].id_machine, y: data[index].total});
+            }   
+        },
+        complete: function (data) {
+            chartQtyStoped();
+        }
+    });*/
     $.ajax({                                            
         url: 'qtyStopedByMachine',                        
         dataType: 'json',
@@ -53,6 +68,7 @@ function qtyMachineStoped(){
             chartQtyStoped();
         }
     });
+
 }
 
 //obtiene la cantidad de horas que se han detenido las maquinas
@@ -65,6 +81,9 @@ function chartHourStop(){
         title: {
             text: 'Total de horas de paros'
         },
+        exporting: {
+            enabled: false
+        },
         accessibility: {
             announceNewData: {
                 enabled: true
@@ -74,8 +93,9 @@ function chartHourStop(){
             type: 'category'
         },
         yAxis: {
+            tickInterval: 1,
             title: {
-                text: 'Total percent market share'
+                text: 'Horas de paros'
             }
         },
         legend: {
@@ -86,17 +106,17 @@ function chartHourStop(){
                 borderWidth: 0,
                 dataLabels: {
                     enabled: true,
-                    format: '{point.y:.1f}'
+                    format: '{point.y:.0f}'
                 }
             }
         },
         tooltip: {
             headerFormat: '<span style="font-size:11px">{series.name}</span><br>',
-            pointFormat: '<span style="color:{point.color}">{point.name}</span>: <b>{point.y:.2f}%</b> of total<br/>'
+            pointFormat: '<span style="color:{point.color}">{point.name}</span>: <b>{point.y:.0f}</b> Horas<br/>'
         },
         series: [
             {
-                name: "Browsers",
+                name: "Maquina",
                 colorByPoint: true,
                 data: [
                     {
@@ -149,12 +169,12 @@ function chartSetup() {
 
 //obtiene cuantas veces se han parado las maquinas
 function chartQtyStoped(){
-    var myChart = new Chart(ctx, {
+        var myChart = new Chart(ctx, {
         type: 'bar',
         data: {
             labels: QtyMachineStoped.labels,
             datasets: [{
-                label: '# of Votes',
+                label: 'Total de paros',
                 data: QtyMachineStoped.data,
                 backgroundColor: [
                     'rgba(255, 99, 132, 1)',
@@ -176,9 +196,14 @@ function chartQtyStoped(){
             }]
         },
         options: {
+            responsive: true,
             scales: {
                 y: {
-                    beginAtZero: true
+                    beginAtZero: true,
+                     ticks: {
+                        stepSize: 1,
+                    },
+                    suggestedMax:  Math.max(...QtyMachineStoped.data) + 1,
                 }
             },
             plugins: {
@@ -192,6 +217,54 @@ function chartQtyStoped(){
             }
         }
     });
+    /*Highcharts.chart('myChart', {
+        chart: {
+            type: 'column'
+        },
+        title: {
+            text: 'Cantidad de paros'
+        },
+        exporting: {
+            enabled: false
+        },
+        accessibility: {
+            announceNewData: {
+                enabled: true
+            }
+        },
+        xAxis: {
+            type: 'category'
+        },
+        yAxis: {
+            tickInterval: 1,
+            title: {
+                text: '# Paros'
+            }
+        },
+        legend: {
+            enabled: false
+        },
+        plotOptions: {
+            series: {
+                borderWidth: 0,
+                dataLabels: {
+                    enabled: false,
+                    format: '{point.y:.1f}'
+                }
+            }
+        },
+        tooltip: {
+            headerFormat: '<span style="font-size:11px">{series.name}</span><br>',
+            pointFormat: '<span style="color:{point.color}">{point.name}</span>: <b>{point.y:.0f}</b> paros<br/>'
+        },
+        series: [
+            {
+                name: "Cantidad de paros",
+                colorByPoint: true,
+                data: QtyMachineStoped
+            }
+        ],
+    });*/
 }
 
 //adapta el ancho del cocumento por el scroll lateral

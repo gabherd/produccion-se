@@ -57,11 +57,12 @@
 	display: flex;
 	flex-direction: column;
 	justify-content: space-between;
+	width: 100%;
 }
 
 .box-employee, .box-machine{
 	height: 95px; 
-	width: 300px;
+	width: 100%;
 }
 
 .image-pause{
@@ -88,7 +89,8 @@
 .first-charts{
 	display: grid; 
 	grid-gap: 20px;
-	grid-template-rows: 200px;
+	grid-template-columns: 1fr 1fr 1fr 1fr;
+	grid-template-rows: auto;
 	grid-template-areas: 'content-machine-employee box-setup box-total-stoped box-total-stoped';
 }
 
@@ -102,7 +104,6 @@
 
 .box-total-stoped{
 	grid-area: box-total-stoped;
-	position: relative;
 }
 
 #myChart{

@@ -104,6 +104,11 @@ body{
 						"menu-container content";
 	}
 
+.menu-container{
+	display: block;
+}
+
+
 	#btn-menu{
 		display: none;
 	}

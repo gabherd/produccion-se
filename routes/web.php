@@ -17,7 +17,7 @@ Route::get('/', function () {
     return view('dashboard');
 })->name('home')->middleware('auth');
 
-Route::get('paros-maquina', function () {
+Route::get('/paros-maquina', function () {
     return view('machine-stop');
 })->name('stop')->middleware('auth');
 
