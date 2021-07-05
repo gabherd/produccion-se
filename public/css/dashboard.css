@@ -85,13 +85,13 @@
 	background: #03A9F4;
 }
 
-
 .first-charts{
 	display: grid; 
 	grid-gap: 20px;
-	grid-template-columns: 1fr 1fr 1fr 1fr;
 	grid-template-rows: auto;
-	grid-template-areas: 'content-machine-employee box-setup box-total-stoped box-total-stoped';
+	grid-template-areas: 'content-machine-employee'
+						 'box-setup'
+						 'box-total-stoped';
 }
 
 .content-machine-employee{
@@ -106,7 +106,21 @@
 	grid-area: box-total-stoped;
 }
 
+.box-total-hours{
+	width: 100% !important;
+}
+
 #myChart{
 	height: 200px !important;
 	width: 100% !important;
+}
+
+@media (min-width: 900px) {
+	.first-charts{
+		display: grid; 
+		grid-gap: 20px;
+		grid-template-columns: 1fr 1fr 1fr 1fr;
+		grid-template-rows: auto;
+		grid-template-areas: 'content-machine-employee box-setup box-total-stoped box-total-stoped';
+	}
 }

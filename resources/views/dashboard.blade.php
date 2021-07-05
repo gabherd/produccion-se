@@ -14,7 +14,7 @@
 @endsection()
 
 @section('content')
-	<div class="first-charts" style="">
+	<div class="first-charts">
 		<div class="content-machine-employee">
 			<div class="box-content box-machine">
 				<div class="line-box-vertical"></div>
@@ -58,7 +58,7 @@
 		</div>
 	</div>
 	<br>
-	<div class="box-content">
+	<div class="box-content box-total-hours">
 		<div id="hour-stop" style="height: 400px; width: 100%; background: #fff;"></div>
 	</div>
 @endsection()

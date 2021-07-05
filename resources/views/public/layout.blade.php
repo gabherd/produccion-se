@@ -18,7 +18,7 @@
 
 			<nav class="navbar">
 			    <div class="title-navbar">
-			        <!--img src="img/menu.svg" id="btn-menu" class="cursor" alt="" height="30"-->
+			        <img src="img/menu.svg" id="btn-menu" class="cursor" alt="" height="30">
 			        <span class="navbar-brand mb-0 h1">Produción SE</span>
 			        
 			    </div>
