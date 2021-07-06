@@ -8,8 +8,8 @@
 	<script src="https://code.highcharts.com/modules/export-data.js"></script>
 	<script src="https://code.highcharts.com/modules/accessibility.js"></script>
 
-	 <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
-	 <link rel="stylesheet" type="text/css" href="css/dashboard.css">
+	<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+	<link rel="stylesheet" type="text/css" href="css/dashboard.css">
 @endsection()
 
 @section('content')

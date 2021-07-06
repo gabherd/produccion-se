@@ -15,7 +15,7 @@ Route::get('/paros-maquina', function () {
 
 /* --------- Dashboard --------- */
 	//Cantidad de maquinas paradas actualmente
-	Route::get('machineNotRepaired', '\App\Http\Controllers\DashboardController@getQtyMachineStoped')
+	Route::get('machineNotRepaired', '\App\Http\Controllers\DashboardController@getMachineNotRepaired')
 		->name('machineNotRepaired')->middleware('auth');
 
 	//Cantidad de paros por maquina

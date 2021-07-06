@@ -29,10 +29,11 @@ class DashboardController extends Controller
     }
 
     //obtiene cantiad de maquinas que no se han corregido
-    public function getQtyMachineStoped()
+    public function getMachineNotRepaired()
     {
         $result = DB::table('machine_stop')
             ->where('hour_end', '=', '00:00')
+            ->where('created_at', '>=', dateActual())
             ->count();
             
         return $result;
@@ -67,7 +68,7 @@ class DashboardController extends Controller
 
     public function getTotalHourStoped()
     {
-        $query = "SELECT machine.id_machine, name_step AS name, SUBSTRING(sum(TIMEDIFF( hour_end, hour_start)), 1, 1 ) as hours, SUBSTRING(sum(TIMEDIFF( hour_end, hour_start)), 2, 2 ) as minutes FROM `machine_stop` JOIN machine on machine_stop.id_machine = machine.id_machine GROUP BY id_machine";
+        $query = "SELECT machine.id_machine, name_step AS name, FLOOR(sum(TIMESTAMPDIFF(MINUTE, hour_start, hour_end))/60) as hours, MOD(sum(TIMESTAMPDIFF(MINUTE, hour_start, hour_end)),60) as minutes FROM `machine_stop` JOIN machine on machine_stop.id_machine = machine.id_machine WHERE created_at >= '".dateActual()."' GROUP BY id_machine";
 
         $result = DB::select($query);
 
