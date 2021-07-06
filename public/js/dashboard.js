@@ -1,6 +1,7 @@
 var responsableCorrection = [    ['Setup', 'Maquinas'] ];
 var getTotalMachineStoped = [];
 var totalHoursStoped = [];
+
 google.charts.load('current', {'packages':['corechart']});
 
 

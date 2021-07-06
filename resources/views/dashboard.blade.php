@@ -3,11 +3,6 @@
 @section('resources')
 	<script src="https://code.highcharts.com/highcharts.js"></script>
 	<script src="https://code.highcharts.com/modules/data.js"></script>
-	<script src="https://code.highcharts.com/modules/drilldown.js"></script>
-	<script src="https://code.highcharts.com/modules/exporting.js"></script>
-	<script src="https://code.highcharts.com/modules/export-data.js"></script>
-	<script src="https://code.highcharts.com/modules/accessibility.js"></script>
-
 	<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
 	<link rel="stylesheet" type="text/css" href="css/dashboard.css">
 @endsection()
@@ -63,6 +58,5 @@
 @endsection()
 
 @section('scripts')
-	<script src="js/public.js"></script>
 	<script src="js/dashboard.js"></script>
 @endsection()
