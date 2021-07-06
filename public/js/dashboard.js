@@ -1,21 +1,17 @@
 var responsableCorrection = [    ['Setup', 'Maquinas'] ];
-var QtyMachineStoped = [];
+var getTotalMachineStoped = [];
 var totalHoursStoped = [];
 google.charts.load('current', {'packages':['corechart']});
 
 
-getMachineStoped();
+getMachineNotRepaired();
 getNameResponsable();
-qtyMachineStoped();
+getTotalStopByMachine();
 getTotalHourStoped();
 
-
-$(document).ready(function(){
-}); 
-
-function getMachineStoped(){
-    $.get( "qtyMachineStoped", function( data ) {
-        $('#machine-stoped').text(data);
+function getMachineNotRepaired(){
+    $.get( "machineNotRepaired", function( data ) {
+        $('#machineNotRepaired').text(data);
     });    
 }
 
@@ -31,12 +27,12 @@ function getNameResponsable(){
             }   
         },
         complete: function (data) {
-              google.charts.setOnLoadCallback(chartSetup);
+              google.charts.setOnLoadCallback(chartNameResponsable);
         }
     });
 }
 
-function qtyMachineStoped(){
+function getTotalStopByMachine(){
     $.ajax({                                            
         url: 'qtyStopedByMachine',                        
         dataType: 'json',
@@ -44,14 +40,13 @@ function qtyMachineStoped(){
         success: function(data)          
         {   
            for(index in data){
-             QtyMachineStoped.push({name: data[index].id_machine, y: data[index].total, process: data[index].name});
+             getTotalMachineStoped.push({name: data[index].id_machine, y: data[index].total, process: data[index].name});
             }   
         },
         complete: function (data) {
-            chartQtyStoped();
+            chartTotalHourStoped();
         }
     });
-
 }
 
 function getTotalHourStoped(){
@@ -66,14 +61,28 @@ function getTotalHourStoped(){
             }   
         },
         complete: function (data) {
-            chartHourStop();
+            chartTotalStopByMachine();
         }
     });
+}
 
+
+//obtiene cual setup tranaja mas
+function chartNameResponsable() {
+
+  var data = google.visualization.arrayToDataTable( responsableCorrection );
+
+  var options = {
+    title: 'Eficiencia setup'
+  };
+
+  var chart = new google.visualization.PieChart(document.getElementById('piechart'));
+
+  chart.draw(data, options);
 }
 
 //obtiene la cantidad de horas que se han detenido las maquinas
-function chartHourStop(){
+function chartTotalStopByMachine(){
     // Create the chart
     Highcharts.chart('hour-stop', {
         chart: {
@@ -134,22 +143,8 @@ function chartHourStop(){
     });
 }
 
-//obtiene cual setup tranaja mas
-function chartSetup() {
-
-  var data = google.visualization.arrayToDataTable( responsableCorrection );
-
-  var options = {
-    title: 'Eficiencia setup'
-  };
-
-  var chart = new google.visualization.PieChart(document.getElementById('piechart'));
-
-  chart.draw(data, options);
-}
-
 //obtiene cuantas veces se han parado las maquinas
-function chartQtyStoped(){
+function chartTotalHourStoped(){
     Highcharts.chart('myChart', {
         chart: {
             type: 'column'
@@ -196,7 +191,7 @@ function chartQtyStoped(){
             {
                 name: "Cantidad de paros",
                 colorByPoint: true,
-                data: QtyMachineStoped
+                data: getTotalMachineStoped
             }
         ],
     });
