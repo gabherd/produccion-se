@@ -9,7 +9,6 @@
 	<script src="https://code.highcharts.com/modules/accessibility.js"></script>
 
 	 <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
-	 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 	 <link rel="stylesheet" type="text/css" href="css/dashboard.css">
 @endsection()
 

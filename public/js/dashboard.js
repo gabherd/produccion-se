@@ -1,13 +1,11 @@
 var responsableCorrection = [    ['Setup', 'Maquinas'] ];
 var QtyMachineStoped = [];
 var totalHoursStoped = [];
-//var ctx = document.getElementById('myChart').getContext('2d');
 google.charts.load('current', {'packages':['corechart']});
 
 
 getMachineStoped();
 getNameResponsable();
-//chartHourStop();//
 qtyMachineStoped();
 getTotalHourStoped();
 
@@ -152,54 +150,6 @@ function chartSetup() {
 
 //obtiene cuantas veces se han parado las maquinas
 function chartQtyStoped(){
-       /* var myChart = new Chart(ctx, {
-        type: 'bar',
-        data: {
-            labels: QtyMachineStoped.labels,
-            datasets: [{
-                label: 'Total de paros',
-                data: QtyMachineStoped.data,
-                backgroundColor: [
-                    'rgba(255, 99, 132, 1)',
-                    'rgba(54, 162, 235, 1)',
-                    'rgba(255, 206, 86, 1)',
-                    'rgba(75, 192, 192, 1)',
-                    'rgba(153, 102, 255, 1)',
-                    'rgba(255, 159, 64, 1)'
-                ],
-                borderColor: [
-                    'rgba(255, 99, 132, 1)',
-                    'rgba(54, 162, 235, 1)',
-                    'rgba(255, 206, 86, 1)',
-                    'rgba(75, 192, 192, 1)',
-                    'rgba(153, 102, 255, 1)',
-                    'rgba(255, 159, 64, 1)'
-                ],
-                borderWidth: 1
-            }]
-        },
-        options: {
-            responsive: true,
-            scales: {
-                y: {
-                    beginAtZero: true,
-                     ticks: {
-                        stepSize: 1,
-                    },
-                    suggestedMax:  Math.max(...QtyMachineStoped.data) + 1,
-                }
-            },
-            plugins: {
-                legend: {
-                    display: false
-                }, 
-                title: {
-                    display: true,
-                    text: 'Cantidad de paros por maquina'
-                }
-            }
-        }
-    });*/
     Highcharts.chart('myChart', {
         chart: {
             type: 'column'
