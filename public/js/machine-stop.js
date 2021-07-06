@@ -49,8 +49,10 @@ $(document).ready(function(){
     $('table.display').DataTable({
         initComplete: function(){
             //reduce el tamaño de del contenedor por el scroll lateral
-            if ($( document ).height() > $( window ).height()) {
-                $('.content').css('width', 'calc(100vw - '+(160 + getScrollBarWidth())+'px)');
+            if ($( window ).width() >= 900) {
+                if ($( document ).height() > $( window ).height()) {
+                    $('.content').css('width', 'calc(100vw - '+(160 + getScrollBarWidth())+'px)');
+                }
             }
         },
         language: {
