@@ -11,7 +11,8 @@
         <link rel="stylesheet" href="css/menu.css">
         <link rel="stylesheet" href="css/public.css">
 		@yield('resources')
-		<title>Produción SE</title>
+		<title>Produción SE | @yield('title', 'Produción SE')</title>
+		
 	</head>
 	<body>
         <div class="main">
