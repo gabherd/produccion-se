@@ -1,7 +1,7 @@
 var responsableCorrection = [    ['Setup', 'Maquinas'] ];
 var getTotalMachineStoped = [];
 var totalHoursStoped = [];
-
+var colors = ['#03A9F4', '#FF9800', '#8BC34A', '#607D8B', '#7C4DFF', '#00BCD4', '#CDDC39', '#FF5722', '#E040FB', '#795548', '#FFEB3B', '#009688', '#9E9E9E', '#FFC107', '#4CAF50', '#448AFF', '#536DFE', '#FF4081', '#FF5252'];
 google.charts.load('current', {'packages':['corechart']});
 
 
@@ -57,8 +57,22 @@ function getTotalHourStoped(){
         async:false,                    
         success: function(data)          
         {   
-           for(index in data){
-             totalHoursStoped.push({name: data[index].id_machine, process: data[index].name, y: parseFloat(data[index].hours + "." + data[index].minutes), hours:data[index].hours, minutes: data[index].minutes});
+            for(index in data){
+                var id_machine = data[index].id_machine
+                var name_process = data[index].name
+                var total_stoped = data[index].total_stoped
+                var full_time = parseFloat(data[index].hours + "." + data[index].minutes)
+                var hours = data[index].hours
+                var minutes = data[index].minutes
+
+
+                totalHoursStoped.push({name: id_machine, 
+                                        process: name_process, 
+                                        y: full_time, 
+                                        hours: hours, 
+                                        minutes: minutes});
+
+                 summaryStop(id_machine, name_process, total_stoped, hours+":"+minutes , colors[index]);
             }   
         },
         complete: function (data) {
@@ -89,6 +103,7 @@ function chartTotalStopByMachine(){
         chart: {
             type: 'column'
         },
+        colors: colors,
         title: {
             text: 'Total de horas de paros'
         },
@@ -150,6 +165,7 @@ function chartTotalHourStoped(){
         chart: {
             type: 'column'
         },
+        colors: colors,
         title: {
             text: 'Cantidad de paros'
         },
@@ -196,6 +212,26 @@ function chartTotalHourStoped(){
             }
         ],
     });
+}
+
+function summaryStop(id_machine, name_process, total_stoped, hour_stoped, color){
+    $('.summary-stop').append('<div class="card-stops shadow">'+
+                                '<div class="header-card-stop" style="background:'+color+'">'+id_machine+'</div>'+
+                                '<div class="body-card-stop">'+
+                                    '<div class="description-stop">'+
+                                        '<div><strong>Maquina: </strong> <span>'+id_machine+'</span></div>'+
+                                        '<div><strong>Proceso: </strong> <span>'+name_process+'</span></div>'+
+                                        '<div><strong>Cantidad de paros: </strong> <span>'+total_stoped+'</span></div>'+
+                                        '<div class="hour-lost"><strong>Horas perdidas: </strong> <span>'+hour_stoped+'</span></div>'+
+                                    '</div>'+
+                                    '<div class="image-stop">'+
+                                        //'<img src="img/materials/'+id_machine+'.jpg" alt="">'+
+                                    '</div>'+
+                                '</div>'+
+                                //'<div class="footer-card-stop">'+
+                                //    '<div class="btn btn-detail-stop" style="'+color+'">Detalles <i class="fas fa-plus"></i> </div>'+
+                                //'</div>'+
+                              '</div>');
 }
 
 //adapta el ancho del cocumento por el scroll lateral

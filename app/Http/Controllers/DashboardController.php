@@ -68,7 +68,7 @@ class DashboardController extends Controller
 
     public function getTotalHourStoped()
     {
-        $query = "SELECT machine.id_machine, name_step AS name, (CASE WHEN FLOOR(sum(TIMESTAMPDIFF(MINUTE, hour_start, hour_end))/60) < 10 THEN '00' END) as hours, (CASE WHEN MOD(sum(TIMESTAMPDIFF(MINUTE, hour_start, hour_end)),60) < 10 THEN CONCAT('0', MOD(sum(TIMESTAMPDIFF(MINUTE, hour_start, hour_end)),60) ) WHEN MOD(sum(TIMESTAMPDIFF(MINUTE, hour_start, hour_end)),60) < 1 THEN '00' ELSE MOD(sum(TIMESTAMPDIFF(MINUTE, hour_start, hour_end)),60) END) as minutes FROM machine_stop JOIN machine on machine_stop.id_machine = machine.id_machine WHERE created_at >= '".dateActual()."' GROUP BY id_machine";
+        $query = "SELECT count(*) as total_stoped, machine.id_machine, name_step AS name, (CASE WHEN FLOOR(sum(TIMESTAMPDIFF(MINUTE, hour_start, hour_end))/60) < 10 THEN '00' END) as hours, (CASE WHEN MOD(sum(TIMESTAMPDIFF(MINUTE, hour_start, hour_end)),60) < 10 THEN CONCAT('0', MOD(sum(TIMESTAMPDIFF(MINUTE, hour_start, hour_end)),60) ) WHEN MOD(sum(TIMESTAMPDIFF(MINUTE, hour_start, hour_end)),60) < 1 THEN '00' ELSE MOD(sum(TIMESTAMPDIFF(MINUTE, hour_start, hour_end)),60) END) as minutes FROM machine_stop JOIN machine on machine_stop.id_machine = machine.id_machine WHERE created_at >= '".dateActual()."' GROUP BY id_machine";
 
         $result = DB::select($query);
 

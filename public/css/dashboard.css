@@ -119,6 +119,95 @@
 	width: 100% !important;
 }
 
+.title-content-summary{
+	margin: 10px;
+	font-size: 20px;
+	font-weight: bold;
+	color: #595959;
+	text-align: center;
+}
+
+.summary-stop{
+	width: 90%;
+	padding: 10px;
+	background: #fff;
+	display: grid;
+	grid-gap: 20px;
+	grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+	justify-content: center;
+}
+
+.card-stops{
+	height: 210px;
+	border-radius: 13px;
+}
+	
+.header-card-stop{
+	border-radius: 13px 13px 0 0;
+	width: 100%;
+	height: 30px;
+	background: #908EED;
+	color: #F3F3F3;
+	padding: 0 10px;
+	display: flex;
+	align-items: center;
+}	
+
+.body-card-stop{
+	height: calc(100% - 70px);
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	padding: 20px;
+}
+
+.description-stop{
+	font-size: 14px;
+	color: #515151;
+}
+
+.image-stop img{
+	height: 100px;
+	width: auto;
+}
+
+.footer-card-stop{
+	height: 40px;
+	width: 100%;
+	border-radius: 0 0 10px 10px;
+	justify-content: center;
+	display: flex;
+	align-items: center;
+}
+
+.btn-detail-stop{
+	background: #ACAAF4;
+	color: #EFEFEF;
+	height: 25px;
+	padding: 5px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	width: 40%;
+	border-radius: 30px;
+	font-size: 13px;
+}
+
+.btn-detail-stop:hover{
+	color: #FFFFFF;
+	background: #908EED;
+}
+
+.hour-lost{
+	color: #FF0000;
+	font-size: 15px;
+}
+
+.btn-detail-stop .fas{
+	margin-left: 5px;
+	font-size: 10px;
+}
+
 @media (min-width: 900px) {
 	.first-charts{
 		display: grid; 
@@ -137,4 +226,7 @@
 		width: 100%;
 	}
 
+	.summary-stop{
+		width: 100%;
+	}
 }
