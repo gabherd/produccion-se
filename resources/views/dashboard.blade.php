@@ -58,7 +58,7 @@
 		<div id="hour-stop" style="height: 400px; width: 100%; background: #fff;"></div>
 	</div>
 	<br>
-	<div class="box-content">
+	<div class="box-content box-summary">
 		<div class="title-content-summary">Resumen de paros</div>
 		<div class="summary-stop">
 			<!--div class="card-stops shadow">

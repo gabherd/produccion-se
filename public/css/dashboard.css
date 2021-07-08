@@ -127,6 +127,10 @@
 	text-align: center;
 }
 
+.box-summary{
+	width: 90%;
+}
+
 .summary-stop{
 	padding: 10px;
 	display: grid;
