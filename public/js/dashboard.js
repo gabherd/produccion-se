@@ -1,7 +1,7 @@
 var responsableCorrection = [    ['Setup', 'Maquinas'] ];
 var getTotalMachineStoped = [];
 var totalHoursStoped = [];
-var colors = ['#03A9F4', '#FF9800', '#8BC34A', '#607D8B', '#7C4DFF', '#00BCD4', '#CDDC39', '#FF5722', '#E040FB', '#795548', '#FFEB3B', '#009688', '#9E9E9E', '#FFC107', '#4CAF50', '#448AFF', '#536DFE', '#FF4081', '#FF5252'];
+var colors = ['#03A9F4', '#FF9800', '#8BC34A', '#607D8B', '#7C4DFF', '#00BCD4', '#CDDC39', '#FF5722', '#E040FB', '#795548', '#D3C43F', '#009688', '#9E9E9E', '#FFC107', '#4CAF50', '#448AFF', '#536DFE', '#FF4081', '#FF5252'];
 google.charts.load('current', {'packages':['corechart']});
 
 
@@ -222,10 +222,10 @@ function summaryStop(id_machine, name_process, total_stoped, hour_stoped, color)
                                         '<div><strong>Maquina: </strong> <span>'+id_machine+'</span></div>'+
                                         '<div><strong>Proceso: </strong> <span>'+name_process+'</span></div>'+
                                         '<div><strong>Cantidad de paros: </strong> <span>'+total_stoped+'</span></div>'+
-                                        '<div class="hour-lost"><strong>Horas perdidas: </strong> <span>'+hour_stoped+'</span></div>'+
+                                        '<div class="hour-lost"><strong>Tiempo perdido: </strong> <span>'+hour_stoped+'</span></div>'+
                                     '</div>'+
                                     '<div class="image-stop">'+
-                                        //'<img src="img/materials/'+id_machine+'.jpg" alt="">'+
+                                        '<img src="img/materials/'+id_machine+'.jpg" alt="">'+
                                     '</div>'+
                                 '</div>'+
                                 //'<div class="footer-card-stop">'+
