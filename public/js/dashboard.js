@@ -88,7 +88,7 @@ function chartNameResponsable() {
   var data = google.visualization.arrayToDataTable( responsableCorrection );
 
   var options = {
-    title: 'Eficiencia setup'
+    title: 'Responsable de corrección'
   };
 
   var chart = new google.visualization.PieChart(document.getElementById('piechart'));
