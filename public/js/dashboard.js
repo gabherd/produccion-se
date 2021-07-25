@@ -72,7 +72,6 @@ function getTotalHourStoped(){
                                         hours: hours, 
                                         minutes: minutes});
 
-                 summaryStop(id_machine, name_process, total_stoped, hours+":"+minutes , colors[index]);
             }   
         },
         complete: function (data) {
@@ -80,7 +79,6 @@ function getTotalHourStoped(){
         }
     });
 }
-
 
 //obtiene cual setup tranaja mas
 function chartNameResponsable() {
@@ -214,26 +212,6 @@ function chartTotalHourStoped(){
     });
 }
 
-function summaryStop(id_machine, name_process, total_stoped, hour_stoped, color){
-    $('.summary-stop').append('<div class="card-stops shadow">'+
-                                '<div class="header-card-stop" style="background:'+color+'">'+id_machine+'</div>'+
-                                '<div class="body-card-stop">'+
-                                    '<div class="description-stop">'+
-                                        '<div><strong>Maquina: </strong> <span>'+id_machine+'</span></div>'+
-                                        '<div><strong>Proceso: </strong> <span>'+name_process+'</span></div>'+
-                                        '<div><strong>Cantidad de paros: </strong> <span>'+total_stoped+'</span></div>'+
-                                        '<div class="hour-lost"><strong>Tiempo perdido: </strong> <span>'+hour_stoped+'</span></div>'+
-                                    '</div>'+
-                                    '<div class="image-stop">'+
-                                        '<img src="img/materials/'+id_machine+'.jpg" alt="">'+
-                                    '</div>'+
-                                '</div>'+
-                                //'<div class="footer-card-stop">'+
-                                //    '<div class="btn btn-detail-stop" style="'+color+'">Detalles <i class="fas fa-plus"></i> </div>'+
-                                //'</div>'+
-                              '</div>');
-}
-
 //adapta el ancho del cocumento por el scroll lateral
 $(document).ready(function(){
     if ($( window ).width() >= 900) {
@@ -241,4 +219,29 @@ $(document).ready(function(){
             $('.content').css('width', 'calc(100vw - '+(160 + getScrollBarWidth())+'px)');
         }
     };
-});
+
+    //tbl-summary-stope
+    $('#tbl-summary-stop').DataTable({
+         language: {
+            "url": "//cdn.datatables.net/plug-ins/1.10.20/i18n/Spanish.json"
+        },
+        lengthChange: false,
+        paging:   false,
+        info:     false,
+        responsive: true,
+        ajax: {
+                url: '/totalHourStoped',
+                dataSrc: '',
+        },
+        columns: [
+            { data: 'id_machine'},
+            { data: 'name'},
+            { data: 'total_stoped'},
+            { data: null,
+                render: function(data, type, row){
+                    return data.hours + ':' + data.minutes
+                }
+            },
+        ]
+    });
+}); 

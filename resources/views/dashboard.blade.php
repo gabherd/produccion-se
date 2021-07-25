@@ -3,6 +3,16 @@
 @section('title') Dashboard @endsection()
 
 @section('resources')
+ <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+        <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+	<!--DataTables-->
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.23/css/dataTables.bootstrap4.min.css">
+    <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.23/js/jquery.dataTables.js"></script>
+    <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.23/js/dataTables.bootstrap4.min.js"></script>
+    <!--Ratatable responsive-->
+    <link rel="stylesheet" href="https://cdn.datatables.net/responsive/2.2.7/css/responsive.dataTables.min.css">
+    <script src="https://cdn.datatables.net/responsive/2.2.7/js/dataTables.responsive.min.js"></script>
+	<!--charts-->
 	<script src="https://code.highcharts.com/highcharts.js"></script>
 	<script src="https://code.highcharts.com/modules/data.js"></script>
 	<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
@@ -60,25 +70,18 @@
 	<br>
 	<div class="box-content box-summary">
 		<div class="title-content-summary">Resumen de paros</div>
-		<div class="summary-stop">
-			<!--div class="card-stops shadow">
-				<div class="header-card-stop">Bimetal yoke</div>
-				<div class="body-card-stop">
-					<div class="description-stop">
-						<div><strong>Maquina: </strong> <span>CA-4006</span></div>
-						<div><strong>Proceso: </strong> <span>Bimetal yoke</span></div>
-						<div><strong>Cantidad de paros: </strong> <span>4</span></div>
-						<div class="hour-lost"><strong>Horas perdidas: </strong> <span>01:20</span></div>
-					</div>
-					<div class="image-stop">
-						<img src="img/materials/bt.jpg" alt="">
-					</div>
-				</div>
-				<div class="footer-card-stop">
-					<div class="btn btn-detail-stop">Detalles <i class="fas fa-plus"></i> </div>
-				</div>
-			</div-->
-		</div>
+		<table id="tbl-summary-stop" class="table table-bordered display responsive nowrap" cellspacing="0" width="100%">
+			<thead  class="thead-light">
+				<tr>
+					<th>Maquina</th>
+					<th>Proceso</th>
+					<th>Cantidad de paros</th>
+					<th>Tiempo detenido</th>
+				</tr>
+			</thead>
+			<tbody>
+			</tbody>
+		</table>
 	</div>
 @endsection()
 
