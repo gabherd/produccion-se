@@ -32,7 +32,7 @@ class DashboardController extends Controller
     public function getMachineNotRepaired()
     {
         $result = DB::table('machine_stop')
-            ->where('hour_end', '=', '00:00')
+            ->whereNull('hour_end')
             ->where('created_at', '>=', dateActual())
             ->count();
             
