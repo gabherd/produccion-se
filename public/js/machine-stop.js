@@ -65,11 +65,7 @@ $(document).ready(function(){
                 url: '/stopMachine',
                 dataSrc: '',
         },
-        createdRow: function( row, data, dataIndex){
-                if( data.hour_end == '00:00'){
-                    $(row).addClass('machine-stoped');
-                }
-        },
+
         columnDefs: [
             {
                 "targets": [8],
@@ -89,12 +85,18 @@ $(document).ready(function(){
             { data: 'description'},
             { data: 'problem'},
             { data: 'hour_start'},
-            { data: 'hour_end'},
+            { data: null, 
+                render: function(data, row, type){
+                    if (data.stoped){
+                        return 0;
+                    }else{
+                        return data.hour_end;
+                    }
+                }
+            },
             { data: null, 
                 render: function(data, type, row){
-                    
-                     
-                    if (data.hour_end == '00:00'){
+                    if (data.stoped){
                         return 0;
                     }else{
                         var start_time = moment(data.hour_start, "HH:mm");
@@ -110,9 +112,8 @@ $(document).ready(function(){
                         hour < 10 ? hour = "0" + hour : hour;
                         minutes < 10 ? minutes = "0" + minutes : minutes;
 
-                        return hour + ":" + minutes;
+                        return '12:00';
                     }
-
                 }
             },
             { data: 'responsible'},
