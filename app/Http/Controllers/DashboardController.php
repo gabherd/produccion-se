@@ -68,17 +68,22 @@ class DashboardController extends Controller
 
     public function getTotalHourStoped()
     {
+        $hour_end = "(CASE WHEN hour_end = '00:00:00' THEN CURRENT_TIMESTAMP     
+                          ELSE hour_end 
+                    END)";
+
         $query = "SELECT count(*) as total_stoped, machine.id_machine, name_step AS name, 
-            (CASE WHEN FLOOR(sum(TIMESTAMPDIFF(MINUTE, hour_start, hour_end))/60) < 10 
-                    THEN CONCAT('0', FLOOR(sum(TIMESTAMPDIFF(MINUTE, hour_start, hour_end))/60) )
-                WHEN FLOOR(sum(TIMESTAMPDIFF(MINUTE, hour_start, hour_end))/60) < 1 
-                    THEN '00'
-                ELSE FLOOR(sum(TIMESTAMPDIFF(MINUTE, hour_start, hour_end))/60)  END) as hours, 
-            (CASE WHEN MOD(sum(TIMESTAMPDIFF(MINUTE, hour_start, hour_end)),60) < 10 
-                    THEN CONCAT('0', MOD(sum(TIMESTAMPDIFF(MINUTE, hour_start, hour_end)),60) ) 
-                WHEN MOD(sum(TIMESTAMPDIFF(MINUTE, hour_start, hour_end)),60) < 1 
-                    THEN '00' 
-                ELSE MOD(sum(TIMESTAMPDIFF(MINUTE, hour_start, hour_end)),60) END) as minutes 
+            (CASE WHEN FLOOR(sum(TIMESTAMPDIFF(MINUTE, hour_start, ".$hour_end."))/60) < 10 
+                 THEN CONCAT('0', FLOOR(sum(TIMESTAMPDIFF(MINUTE, hour_start, ".$hour_end."))/60))
+                WHEN FLOOR(sum(TIMESTAMPDIFF(MINUTE, hour_start, ".$hour_end."))/60) < 1 
+                  THEN '00'
+                ELSE FLOOR(sum(TIMESTAMPDIFF(MINUTE, hour_start, ".$hour_end."))/60)  END) as hours, 
+            (CASE WHEN MOD(sum(TIMESTAMPDIFF(MINUTE, hour_start, ".$hour_end.")),60) < 10 
+                 THEN CONCAT('0', MOD(sum(TIMESTAMPDIFF(MINUTE, hour_start, ".$hour_end.")),60) ) 
+                WHEN MOD(sum(TIMESTAMPDIFF(MINUTE, hour_start, ".$hour_end.")),60) < 1 
+                 THEN '00' 
+                ELSE MOD(sum(TIMESTAMPDIFF(MINUTE, hour_start, ".$hour_end.")),60) 
+            END) as minutes 
             FROM machine_stop JOIN machine on machine_stop.id_machine = machine.id_machine 
             WHERE created_at >= DATE_FORMAT('".dateActual()."', '%y-%m-%d') GROUP BY id_machine";
 
