@@ -234,12 +234,24 @@ $(document).ready(function(){
                 dataSrc: '',
         },
         columns: [
-            { data: 'id_machine'},
+            { data: null,
+                render: function(data, type, row){
+                    if (data.stoped) 
+                        return '<div><div class="machine-stoped"></div> '+ data.id_machine +'</div>'
+                    else
+                        return data.id_machine
+                }
+            },
             { data: 'name'},
             { data: 'total_stoped'},
             { data: null,
                 render: function(data, type, row){
                     return data.hours + ':' + data.minutes
+                }
+            },
+            { data: null,
+                render: function(data, type, row){
+                    return '<button class="btn btn-secondary">Detalles</button>'
                 }
             },
         ]

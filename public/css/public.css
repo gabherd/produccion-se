@@ -92,9 +92,31 @@ body{
 	cursor: pointer;
 }
 
-.redClass{
-	background: #FCCDCD;
+.center-absolute{
+	height: 100%;
+	width: 100%;
+	top: 0;
+	position: absolute;
+	bottom: 50%;
+	transform: translate(50%);
+	display: flex;
+	align-items: center;
+	border-radius: 0;
 }
+
+.machine-stoped{
+	height: 100%;
+	width: 3px;
+	position: absolute;
+	background: #F16363;
+	top: 0;
+	left: 0;
+}
+
+td{
+	position: relative;
+}
+
 
 @media (min-width: 900px) {
 	.main{

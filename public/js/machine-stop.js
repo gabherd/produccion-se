@@ -67,7 +67,7 @@ $(document).ready(function(){
         },
         createdRow: function( row, data, dataIndex){
                 if( data.hour_end == '00:00'){
-                    $(row).addClass('redClass');
+                    $(row).addClass('machine-stoped');
                 }
         },
         columnDefs: [
@@ -78,7 +78,14 @@ $(document).ready(function(){
             }
         ],
         columns: [
-            { data: 'id_machine'},
+            { data: null,
+                render: function(data, type, row){
+                    if (data.stoped) 
+                        return '<div><div class="machine-stoped"></div> '+ data.id_machine +'</div>'
+                    else
+                        return data.id_machine
+                }
+            },
             { data: 'description'},
             { data: 'problem'},
             { data: 'hour_start'},

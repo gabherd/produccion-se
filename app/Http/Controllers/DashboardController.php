@@ -68,11 +68,17 @@ class DashboardController extends Controller
 
     public function getTotalHourStoped()
     {
-        $hour_end = "(CASE WHEN hour_end = '00:00:00' THEN CURRENT_TIMESTAMP     
+        $hour_end = "(CASE WHEN hour_end is null THEN CURRENT_TIMESTAMP     
                           ELSE hour_end 
                     END)";
 
-        $query = "SELECT count(*) as total_stoped, machine.id_machine, name_step AS name, 
+        $query = "SELECT count(*) as total_stoped, 
+            machine.id_machine, 
+            name_step AS name,  
+            (CASE WHEN hour_end is null
+                THEN true
+             ELSE false
+            END) AS stoped,
             (CASE WHEN FLOOR(sum(TIMESTAMPDIFF(MINUTE, hour_start, ".$hour_end."))/60) < 10 
                  THEN CONCAT('0', FLOOR(sum(TIMESTAMPDIFF(MINUTE, hour_start, ".$hour_end."))/60))
                 WHEN FLOOR(sum(TIMESTAMPDIFF(MINUTE, hour_start, ".$hour_end."))/60) < 1 

@@ -77,6 +77,7 @@
 					<th>Proceso</th>
 					<th>Cantidad de paros</th>
 					<th>Tiempo detenido</th>
+					<th>Detalles</th>
 				</tr>
 			</thead>
 			<tbody>

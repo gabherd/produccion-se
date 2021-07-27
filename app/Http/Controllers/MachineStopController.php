@@ -25,6 +25,7 @@ class MachineStopController extends Controller
                                     'updated_at AS updated',
                                     'employee.id_employee',
                                     'position.id_position',
+                                    DB::raw('(CASE WHEN hour_end is null THEN true ELSE false END) AS stoped'),
                                     DB::raw('IFNULL(name_employee, name_position) as responsible'),
                                     DB::raw('DATE_FORMAT(hour_start, "%H:%i") AS hour_start'),
                                     DB::raw('(CASE WHEN DATE_FORMAT(hour_end, "%H:%i") = "00:00" THEN "00:00" ELSE DATE_FORMAT(hour_end, "%H:%i") END) AS hour_end'))
