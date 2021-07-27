@@ -32,7 +32,7 @@ class MachineStopController extends Controller
                                 ->leftjoin('employee', 'employee.id_employee', '=', 'machine_stop.id_employee')
                                 ->leftjoin('position', 'position.id_position', '=', 'machine_stop.id_position')
                                 ->orderBy('updated_at', 'DESC')
-                                ->where('updated_at', '>=', date(dateActual()))
+                                ->where('created_at', '>=', date(dateActual()))
                                 ->get();
 
         return $product;
