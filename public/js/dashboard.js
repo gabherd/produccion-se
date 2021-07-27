@@ -236,7 +236,7 @@ $(document).ready(function(){
         columns: [
             { data: null,
                 render: function(data, type, row){
-                    if (data.stoped) 
+                    if (data.stoped == 1) 
                         return '<div><div class="machine-stoped"></div> '+ data.id_machine +'</div>'
                     else
                         return data.id_machine

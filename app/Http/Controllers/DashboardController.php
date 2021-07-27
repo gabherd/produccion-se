@@ -72,12 +72,12 @@ class DashboardController extends Controller
                           ELSE hour_end 
                     END)";
 
-        $query = "SELECT count(*) as total_stoped, 
+        $query = "SELECT count(*) as total_stoped,
             machine.id_machine, 
-            name_step AS name,  
-            (CASE WHEN hour_end is null
-                THEN true
-             ELSE false
+            name_step AS name,  hour_end, 
+            sum(CASE WHEN hour_end is NULL
+                THEN 1
+             ELSE 0
             END) AS stoped,
             (CASE WHEN FLOOR(sum(TIMESTAMPDIFF(MINUTE, hour_start, ".$hour_end."))/60) < 10 
                  THEN CONCAT('0', FLOOR(sum(TIMESTAMPDIFF(MINUTE, hour_start, ".$hour_end."))/60))
