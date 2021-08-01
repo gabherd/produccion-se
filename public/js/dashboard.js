@@ -251,9 +251,11 @@ $(document).ready(function(){
             },
             { data: null,
                 render: function(data, type, row){
-                    return '<button class="btn btn-secondary">Detalles</button>'
+                    return '<button class="btn btn-secondary" data-toggle="modal" data-target="#modal-detail-stop">Detalles</button>'
                 }
             },
         ]
     });
 }); 
+
+//tbl-detail-stop
