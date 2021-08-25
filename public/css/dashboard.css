@@ -125,7 +125,7 @@
 
 .box-summary{
 	width: 90%;
-	height: 60%;
+	min-height: 60%;
 }
 
 .summary-stop{
