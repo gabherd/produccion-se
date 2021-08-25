@@ -59,6 +59,7 @@ body{
 	display: flex;
 	justify-content: center;
 	align-items: center;
+	position: relative;
 }
 
 .user-image{
@@ -68,6 +69,30 @@ body{
 
 .user-image{
 	border-radius: 40px;
+}
+
+.box-options-account{
+	width: 150px;
+	background: #ffffff;
+	border-radius: 3px;
+	position: absolute;
+	right: 0;
+	top: 44px;
+	z-index: 1;
+	display: none;
+}
+
+.item-option-account{
+	color: #333333;
+	display: flex;
+	justify-content: center;
+	height: 40px;
+	align-items: center;
+}
+
+.item-option-account:hover{
+	background: #f7f8f8;
+	border-radius: 3px;
 }
 
 .btn-close{

@@ -1,3 +1,12 @@
+$('body').click(function(e){
+    if ($(e.target).is('.user-image')) {
+        $('.box-options-account').toggle();
+    }else{
+        $('.box-options-account').hide();
+    }
+});
+
+
 //Modal encima de otra modal
 $(document).on('show.bs.modal', '.modal', function (event) {
     var zIndex = 1040 + (10 * $('.modal:visible').length);

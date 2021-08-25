@@ -26,7 +26,15 @@
 			    <div class="user-data">
 			        <div class="user-name">{{ Auth::user()->name }}</div>
 			        <div class="content-user-image">
-			            <img src="img/animals/{{ Auth::user()->avatar }}.svg" class="user-image">
+			            <img src="img/animals/{{ Auth::user()->avatar }}.svg" class="user-image cursor">
+			            <div class="box-options-account shadow cursor">
+			            	<a class="full-width" href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+								<div class="item-option-account">Cerrar sesion</div>
+							</a>
+							<form  id="logout-form" class="d-none" action="{{ route('logout') }}" method="POST">
+								@csrf
+							</form>
+			            </div>
 			        </div>
 			    </div>
 			</nav>
