@@ -120,15 +120,18 @@ function chartTotalHourStoped(){
 
 //adapta el ancho del cocumento por el scroll lateral
 $(document).ready(function(){
-    if ($( window ).width() >= 900) {
-        if ($( document ).height() > $( window ).height()) {
-            $('.content').css('width', 'calc(100vw - '+(160 + getScrollBarWidth())+'px)');
-        }
-    };
 
     //tbl-summary-stope
     $('#tbl-summary-stop').DataTable({
-         language: {
+        initComplete: function(){
+            //reduce el tamaño de del contenedor por el scroll lateral
+            if ($( window ).width() >= 900) {
+                if ($( document ).height() > $( window ).height()) {
+                    $('.content').css('width', 'calc(100vw - '+(160 + getScrollBarWidth())+'px)');
+                }
+            }
+        },
+        language: {
             "url": "//cdn.datatables.net/plug-ins/1.10.20/i18n/Spanish.json"
         },
         lengthChange: false,
