@@ -10,10 +10,6 @@ use Illuminate\Support\Facades\DB;
 
 class MachineStopController extends Controller
 {
-    public function index()
-    {
-        //
-    }
 
     public function getStopMachine(){
         $now = new DateTime();
@@ -58,9 +54,6 @@ class MachineStopController extends Controller
 
     public function store(Request $request)
     {
-        $now = new DateTime();
-        //check-switch
-        
         if ($request['hour_end'] == null) {
             $hour_end = '00:00:00';
         }else{
@@ -72,7 +65,6 @@ class MachineStopController extends Controller
                 'problem' => $request['problem'],
                 'hour_start' => $request['hour_start'],
                 'hour_end' => $hour_end,
-                'created_at' => $now->format('Y-m-d H:i:s'),
                 'id_employee' => $request['employee'],
                 'id_machine' => 'CA-'.$request['machine']
             ]);
@@ -81,7 +73,6 @@ class MachineStopController extends Controller
                 'problem' => $request['problem'],
                 'hour_start' => $request['hour_start'],
                 'hour_end' => $hour_end,
-                'created_at' => $now->format('Y-m-d H:i:s'),
                 'id_position' => $request['position'],
                 'id_machine' => 'CA-'.$request['machine']
             ]);
