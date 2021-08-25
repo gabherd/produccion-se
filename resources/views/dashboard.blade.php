@@ -62,11 +62,9 @@
 			<div id="myChart" style="width: 100%; height: 200px;"></div>
 		</div>
 	</div>
+
 	<br>
-	<div class="box-content box-total-hours">
-		<div id="hour-stop" style="height: 400px; width: 100%; background: #fff;"></div>
-	</div>
-	<br>
+
 	<div class="box-content box-summary">
 		<div class="title-content-summary">Resumen de paros</div>
 		<table id="tbl-summary-stop" class="table table-bordered display responsive nowrap" cellspacing="0" width="100%">

@@ -110,10 +110,6 @@
 	grid-area: box-total-stoped;
 }
 
-.box-total-hours{
-	width: 90%;
-}
-
 #myChart{
 	height: 200px !important;
 	width: 100% !important;
@@ -256,10 +252,6 @@
 
 	.content-machine-employee{
 		margin-top: 0px;		
-	}
-
-	.box-total-hours{
-		width: 100%;
 	}
 
 	.summary-stop{
