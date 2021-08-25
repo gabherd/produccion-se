@@ -58,12 +58,11 @@ function getTotalHourStoped(){
         success: function(data)          
         {   
             for(index in data){
-                var id_machine = data[index].id_machine
-                var name_process = data[index].name
-                var total_stoped = data[index].total_stoped
-                var full_time = parseFloat(data[index].hours + "." + data[index].minutes)
-                var hours = data[index].hours
-                var minutes = data[index].minutes
+                var id_machine = data[index].id_machine;
+                var name_process = data[index].name;
+                var full_time = parseFloat(data[index].hours + "." + data[index].minutes);
+                var hours = data[index].hours;
+                var minutes = data[index].minutes;
 
 
                 totalHoursStoped.push({name: id_machine, 
@@ -71,7 +70,6 @@ function getTotalHourStoped(){
                                         y: full_time, 
                                         hours: hours, 
                                         minutes: minutes});
-
             }   
         },
         complete: function (data) {
@@ -138,20 +136,13 @@ function chartTotalStopByMachine(){
             headerFormat: '<span style="font-size:11px">{series.name}</span><br>',
             pointFormat: '<b>Maquina: </b><span style="color:{point.color}">{point.name}</span> <br>'+
                          '<b>Proceso:</b> {point.process} <br>'+
-                         '<b>Tiempo:</b>  {point.hours}:{point.minutes} <br>'
+                         '<b>Tiempo:</b>   {point.hours}:{point.minutes} <br>'
         },
         series: [
             {
                 name: "Paro de maquina",
                 colorByPoint: true,
                 data:  totalHoursStoped 
-                /* 
-                totalHoursStoped structure
-                {
-                        name: "CA-4006",
-                        process: "BIM",
-                        y: 5,
-                }*/
             }
         ],
     });
@@ -246,12 +237,12 @@ $(document).ready(function(){
             { data: 'total_stoped'},
             { data: null,
                 render: function(data, type, row){
-                    return data.hours + ':' + data.minutes
+                    return data.hours + ":" + data.minutes
                 }
             },
             { data: null,
                 render: function(data, type, row){
-                    return '<button class="btn btn-secondary" data-toggle="modal" data-target="#modal-detail-stop">Detalles</button>'
+                    return '<button class="btn btn-secondary btn-detail-stop" onclick="detailStop(`'+ data.id_machine +'`, `'+ data.name +'`, '+ data.total_stoped+', `'+ data.hours +':'+ data.minutes +'`, '+ data.stoped+', `'+ data.problem+'`)" data-toggle="modal" data-target="#modal-detail-stop">Detalles</button>'
                 }
             },
         ]
@@ -259,3 +250,66 @@ $(document).ready(function(){
 }); 
 
 //tbl-detail-stop
+
+
+
+function detailStop(id_machine, name, total_stoped, time_stoped, stoped, problem){
+    $('#machine_id_stoped').text(id_machine);
+    $('#machine_name_stoped').text(name);
+    $('#machine_total_stoped').text(total_stoped);
+    $('#machine_time_stoped').text(time_stoped);
+
+    if (stoped) {
+        $('.box_machine_status').show();
+        $('#machine_status').text('Detenido');
+        $('#machine_status_description').text('...');
+
+    }else{
+        $('.box_machine_status').hide();
+    }
+
+    $('.tbl-detail-stop').DataTable().clear().destroy();
+
+    $('.tbl-detail-stop').DataTable({
+         language: {
+            "url": "//cdn.datatables.net/plug-ins/1.10.20/i18n/Spanish.json"
+        },
+        lengthChange: false,
+        paging:   false,
+        searching: false,
+        info:     false,
+        responsive: true,
+        ajax: {
+                url: '/detail/'+id_machine,
+                dataSrc: '',
+        },
+        columns: [
+            { data: null,
+                render: function(data, type, row){
+                    if (data.stoped == 1){
+                        $('#machine_status_description').text(data.problem);
+                        return '<div><div class="machine-stoped"></div> '+ data.problem +'</div>'
+                    }else{
+                        return data.problem;
+                    }
+                }
+            },
+            { data: 'hour_start'},
+            { data: null,
+                render: function(data, type, row){
+                    if (data.hour_end == null)
+                        '';
+                    else
+                        return data.hour_end;
+                }
+            },
+            { data: null,
+                render: function(data, type, row){
+                    return data.hours + ":" + data.minutes
+                }
+            },
+            { data: 'responsible'},
+        ]
+    });
+
+}

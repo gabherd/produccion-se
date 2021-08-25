@@ -104,34 +104,34 @@
 	                   		<div class="row-detail-stop">
 	                   			<div class="box-detail-stop">
 	                   				<div class="title-detail-stop">Maquina</div>
-	                   				<div class="description-detail-stop">CA-1353</div>
+	                   				<div id="machine_id_stoped" class="description-detail-stop">CA-____</div>
 	                   			</div>
 	                   			<div class="box-description">
 	                   				<div class="title-detail-stop">Proceso</div>
-	                   				<div class="description-detail-stop">Bimetal Yoke</div>
+	                   				<div id="machine_name_stoped" class="description-detail-stop">...</div>
 	                   			</div>
 	                   			<div class="box-detail-stop">
 	                   				<div class="title-detail-stop">Cantiad de paros</div>
-	                   				<div class="description-detail-stop">1</div>
+	                   				<div id="machine_total_stoped" class="description-detail-stop">#</div>
 	                   			</div>
 	                   			<div class="box-description">
 	                   				<div class="title-detail-stop">Tiempo detenido</div>
-	                   				<div class="description-detail-stop">01:00</div>
+	                   				<div id="machine_time_stoped" class="description-detail-stop">#</div>
 	                   			</div>
 	                   		</div>
-	                   		<div class="row-detail-stop-current">
+	                   		<div class="row-detail-stop-current box_machine_status">
 	                   			<div class="box-detail-stop">
 	                   				<div class="title-detail-stop">Estado</div>
-	                   				<div class="description-detail-stop">Detenido</div>
+	                   				<div id="machine_status" class="description-detail-stop">...</div>
 	                   			</div>
 	                   			<div class="box-description">
 	                   				<div class="title-detail-stop">Problema</div>
-	                   				<div class="description-detail-stop">Punto c alto</div>
+	                   				<div id="machine_status_description" class="description-detail-stop">...</div>
 	                   			</div>
 	                   		</div>
                    		</div>
                    	</div>
-                          <table id="tbl-detail-stop" class="table table-bordered display responsive nowrap" cellspacing="0" width="100%">
+                          <table class="tbl-detail-stop table table-bordered display responsive nowrap" cellspacing="0" width="100%">
                               <thead class="thead-light">
                                   <tr>
                                        <th>Problema</th>

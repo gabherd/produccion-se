@@ -28,7 +28,11 @@ Route::get('/paros-maquina', function () {
 
 	//total de horas que se detuvo una maquina
 	Route::get('totalHourStoped', '\App\Http\Controllers\DashboardController@getTotalHourStoped')
-		->name('totalHourStoped')->middleware('auth');		
+		->name('totalHourStoped')->middleware('auth');
+
+	//detalle de paro
+	Route::get('detail/{id}', '\App\Http\Controllers\DashboardController@show')
+		->name('detail')->middleware('auth');				
 
 /* --------- PAROS DE MAQUINA --------- */
 	Route::get('stopMachine', '\App\Http\Controllers\MachineStopController@getStopMachine')

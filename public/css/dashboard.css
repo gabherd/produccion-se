@@ -183,31 +183,14 @@
 }
 
 .btn-detail-stop{
-	background: #ACAAF4;
-	color: #EFEFEF;
-	height: 25px;
-	padding: 5px;
-	display: flex;
-	align-items: center;
-	justify-content: center;
-	width: 40%;
-	border-radius: 30px;
-	font-size: 13px;
 }
 
 .btn-detail-stop:hover{
-	color: #FFFFFF;
-	background: #908EED;
 }
 
 .hour-lost{
 	color: #FF0000;
 	font-size: 15px;
-}
-
-.btn-detail-stop .fas{
-	margin-left: 5px;
-	font-size: 10px;
 }
 
 .main-detail-stop{
