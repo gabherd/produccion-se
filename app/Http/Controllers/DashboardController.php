@@ -40,7 +40,7 @@ class DashboardController extends Controller
                                     ->leftjoin('position', 'position.id_position', '=', 'machine_stop.id_position')
                                     ->orderBy('updated_at', 'DESC')
                                     ->where('machine.id_machine', $id)
-                                    ->where('created_at', '>=',  date(dateActual()))
+                                    ->where(DB::raw('(DATE_FORMAT(created_at, "%Y-%m-%d"))'), '=', dateActual())
                                     ->get();
 
         return $detail_stop;
@@ -51,7 +51,7 @@ class DashboardController extends Controller
     {
         $result = DB::table('machine_stop')
             ->whereNull('hour_end')
-            ->where('created_at', '>=', date(dateActual()))
+            ->where(DB::raw('(DATE_FORMAT(created_at, "%Y-%m-%d"))'), '=', dateActual())
             ->count();
             
         return $result;
@@ -64,7 +64,7 @@ class DashboardController extends Controller
             ->select(DB::raw('machine_stop.id_machine, machine.name_step AS name, COUNT(machine.id_machine) as total'))
             ->join('machine', 'machine.id_machine', '=', 'machine_stop.id_machine')
             ->groupBy('machine_stop.id_machine')
-            ->where('created_at', '>=', date(dateActual()))
+            ->where(DB::raw('(DATE_FORMAT(created_at, "%Y-%m-%d"))'), '=', dateActual())
             ->get();
             
         return $result;
@@ -77,7 +77,7 @@ class DashboardController extends Controller
                 ->leftjoin('employee', 'machine_stop.id_employee', '=', 'employee.id_employee')
                 ->leftjoin('position', 'machine_stop.id_position', '=', 'position.id_position')
                 ->groupBy('id_responsable')
-                ->where('created_at', '>=', date(dateActual()))
+                ->where(DB::raw('(DATE_FORMAT(created_at, "%Y-%m-%d"))'), '=', dateActual())
                 ->get();
 
         return $result;
@@ -111,7 +111,7 @@ class DashboardController extends Controller
                     ELSE MOD(sum(TIMESTAMPDIFF(MINUTE, hour_start, ".$hour_end.")),60) 
                 END) AS minutes
             FROM machine_stop JOIN machine on machine_stop.id_machine = machine.id_machine 
-            WHERE created_at >= DATE_FORMAT('".dateActual()."', '%y-%m-%d') GROUP BY id_machine";
+            WHERE created_at = DATE_FORMAT('".dateActual()."', '%y-%m-%d') GROUP BY id_machine";
 
         $result = DB::select($query);
 
