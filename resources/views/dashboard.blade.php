@@ -19,7 +19,9 @@
 	<link rel="stylesheet" type="text/css" href="css/dashboard.css">
 @endsection()
 
+
 @section('content')
+	@section('title-section') Dashboard @endsection()
 	<div class="first-charts">
 		<div class="content-machine-employee">
 			<div class="box-content box-machine">

@@ -29,7 +29,7 @@ class MachineStopController extends Controller
                                 ->leftjoin('employee', 'employee.id_employee', '=', 'machine_stop.id_employee')
                                 ->leftjoin('position', 'position.id_position', '=', 'machine_stop.id_position')
                                 ->orderBy('updated_at', 'DESC')
-                                ->where('created_at', '>=', date(dateActual()))
+                                ->where(DB::raw('(DATE_FORMAT(created_at, "%Y-%m-%d"))'), '=', dateActual())
                                 ->get();
 
         return $product;

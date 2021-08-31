@@ -12,6 +12,9 @@ Route::get('/paros-maquina', function () {
 })->name('stop')->middleware('auth');
 
 
+//detalle de paro
+	Route::get('changeDate/{date}', '\App\Http\Controllers\PublicController@changeDate')
+		->name('changeDate')->middleware('auth');	
 
 /* --------- Dashboard --------- */
 	//Cantidad de maquinas paradas actualmente

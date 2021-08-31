@@ -1,3 +1,21 @@
+$('#date-request').on('change', function(){
+    var date = $(this).val();
+            
+    $.ajax({
+            url: "/changeDate/"+date,
+            dataType: "JSON",
+            method:"GET",
+            success: function(data, textStatus, xhr){
+                console.log(xhr.status);
+                document.location.reload(true);
+            }, 
+            error: function(data, textStatus, xhr){
+                console.log(xhr.status);
+            }
+    });
+});
+
+//opciones de cuenta de usuario
 $('body').click(function(e){
     if ($(e.target).is('.user-image')) {
         $('.box-options-account').toggle();
@@ -5,7 +23,6 @@ $('body').click(function(e){
         $('.box-options-account').hide();
     }
 });
-
 
 //Modal encima de otra modal
 $(document).on('show.bs.modal', '.modal', function (event) {
@@ -38,4 +55,5 @@ function getScrollBarWidth () {
         widthWithScroll = $('<div>').css({width: '100%'}).appendTo($outer).outerWidth();
     $outer.remove();
     return 100 - widthWithScroll;
-};
+}
+

@@ -151,9 +151,9 @@ td{
 						"menu-container content";
 	}
 
-.menu-container{
-	display: block;
-}
+	.menu-container{
+		display: block;
+	}
 
 
 	#btn-menu{
@@ -184,10 +184,24 @@ td{
 		background: rgba(255,255,255,.1);
 	}
 
+	.header-document{
+		padding: 4px;
+		color: #868686;
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+		position: relative;
+		width: 100%;
+	}
+
+	#date-request{
+		width: 200px;
+	}
+
 	.content {
 		grid-area: content;
 		display: block;
-		padding: 15px;
+		padding: 0 15px 15px 15px;
 		width: calc(100vw - 160px);
   	}
 }

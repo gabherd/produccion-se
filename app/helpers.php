@@ -11,6 +11,10 @@ use Illuminate\Support\Facades\DB;
 	}
 
 	function dateActual(){
-		return '2021-07-27';
+		if (Session::has('customDate')) {
+			return Session::get('customDate');
+		}else{
+			return date('Y-m-d');
+		}
 	}
 ?>

@@ -30,37 +30,42 @@
 @endsection()
 
 @section('content')
-                <div class="btn-add-stop shadow cursor" onclick='saveStop();' data-toggle="modal" data-target="#mdl-add-stop">
-                    <div class="icon-action">
-                        <i class="fas fa-plus"></i>
-                    </div>Agregar <span class="txt-description">&nbsp; paro de maquina <span>
-                </div>
-                <div class="space"></div>
-                <div class="view-stop shadow" data-toggle="modal" data-target="#modal-view">
-                    <div class="icon-action">
-                        <i class="fas fa-eye"></i>
-                    </div>
-                    Ver paros de maquina
-                </div>
-                <div class="container-tbl-stop shadow">
-                    <table id="tbl-stop" class="tbl-stop table table-bordered display responsive nowrap" cellspacing="0" width="100%">
-                        <thead class="thead-light">
-                            <tr>
-                                <th>Maquina</th>
-                                <th>Descripcion</th>
-                                <th>Problema</th>
-                                <th>Hora Incio</th>
-                                <th>Hora Fin</th>
-                                <th>Tiempo</th>
-                                <th>Responsable</th>
-                                <th>Acciones</th>
-                                <th></th>
-                            </tr>
-                        </thead>
-                         <tbody>
-                         </tbody>
-                    </table>
-                </div>
+    @section('title-section') Paros de Máquina @endsection()
+    @if(dateActual() == date('Y-m-d'))
+        <div class="btn-add-stop shadow cursor" onclick='saveStop();' data-toggle="modal" data-target="#mdl-add-stop">
+            <div class="icon-action">
+                <i class="fas fa-plus"></i>
+            </div>Agregar <span class="txt-description">&nbsp; paro de maquina <span>
+        </div>
+    @endif
+
+
+    <div class="space"></div>
+    <div class="view-stop shadow" data-toggle="modal" data-target="#modal-view">
+        <div class="icon-action">
+            <i class="fas fa-eye"></i>
+        </div>
+        Ver paros de maquina
+    </div>
+    <div class="container-tbl-stop shadow">
+        <table id="tbl-stop" class="tbl-stop table table-bordered display responsive nowrap" cellspacing="0" width="100%">
+            <thead class="thead-light">
+                <tr>
+                    <th>Maquina</th>
+                    <th>Descripcion</th>
+                    <th>Problema</th>
+                    <th>Hora Incio</th>
+                    <th>Hora Fin</th>
+                    <th>Tiempo</th>
+                    <th>Responsable</th>
+                    <th>Acciones</th>
+                    <th></th>
+                </tr>
+            </thead>
+             <tbody>
+             </tbody>
+        </table>
+    </div>
 @endsection()
 
 @section('modals')
