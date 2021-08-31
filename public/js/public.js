@@ -1,6 +1,8 @@
 $('#date-request').on('change', function(){
     var date = $(this).val();
-            
+    
+    $('.loader').show();
+
     $.ajax({
             url: "/changeDate/"+date,
             dataType: "JSON",

@@ -41,6 +41,31 @@ body{
 	justify-content: center;
 }
 
+.loader{
+	display: none;
+	height: 70px;
+	width:  70px;
+	border: solid 7px rgba(0, 0, 0, .1);
+	border-left-color: #B1B1B1; 
+	position: absolute;
+	border-radius: 50%;
+	top:  50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	z-index: 1;
+	animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
 .user-data{
 	display: flex;
 	align-items: center;
