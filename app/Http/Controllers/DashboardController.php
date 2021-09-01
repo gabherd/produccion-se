@@ -111,7 +111,7 @@ class DashboardController extends Controller
                     ELSE MOD(sum(TIMESTAMPDIFF(MINUTE, hour_start, ".$hour_end.")),60) 
                 END) AS minutes
             FROM machine_stop JOIN machine on machine_stop.id_machine = machine.id_machine 
-            WHERE created_at = DATE_FORMAT('".dateActual()."', '%y-%m-%d') GROUP BY id_machine";
+            WHERE (DATE_FORMAT(created_at, '%Y-%m-%d')) = '".dateActual()."' GROUP BY id_machine";
 
         $result = DB::select($query);
 

@@ -54,17 +54,11 @@ class MachineStopController extends Controller
 
     public function store(Request $request)
     {
-        if ($request['hour_end'] == null) {
-            $hour_end = '00:00:00';
-        }else{
-            $hour_end = $request['hour_end'];
-        }
-
         if ($request['swt-employee'] == 'on') {
             $request = MachineStop::insert([
                 'problem' => $request['problem'],
                 'hour_start' => $request['hour_start'],
-                'hour_end' => $hour_end,
+                'hour_end' => $request['hour_end'],
                 'id_employee' => $request['employee'],
                 'id_machine' => 'CA-'.$request['machine']
             ]);
@@ -72,7 +66,7 @@ class MachineStopController extends Controller
             $request = MachineStop::insert([
                 'problem' => $request['problem'],
                 'hour_start' => $request['hour_start'],
-                'hour_end' => $hour_end,
+                'hour_end' => $request['hour_end'],
                 'id_position' => $request['position'],
                 'id_machine' => 'CA-'.$request['machine']
             ]);
