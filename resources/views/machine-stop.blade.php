@@ -30,7 +30,7 @@
 @endsection()
 
 @section('content')
-    @section('title-section') Paros de Máquina @endsection()
+@section('title-section') Paros de Máquina @endsection()
     @if(dateActual() == date('Y-m-d'))
         <div class="btn-add-stop shadow cursor" onclick='saveStop();' data-toggle="modal" data-target="#mdl-add-stop">
             <div class="icon-action">
