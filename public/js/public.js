@@ -1,3 +1,23 @@
+
+
+$(document).ready(function(){
+    var id_user = $('#id_user').text();
+    
+    if (getCookie("update-showed") != id_user) {
+        Swal.fire({
+            title: '¡Nueva actualización!',
+            text: 'Ahora podrás los registros de fechas pasadas',
+            imageUrl: 'img/updates/update-v2.4.0.png',
+            imageWidth: 200,
+            imageHeight: 380,
+            imageAlt: 'Custom image',
+        }).then((result) => {
+            document.cookie = "update-showed="+id_user; 
+        });
+    };
+});
+
+
 $('#date-selected').on('change', function(){
     var date = $(this).val();
     
@@ -59,3 +79,18 @@ function getScrollBarWidth () {
     return 100 - widthWithScroll;
 }
 
+
+function getCookie(cname) {
+  var name = cname + "=";
+  var ca = document.cookie.split(';');
+  for(var i = 0; i < ca.length; i++) {
+    var c = ca[i];
+    while (c.charAt(0) == ' ') {
+      c = c.substring(1);
+    }
+    if (c.indexOf(name) == 0) {
+      return c.substring(name.length, c.length);
+    }
+  }
+  return "";
+}
