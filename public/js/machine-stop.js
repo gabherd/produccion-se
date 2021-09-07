@@ -241,7 +241,7 @@ $(".table.display").delegate('.btn-delete-problem', 'click', function(){
         var item_name = $(this).attr('data-name');
         
         Swal.fire({
-            title: '¿Estas seguro?',
+            title: '¿Estás seguro?',
             text: "Eliminar " + item_name,
             icon: 'warning',
             showCancelButton: true,
@@ -279,7 +279,7 @@ $(".table.display").delegate('.btn-delete-problem', 'click', function(){
 
                                 $('.table.display').DataTable().ajax.reload();
                             }else{
-                                swalMessage('warning', 'Error', 'Ocurrio un problema');
+                                swalMessage('warning', 'Error', 'Ocurrió un problema');
                             }
                         }
                     }); 
@@ -428,7 +428,7 @@ $('#btn-save-employee').on('click', function(){
 });
 
 function saveStop(){
-    $('#title-modal-add-stop').text('Agregar paro de maquina');
+    $('#title-modal-add-stop').text('Agregar paro de máquina');
     $('.alert-danger').hide();
 
     $("#create-stop").trigger("reset");

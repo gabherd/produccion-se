@@ -30,7 +30,7 @@
 			            <img src="img/animals/{{ Auth::user()->avatar }}.svg" class="user-image cursor">
 			            <div class="box-options-account shadow cursor">
 			            	<a class="full-width" href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
-								<div class="item-option-account">Cerrar sesion</div>
+								<div class="item-option-account">Cerrar sesión</div>
 							</a>
 							<form  id="logout-form" class="d-none" action="{{ route('logout') }}" method="POST">
 								@csrf
@@ -49,7 +49,7 @@
 	                </a>
 	                <a class="item-menu cursor" href="{{ route('stop') }}">
 	                    <img src="img/mantenimiento.svg" height="20">
-	                    <div class="text-menu">Paros de maquina</div>
+	                    <div class="text-menu">Paros de máquina</div>
 	                </a>
 	            </div>
 	        </div>

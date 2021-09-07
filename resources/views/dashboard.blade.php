@@ -33,7 +33,7 @@
 					<div class="info-box">
 						<div class="title-box" id="machineNotRepaired">...</div>
 						<div class="subTitle-box">
-							<div>Maquinas</div>
+							<div>Máquinas</div>
 							<div>detenidas</div>
 						</div>
 					</div>
@@ -75,7 +75,7 @@
 		<table id="tbl-summary-stop" class="table table-bordered display responsive nowrap" cellspacing="0" width="100%">
 			<thead  class="thead-light">
 				<tr>
-					<th>Maquina</th>
+					<th>Máquina</th>
 					<th>Proceso</th>
 					<th>Cantidad de paros</th>
 					<th>Tiempo detenido</th>
@@ -96,7 +96,7 @@
            <div class="modal-dialog modal-lg modal-dialog-centered">
                <div class="modal-content">
                    <div class="modal-header">
-                       <h5 class="modal-title" id="exampleModalLabel">Ver paros de maquina</h5>
+                       <h5 class="modal-title" id="exampleModalLabel">Ver paros de máquina</h5>
                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                              <span aria-hidden="true">&times;</span>
                            </button>
@@ -106,7 +106,7 @@
                    		<div class="box-description-stop">
 	                   		<div class="row-detail-stop">
 	                   			<div class="box-detail-stop">
-	                   				<div class="title-detail-stop">Maquina</div>
+	                   				<div class="title-detail-stop">Máquina</div>
 	                   				<div id="machine_id_stoped" class="description-detail-stop">CA-____</div>
 	                   			</div>
 	                   			<div class="box-description">

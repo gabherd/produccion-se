@@ -35,7 +35,7 @@
         <div class="btn-add-stop shadow cursor" onclick='saveStop();' data-toggle="modal" data-target="#mdl-add-stop">
             <div class="icon-action">
                 <i class="fas fa-plus"></i>
-            </div>Agregar <span class="txt-description">&nbsp; paro de maquina <span>
+            </div>Agregar <span class="txt-description">&nbsp; paro de máquina <span>
         </div>
     @endif
 
@@ -45,14 +45,14 @@
         <div class="icon-action">
             <i class="fas fa-eye"></i>
         </div>
-        Ver paros de maquina
+        Ver paros de máquina
     </div>
     <div class="container-tbl-stop shadow">
         <table id="tbl-stop" class="tbl-stop table table-bordered display responsive nowrap" cellspacing="0" width="100%">
             <thead class="thead-light">
                 <tr>
-                    <th>Maquina</th>
-                    <th>Descripcion</th>
+                    <th>Máquina</th>
+                    <th>Descripción</th>
                     <th>Problema</th>
                     <th>Hora Incio</th>
                     <th>Hora Fin</th>
@@ -74,7 +74,7 @@
                 <div class="modal-dialog modal-lg modal-dialog-centered">
                     <div class="modal-content">
                         <div class="modal-header">
-                            <h5 class="modal-title" id="exampleModalLabel">Ver paros de maquina</h5>
+                            <h5 class="modal-title" id="exampleModalLabel">Ver paros de máquina</h5>
                                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                   <span aria-hidden="true">&times;</span>
                                 </button>
@@ -83,8 +83,8 @@
                                <table id="tbl-stop-mobile" class="tbl-stop table table-bordered display responsive nowrap" cellspacing="0" width="100%">
                                    <thead class="thead-light">
                                        <tr>
-                                            <th>Maquina</th>
-                                            <th>Descripcion</th>
+                                            <th>Máquina</th>
+                                            <th>Descripción</th>
                                             <th>Problema</th>
                                             <th>Hora Incio</th>
                                             <th>Hora Fin</th>
@@ -110,7 +110,7 @@
                 <div class="modal-dialog modal-dialog-centered">
                     <div class="modal-content">
                         <div class="modal-header">
-                            <h5 class="modal-title" id="title-modal-add-stop">Agregar paro de maquina</h5>
+                            <h5 class="modal-title" id="title-modal-add-stop">Agregar paro de máquina</h5>
                                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                   <span aria-hidden="true">&times;</span>
                                 </button>
@@ -119,12 +119,12 @@
                             <form id="create-stop">
                                 @csrf
                                 <div class="form-group">
-                                    <label for="id_machine">Maquina</label>
+                                    <label for="id_machine">Máquina</label>
                                     <div class="form-group-icon">
                                         <i class="fas fa-search"></i>
                                         <input id="id_machine" name="machine" type="number" class="form-control" placeholder="Buscar">
                                         <div class="msg-error-machine alert alert-danger">
-                                            Maquina no encontrada, selecciona una de la lista
+                                            Máquina no encontrada, selecciona una de la lista
                                         </div>
                                     </div>
                                     <small id="description_machine" class="form-text text-muted"></small>
@@ -156,7 +156,7 @@
                                     <label for="employee">Responsable</label>
                                     <div class="custom-control custom-switch">
                                         <input type="checkbox" name="swt-employee" class="custom-control-input" id="swt-id_employee" checked>
-                                        <label class="custom-control-label" for="swt-id_employee">Numero de empleado</label>
+                                        <label class="custom-control-label" for="swt-id_employee">Número de empleado</label>
                                     </div>
                                     <div id="name_employee">
                                         <div class="form-group-icon">
@@ -201,7 +201,7 @@
                             <form id="create-employee">
                                 @csrf
                                 <div class="form-group">
-                                    <label for="number-employee">Numero de empleado</label>
+                                    <label for="number-employee">Número de empleado</label>
                                     <input id="number-employee" name="number-employee" type="number" class="form-control">
                                 </div>
                                 <div class="form-group">
