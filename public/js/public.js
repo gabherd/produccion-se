@@ -9,7 +9,7 @@ $(document).ready(function(){
             text: 'Ahora podrás ver los registros de fechas pasadas haciendo click en el calendario',
             imageUrl: 'img/updates/update-v2.4.0.png',
             imageWidth: 200,
-            imageHeight: 380,
+            imageHeight: 300,
             imageAlt: 'Custom image',
         }).then((result) => {
             document.cookie = "update-showed="+id_user; 
