@@ -235,7 +235,12 @@ td{
 		width: 100%;
 	}
 
-	#date-request{
+	.header-document {
+		position: relative;
+		top: 0;
+		width: 100%;
+	}
+	#date-selected{
 		width: 200px;
 	}
 
@@ -244,5 +249,5 @@ td{
 		display: block;
 		padding: 0 15px 15px 15px;
 		width: calc(100vw - 160px);
-  	}
+  }
 }

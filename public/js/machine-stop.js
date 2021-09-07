@@ -296,6 +296,7 @@ $(".table.display").delegate('.btn-delete-problem', 'click', function(){
 
 $('#btn-save-stop').on('click', function(){
     var action_submit = $('#btn-save-stop').attr('data-submit');
+    var date_selected = $('#date-selected').val();
 
     if (action_submit  == 'update') {
         if (!$('#swt-id_employee').is(':checked')) {
@@ -305,7 +306,7 @@ $('#btn-save-stop').on('click', function(){
                     url: "/paros/"+id,
                     dataType: "JSON",
                     method:"PUT",
-                    data: $("#create-stop").serialize() + '&_method=' + "PUT",
+                    data: $("#create-stop").serialize() + '&_method=' + 'PUT',
                     success: function(res){
                         console.log(res)
                         if (res.status == 200) {
@@ -359,7 +360,7 @@ $('#btn-save-stop').on('click', function(){
                     url: "paros",
                     dataType: "JSON",
                     method:"POST",
-                    data: $("#create-stop").serialize(),
+                    data: $("#create-stop").serialize() + '&date_selected=' + date_selected,
                     success: function(res){
                         if (res.status) {
   

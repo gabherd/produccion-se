@@ -60,7 +60,7 @@
    				
 				<div class="header-document">
 					@yield('title-section')
-					<input id="date-request" type="date" value="{{ dateActual() }}" class="form-control">
+					<input id="date-selected" type="date" value="{{ dateActual() }}" class="form-control">
 				</div>
         		@yield('content')
    			</div>

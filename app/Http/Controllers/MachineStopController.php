@@ -59,6 +59,7 @@ class MachineStopController extends Controller
                 'problem' => $request['problem'],
                 'hour_start' => $request['hour_start'],
                 'hour_end' => $request['hour_end'],
+                'created_at' => $request['date_selected'],
                 'id_employee' => $request['employee'],
                 'id_machine' => 'CA-'.$request['machine']
             ]);
@@ -67,6 +68,7 @@ class MachineStopController extends Controller
                 'problem' => $request['problem'],
                 'hour_start' => $request['hour_start'],
                 'hour_end' => $request['hour_end'],
+                'created_at' => $request['date_selected'],
                 'id_position' => $request['position'],
                 'id_machine' => 'CA-'.$request['machine']
             ]);

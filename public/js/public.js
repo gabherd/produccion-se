@@ -1,4 +1,4 @@
-$('#date-request').on('change', function(){
+$('#date-selected').on('change', function(){
     var date = $(this).val();
     
     $('.loader').show();
