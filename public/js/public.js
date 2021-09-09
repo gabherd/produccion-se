@@ -12,7 +12,7 @@ $(document).ready(function(){
             imageHeight: 300,
             imageAlt: 'Custom image',
         }).then((result) => {
-            document.cookie = "update-showed="+id_user; 
+            document.cookie = "update-showed="+id_user+"; Max-Age="+60*60*24*7+";"; 
         });
     };
 });
